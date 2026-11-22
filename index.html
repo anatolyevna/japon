@@ -2843,15 +2843,16 @@ function jgMap(o){
   var cpin='';
   cl.forEach(function(c){
    if(c.m.length>1){var xs=c.m.map(function(p){return p.x}),ys=c.m.map(function(p){return p.y});
-    cpin+='<g class="pin cl" data-c="'+c.m.map(function(p){return pins.indexOf(p)}).join(',')+'"><circle cx="'+c.x+'" cy="'+c.y+'" r="'+px(7.5)+'" fill="'+dk('#CF6B64',.8)+'" stroke="#FFFBF5" stroke-width="'+px(1.6)+'"/><text x="'+c.x+'" y="'+(c.y+px(3.1))+'" text-anchor="middle" style="font-size:'+px(9)+'px;fill:#FFFBF5;font-weight:700">'+c.m.length+'</text></g>';used.push([c.x-px(7.5),c.y-px(7.5),c.x+px(7.5),c.y+px(7.5)])}
-   else{var p=c.m[0],r=prefRegion(p.pref),col=dk(r.d,.74),hollow=!p.n&&p.wo;
-    cpin+='<g class="pin" data-i="'+pins.indexOf(p)+'" '+(p.ok?'':'opacity=".66"')+'>'+(hollow?'<circle cx="'+p.x+'" cy="'+p.y+'" r="'+px(3.6)+'" fill="#FFFBF5" stroke="'+col+'" stroke-width="'+px(1.8)+'"/>':'<circle cx="'+p.x+'" cy="'+p.y+'" r="'+px(4)+'" fill="'+col+'" stroke="#FFFBF5" stroke-width="'+px(1.5)+'"/>')+'</g>';
-    used.push([p.x-px(5),p.y-px(5),p.x+px(5),p.y+px(5)]);
+    cpin+='<g class="pin cl" data-c="'+c.m.map(function(p){return pins.indexOf(p)}).join(',')+'"><rect x="'+(c.x-px(7.5))+'" y="'+(c.y-px(7.5))+'" width="'+px(15)+'" height="'+px(15)+'" rx="'+px(3.5)+'" fill="'+dk('#CF6B64',.8)+'"/><text x="'+c.x+'" y="'+(c.y+px(3.2))+'" text-anchor="middle" style="font-size:'+px(9)+'px;fill:#FFFBF5;font-weight:700">'+c.m.length+'</text></g>';used.push([c.x-px(7.5),c.y-px(7.5),c.x+px(7.5),c.y+px(7.5)])}
+   else{var p=c.m[0],r=prefRegion(p.pref),col=dk(r.d,.58),hollow=!p.n&&p.wo;
+    var dr=px(5.4),dm=p.x+','+(p.y-dr)+' '+(p.x+dr)+','+p.y+' '+p.x+','+(p.y+dr)+' '+(p.x-dr)+','+p.y;
+    cpin+='<g class="pin" data-i="'+pins.indexOf(p)+'" '+(p.ok?'':'opacity=".66"')+'><polygon points="'+dm+'" '+(hollow?'fill="none" stroke="'+col+'" stroke-width="'+px(1.7)+'"':'fill="'+col+'" stroke="'+dk(r.d,.45)+'" stroke-width="'+px(1)+'"')+' stroke-linejoin="round"/></g>';
+    used.push([p.x-px(6),p.y-px(6),p.x+px(6),p.y+px(6)]);
     p._lab=1}});
   /* libellés des destinations (priorité haute) */
   var plab='';
   cl.forEach(function(c){if(c.m.length>1)return;var p=c.m[0],tw=p.city.length*5.9+10;
-   if(claim(p.x+px(8),p.y+px(3.5),tw,12,'start'))plab+='<text class="cl" x="'+(p.x+px(8))+'" y="'+(p.y+px(3.5))+'" style="font-size:'+px(10.5)+'px;stroke-width:'+px(3)+'px;fill:'+dk(prefRegion(p.pref).d,.55)+'">'+p.city+'</text>'});
+   if(claim(p.x+px(9),p.y+px(3.5),tw,12,'start'))plab+='<text class="cl" x="'+(p.x+px(9))+'" y="'+(p.y+px(3.5))+'" style="font-size:'+px(10.5)+'px;stroke-width:'+px(3)+'px;fill:'+dk(prefRegion(p.pref).d,.55)+'">'+p.city+'</text>'});
 
   /* ----- libellés de préfecture ----- */
   var tl='';
@@ -2945,8 +2946,7 @@ function mapFrame(){
  if(!JGD)return el('div');
  var d=el('div'),m=jgMap({onPref:function(p,r){openRegion(r)}}),J=m._jm,mt=J.trips(),ap=J.pins().filter(function(p){return!p.ok}).length;
  d.append(m);
- var lg=el('div','jleg');
- [['d','Destination'],['h','Envie'],['n','Trajet sur une ligne'],['s','Trajet à vol d’oiseau']].forEach(function(x){var i=el('span','lgi '+x[0]);i.append(el('i'),document.createTextNode(x[1]));lg.append(i)});d.append(lg);
+
  var n=[];
  if(n.length)d.append(el('p','jnote',n.join('\n')));return d}
 /* Destinations : carte réelle de la région */
