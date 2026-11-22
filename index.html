@@ -620,6 +620,8 @@ input,select,textarea{font-size:16px!important}
 .shw .sub .fr{color:#5A4A44;font-weight:500}
 .shw .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:16px;width:44px;height:44px;border-radius:50%;border:1.5px solid #E4D9D0;background:#FFF;color:#5A4A44;display:grid;place-items:center;cursor:pointer}
 
+.lb{fill:var(--sea);pointer-events:none}
+
 </style>
 </head>
 <body>
@@ -3137,6 +3139,8 @@ function DECO(){
   return d}
 
  var s='<svg class="jsv" viewBox="'+vb.x+' '+vb.y+' '+vb.w+' '+vb.h+'" role="group" aria-label="'+(reg?'Préfectures de la région '+reg.n:'Carte du Japon')+'">'+DECO();
+ /* fond de terre opaque : la mer (dégradé et vagues) ne transparaît jamais sous les préfectures */
+ s+='<g class="lbg" pointer-events="none">'+Object.keys(JGD.pd).map(function(p){return'<path class="lb" d="'+JGD.pd[p]+'" fill-rule="evenodd"/>'}).join('')+'</g>';
  Object.keys(JGD.pd).forEach(function(p){var rg=prefRegion(p),dim=reg&&rg!==reg;
   s+='<path class="pf'+(dim?' dim':'')+'" data-p="'+p+'" data-r="'+rg.n+'" d="'+JGD.pd[p]+'" style="--c:'+rg.d+'" fill="'+rg.d+'" fill-rule="evenodd"'+(has[p]?'':' fill-opacity=".82"')+(dim?'':' tabindex="0" role="button" aria-label="'+p+(reg?'':', région '+rg.n)+'"')+'/>'});
  s+='<path class="pb" d="'+JGD.pb+'"/><path class="rb" d="'+JGD.rb+'"/><path class="cs" d="'+JGD.cs+'"/><g class="dyn"></g></svg>';
