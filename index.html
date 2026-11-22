@@ -529,6 +529,11 @@ input,select,textarea{font-size:16px!important}
 .wadd{width:34px;height:34px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 16%,var(--bg));background:var(--card);font-size:1.2rem;line-height:1;padding:0;color:var(--muted)}
 .wsec.empty0 .whd{padding-bottom:10px;border-bottom:1.5px dashed color-mix(in srgb,var(--ink) 16%,var(--bg))}
 .wsec .list{margin-top:6px}
+/* v17 : ajouter le trajet estimé */
+.estact{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.estadd.done{opacity:.75}
+.estact .mini{margin-top:0}
+
 </style>
 </head>
 <body>
@@ -2981,6 +2986,33 @@ function renderWish(){var box=$('#wish');if(!box)return;box.replaceChildren();
   hd.append(bub,pl);sec.append(hd);
   if(its.length){var l=el('div','list');its.forEach(function(w){l.append(wishRow(w))});sec.append(l)}
   box.append(sec)})}
+
+
+/* ---------- v17 : ajouter directement le trajet estimé à « Mes trajets » ---------- */
+var ESEL={},EADD={};
+function calcCard(net,i,l){
+ var names=calcNames(net,l);if(!names)return null;
+ var key=net+'|'+i,c=sty(el('div','leg lcard'),l.c),box=el('div','est'),s1=el('select'),s2=el('select'),out=el('div','estr');
+ s1.setAttribute('aria-label','Départ');s2.setAttribute('aria-label','Arrivée');
+ names.forEach(function(n){[s1,s2].forEach(function(s){var o=el('option',null,n);o.value=n;s.append(o)})});
+ var sv=ESEL[key];s1.value=sv&&names.indexOf(sv[0])>=0?sv[0]:names[0];s2.value=sv&&names.indexOf(sv[1])>=0?sv[1]:names[names.length-1];
+ var act=el('div','estact');
+ function up(){ESEL[key]=[s1.value,s2.value];out.replaceChildren();act.replaceChildren();var r=calc(net,i,l,s1.value,s2.value);
+  if(!r){out.append(el('span',null,'—'));return}
+  var parts=[];if(r.k!=null)parts.push(r.k+' station'+(r.k>1?'s':''));parts.push('≈ '+fmtMin(r.min));
+  out.append(el('b',null,parts.join(' · ')));
+  if(r.pr)out.append(el('span',null,'≈ '+money(r.pr).replace(' · ≈ ',' (≈ ')+')'));
+  if(r.dir)out.append(el('small',null,'Direction '+r.dir));if(r.alt)out.append(el('small',null,'Dans l’autre sens : '+r.alt+' stations'));
+  var sig=s1.value+'|'+s2.value,done=EADD[key]===sig,add=el('button','mini estadd'+(done?' done':''),done?'Ajouté à mes trajets ✓':'+ Ajouter à mes trajets');add.type='button';add.disabled=done;
+  add.setAttribute('aria-label','Ajouter le trajet '+s1.value+' → '+s2.value+' à mes trajets');
+  add.onclick=function(){
+   var note='Estimation : ≈ '+fmtMin(r.min)+(r.pr?' · ≈ '+r.pr.toLocaleString('fr-FR')+' ¥':'');
+   trips.push({id:++uid,m:TMI[net],a:s1.value,b:s2.value,date:'',dep:'',arr:'',price:r.pr||0,note:note});
+   EADD[key]=sig;refresh()};
+  act.append(add);
+  if(done){var go=el('button','mini estgo','Voir mes trajets');go.type='button';go.onclick=function(){TV='trajets';renderTrans();window.scrollTo(0,0)};act.append(go)}}
+ s1.onchange=s2.onchange=up;up();
+ var l1=el('label',null,'De'),l2=el('label',null,'À');l1.append(s1);l2.append(s2);box.append(l1,l2);c.append(box,out,act);return c}
 
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
