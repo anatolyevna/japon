@@ -2784,7 +2784,7 @@ function jgMap(o){
  var pins=[],tr={ok:[],miss:0,approx:0};
  function build(){
   var m={};cityGroups().forEach(function(g){m[norm(g.city)]={city:g.city,pref:g.pref,n:g.items.length,w:0,it:g.items}});
-  wishes.forEach(function(w){if(!w.city)return;var k=norm(w.city);if(!m[k])m[k]={city:w.city,pref:w.pref||cityPref(w.city),n:0,w:0,it:[],wo:1};m[k].w++});
+  wishes.forEach(function(w){if(!w.city)return;var k=norm(w.city);if(!m[k])m[k]={city:w.city,pref:w.pref||cityPref(w.city),n:0,w:0,it:[],wo:1};m[k].w++;(m[k].wt=m[k].wt||[]).push(w.type)});
   pins=[];Object.keys(m).forEach(function(k){var p=m[k],g=geoOf(p.city,p.pref);if(!g)return;p.x=g.x;p.y=g.y;p.ok=g.ok;pins.push(p)});
   tr={ok:[],miss:0,approx:0};
   trips.forEach(function(t){var kind=t.m===1?SHK:(t.m===0||t.m===2)?MET:null,rt=kind?netRoute(kind,t.a,t.b):null,ga=GAZ[norm(t.a)],gb=GAZ[norm(t.b)];
@@ -2845,14 +2845,20 @@ function jgMap(o){
    if(c.m.length>1){var xs=c.m.map(function(p){return p.x}),ys=c.m.map(function(p){return p.y});
     cpin+='<g class="pin cl" data-c="'+c.m.map(function(p){return pins.indexOf(p)}).join(',')+'"><rect x="'+(c.x-px(7.5))+'" y="'+(c.y-px(7.5))+'" width="'+px(15)+'" height="'+px(15)+'" rx="'+px(3.5)+'" fill="'+dk('#CF6B64',.8)+'"/><text x="'+c.x+'" y="'+(c.y+px(3.2))+'" text-anchor="middle" style="font-size:'+px(9)+'px;fill:#FFFBF5;font-weight:700">'+c.m.length+'</text></g>';used.push([c.x-px(7.5),c.y-px(7.5),c.x+px(7.5),c.y+px(7.5)])}
    else{var p=c.m[0],r=prefRegion(p.pref),col=dk(r.d,.58),hollow=!p.n&&p.wo;
-    var dr=px(5.4),dm=p.x+','+(p.y-dr)+' '+(p.x+dr)+','+p.y+' '+p.x+','+(p.y+dr)+' '+(p.x-dr)+','+p.y;
-    cpin+='<g class="pin" data-i="'+pins.indexOf(p)+'" '+(p.ok?'':'opacity=".66"')+'><polygon points="'+dm+'" '+(hollow?'fill="none" stroke="'+col+'" stroke-width="'+px(1.7)+'"':'fill="'+col+'" stroke="'+dk(r.d,.45)+'" stroke-width="'+px(1)+'"')+' stroke-linejoin="round"/></g>';
-    used.push([p.x-px(6),p.y-px(6),p.x+px(6),p.y+px(6)]);
+    var cnt={},best=null,src=p.n>0?(p.it||[]).map(function(x){return x.type}):(p.wt||[]);
+    src.forEach(function(t){cnt[t]=(cnt[t]||0)+1;if(!best||cnt[t]>cnt[best])best=t});
+    var ty=null;TYPES.forEach(function(t){if(t[0]===best)ty=t});
+    if(ty){var tc=dk(ty[1],.62),sz=px(18),h=sz/2,ic=px(11.5),fl=p.n>0;
+     cpin+='<g class="pin" data-i="'+pins.indexOf(p)+'" '+(p.ok?'':'opacity=".66"')+'><rect x="'+(p.x-h)+'" y="'+(p.y-h)+'" width="'+sz+'" height="'+sz+'" rx="'+px(5)+'" fill="'+(fl?tc:'#FFFBF5')+'" stroke="'+(fl?'none':tc)+'" stroke-width="'+px(1.3)+'"/><svg x="'+(p.x-ic/2)+'" y="'+(p.y-ic/2)+'" width="'+ic+'" height="'+ic+'" viewBox="0 0 24 24" fill="none" stroke="'+(fl?'#FFFBF5':tc)+'" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="'+ICONS[ty[2]]+'"/></svg></g>';
+     used.push([p.x-px(10),p.y-px(10),p.x+px(10),p.y+px(10)])}
+    else{var dr=px(5.4),dm=p.x+','+(p.y-dr)+' '+(p.x+dr)+','+p.y+' '+p.x+','+(p.y+dr)+' '+(p.x-dr)+','+p.y;
+     cpin+='<g class="pin" data-i="'+pins.indexOf(p)+'" '+(p.ok?'':'opacity=".66"')+'><polygon points="'+dm+'" '+(hollow?'fill="none" stroke="'+col+'" stroke-width="'+px(1.7)+'"':'fill="'+col+'" stroke="'+dk(r.d,.45)+'" stroke-width="'+px(1)+'"')+' stroke-linejoin="round"/></g>';
+     used.push([p.x-px(6),p.y-px(6),p.x+px(6),p.y+px(6)])}
     p._lab=1}});
   /* libellés des destinations (priorité haute) */
   var plab='';
   cl.forEach(function(c){if(c.m.length>1)return;var p=c.m[0],tw=p.city.length*5.9+10;
-   if(claim(p.x+px(9),p.y+px(3.5),tw,12,'start'))plab+='<text class="cl" x="'+(p.x+px(9))+'" y="'+(p.y+px(3.5))+'" style="font-size:'+px(10.5)+'px;stroke-width:'+px(3)+'px;fill:'+dk(prefRegion(p.pref).d,.55)+'">'+p.city+'</text>'});
+   if(claim(p.x+px(12),p.y+px(3.5),tw,12,'start'))plab+='<text class="cl" x="'+(p.x+px(12))+'" y="'+(p.y+px(3.5))+'" style="font-size:'+px(10.5)+'px;stroke-width:'+px(3)+'px;fill:'+dk(prefRegion(p.pref).d,.55)+'">'+p.city+'</text>'});
 
   /* ----- libellés de préfecture ----- */
   var tl='';
