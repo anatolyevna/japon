@@ -586,6 +586,8 @@ input,select,textarea{font-size:16px!important}
 .jsv .mt .fjn ellipse{stroke:none}
 .jsv .mt .msm circle{stroke:#C9BDB1}
 
+.jsv .mt.mf{filter:none}
+
 .jsv .rd,.jsv .rdc{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .jsv .rdc{stroke:#FFFBF5;opacity:.7}
 .jsv .rd{stroke:#E2B57A}
@@ -2811,29 +2813,7 @@ function jgMap(o){
 
  function DECO(){
   function P(lat,lon){return jgXY(lon,lat)}
-  var d='<defs><pattern id="sgh" width="16" height="8" patternUnits="userSpaceOnUse"><g fill="none" stroke="#9DB9C9" stroke-width=".9"><circle cx="8" cy="8" r="7"/><circle cx="8" cy="8" r="4.6"/><circle cx="8" cy="8" r="2.2"/><circle cx="0" cy="0" r="7"/><circle cx="0" cy="0" r="4.6"/><circle cx="0" cy="0" r="2.2"/><circle cx="16" cy="0" r="7"/><circle cx="16" cy="0" r="4.6"/><circle cx="16" cy="0" r="2.2"/></g></pattern></defs>';
-  d+='<g class="dsea" pointer-events="none">';
-  d+='<rect x="-60" y="-60" width="640" height="720" fill="url(#sgh)" opacity=".27"/>';
-  /* soleil levant sur le Pacifique */
-  var sn=P(40.9,145.6),rr=[];
-  for(var i=0;i<16;i++){var a=i*Math.PI/8;rr.push('<path d="M'+(sn[0]+Math.cos(a)*31).toFixed(1)+' '+(sn[1]+Math.sin(a)*31).toFixed(1)+'L'+(sn[0]+Math.cos(a+.1)*52).toFixed(1)+' '+(sn[1]+Math.sin(a+.1)*52).toFixed(1)+'L'+(sn[0]+Math.cos(a-.1)*52).toFixed(1)+' '+(sn[1]+Math.sin(a-.1)*52).toFixed(1)+'Z"/>')}
-  d+='<g fill="#E8A9A0" opacity=".3">'+rr.join('')+'</g><circle cx="'+sn[0]+'" cy="'+sn[1]+'" r="26" fill="#E58C84" opacity=".34"/>';
-  /* rose des vents */
-  var c=P(31.2,138.2);
-  d+='<g transform="translate('+c[0].toFixed(1)+' '+c[1].toFixed(1)+')" opacity=".62"><circle r="21" fill="none" stroke="#8FB0C2" stroke-width="1"/><circle r="15" fill="none" stroke="#8FB0C2" stroke-width=".6" stroke-dasharray="1.5 2.5"/>'
-   +'<path d="M0 -21L4 0L0 21L-4 0Z" fill="#B7CEDA"/><path d="M-21 0L0 -4L21 0L0 4Z" fill="#CFDFE8"/><path d="M0 -21L4 0L0 0Z" fill="#7E9FB3"/><path d="M0 21L-4 0L0 0Z" fill="#7E9FB3"/><path d="M-21 0L0 4L0 0Z" fill="#8FB0C2"/><path d="M21 0L0 -4L0 0Z" fill="#8FB0C2"/>'
-   +'<text y="-25" text-anchor="middle" font-size="9" font-weight="700" fill="#6E94A8">N</text></g>';
-  /* jonque (voile) en mer du Japon */
-  var j=P(40.4,133.0);
-  d+='<g transform="translate('+j[0].toFixed(1)+' '+j[1].toFixed(1)+') scale(1.05)" opacity=".85"><path d="M-9 4L9 4L6 8L-6 8Z" fill="#B88B72"/><path d="M0 -10L0 3.5" stroke="#8C6A58" stroke-width="1"/><path d="M1 -9.5L8 2L1 2Z" fill="#FFFBF5" stroke="#C9B6A3" stroke-width=".6"/><path d="M-1 -7L-6.5 2L-1 2Z" fill="#F3E6D8" stroke="#C9B6A3" stroke-width=".6"/><path d="M-12 9.5Q-9 7.8-6 9.5T0 9.5T6 9.5T12 9.5" fill="none" stroke="#8FB0C2" stroke-width="1" stroke-linecap="round"/></g>';
-  /* baleine, Pacifique */
-  var w=P(32.4,144.4);
-  d+='<g transform="translate('+w[0].toFixed(1)+' '+w[1].toFixed(1)+') scale(.95)" opacity=".8"><path d="M-14 2C-14 -6-3 -8 6 -4C9 -3 11 -6 14 -9C14 -4 13 0 11 2C13 3 14 5 15 8C11 7 9 6 8 5C1 8-14 9-14 2Z" fill="#90ADC0"/><path d="M-9 4C-4 6 2 6 6 4" fill="none" stroke="#FFFBF5" stroke-width=".9" opacity=".7"/><circle cx="-8" cy="-1.5" r=".9" fill="#FFFBF5"/><path d="M-6 -6.5Q-6 -11-9 -12.5M-6 -6.5Q-6 -11-3 -12.5" fill="none" stroke="#B7CEDA" stroke-width="1.1" stroke-linecap="round"/></g>';
-  /* mouettes */
-  [[41.4,131.6,1],[40.6,130.7,.8],[41.9,132.4,.7],[35.6,147.0,.9],[34.4,146.3,.7]].forEach(function(g){var q=P(g[0],g[1]);d+='<path d="M'+(q[0]-5*g[2]).toFixed(1)+' '+q[1].toFixed(1)+'Q'+(q[0]-2.5*g[2]).toFixed(1)+' '+(q[1]-4*g[2]).toFixed(1)+' '+q[0].toFixed(1)+' '+q[1].toFixed(1)+'Q'+(q[0]+2.5*g[2]).toFixed(1)+' '+(q[1]-4*g[2]).toFixed(1)+' '+(q[0]+5*g[2]).toFixed(1)+' '+q[1].toFixed(1)+'" fill="none" stroke="#7D9DB0" stroke-width="1.1" stroke-linecap="round" opacity=".8"/>'});
-  /* nuages */
-  [[43.0,133.0,1],[37.2,147.4,1.1],[31.6,136.5,.9],[45.3,138.0,.8]].forEach(function(g){var q=P(g[0],g[1]);d+='<g transform="translate('+q[0].toFixed(1)+' '+q[1].toFixed(1)+') scale('+g[2]+')" fill="#FFFBF5" opacity=".78"><ellipse cx="0" cy="0" rx="12" ry="4"/><circle cx="-4" cy="-3.2" r="4.4"/><circle cx="3.4" cy="-4.2" r="5.4"/></g>'});
-  d+='</g>';
+  var d='';
   /* halo côtier : vagues concentriques autour de toutes les côtes */
   d+='<g class="dhalo" pointer-events="none" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="'+JGD.cs+'" stroke="#C5D8E2" stroke-width="15" opacity=".34" vector-effect="non-scaling-stroke"/><path d="'+JGD.cs+'" stroke="#B5CCD8" stroke-width="8.5" opacity=".4" vector-effect="non-scaling-stroke"/></g>';
   return d}
@@ -2908,7 +2888,7 @@ function jgMap(o){
   POI.forEach(function(l){if(z<(l[4]<=4?9:16))return;var p=jgXY(l[3],l[2]);if(!vis(p[0],p[1],mg))return;under+=glyph11(l[1],p[0],p[1],9/k)});
   /* montagnes : Fuji illustré, cônes volcaniques (fumée), sommets alpins enneigés, collines */
   function mtGlyph(kind,fj){
-   if(fj)return '<g class="fj"><path class="fjc" d="M-22 7Q-9 5.5-3.8 -13L3.8 -13Q9 5.5 22 7Z"/><path class="fjs" d="M3.8 -13Q9 5.5 22 7L9 7Q4.8 -2 2.4 -12.4Z"/><path class="fjw" d="M-3.8 -13Q0 -11.8 3.8 -13L7.2 -4.6L5 -6.4L3.3 -3.6L1.2 -6.2L-.5 -3.4L-2.4 -6L-4.2 -3.8L-5.4 -6L-7 -4.6Z"/><path class="fjws" d="M3.8 -13L7.2 -4.6L5 -6.4L3.3 -3.6L1.8 -5.6L2.4 -12.2Z"/><path class="fjk" d="M-3.4 -12.9Q0 -11.6 3.4 -12.9Q0 -14-3.4 -12.9Z"/><g class="fjn"><ellipse cx="-11.5" cy="4.6" rx="6.5" ry="1.5"/><ellipse cx="-7" cy="3.4" rx="3.4" ry="1.3"/><ellipse cx="10.5" cy="4.8" rx="6.5" ry="1.5"/></g></g>';
+   if(fj)return '<path class="m1" d="M-12.5 5.8Q-5 4-2.2 -8L2.2 -8Q5 4 12.5 5.8Z"/><path class="m2" d="M2.2 -8Q5 4 12.5 5.8L4 5.8Q2.2 -1 1 -7.5Z"/><path class="ms" d="M-2.2 -8L2.2 -8L4.2 -2.2L3 -3.4L1.8 -1.5L.4 -3.3L-1 -1.4L-2.5 -3.2L-3.4 -2.4L-4.2 -2.2Z"/><path class="mk" d="M-2.2 -8Q0 -7.2 2.2 -8Q0 -8.8-2.2 -8Z"/>';
    if(kind==='v'||kind==='s'){var sm=kind==='s'?'<g class="msm"><circle cx="1.6" cy="-8.6" r="2.3"/><circle cx="4.1" cy="-11.4" r="2.9"/><circle cx="1.6" cy="-15" r="3.3"/><circle cx="-1.8" cy="-18" r="2.5"/></g>':'';
     return sm+'<path class="m1" d="M-10 5.8L-2.4 -5.4Q0 -6.6 2.4 -5.4L10 5.8Z"/><path class="m2" d="M2.4 -5.4L10 5.8L2 5.8L.6 -2.4Z"/><path class="mk" d="M-2.4 -5.4Q0 -4.6 2.4 -5.4Q0 -6.6-2.4 -5.4Z"/>'}
    if(kind==='a'){return '<path class="m1 mb2" d="M2 5.8L6.3 -2.2Q7 -3.4 7.8 -2.2L12 5.8Z"/><path class="m2" d="M7.8 -2.2L12 5.8L8 5.8L7.2 -1.2Z"/><path class="m1" d="M-11 5.8L-5.6 -4.6L-3.6 -7.2L-1.6 -4.2L-.2 -5.4L4.6 5.8Z"/><path class="m2" d="M-3.6 -7.2L-1.6 -4.2L-.2 -5.4L4.6 5.8L-.8 5.8L-2.2 -1Z"/><path class="ms" d="M-3.6 -7.2L-5.6 -4.6L-4.7 -4.8L-3.9 -3.4L-3.1 -4.6L-2.3 -3.6L-1.6 -4.2L-.2 -5.4L-1 -4.1L-1.8 -2.7L-2.6 -4L-3.4 -2.4L-4.4 -4Z"/><path class="ms" d="M7.8 -2.2L6.3 -2.2L5.9 -.8L6.8 -1.5L7.6 -.3L8.3 -1.4L9 -.7L8.6 -2Z"/>'}
@@ -2922,7 +2902,7 @@ function jgMap(o){
   if(z<9)MR.forEach(function(l){if(z>=(z<2.4?99:5)&&false)return;var p=jgXY(l[1],l[0]);if(!vis(p[0],p[1],mg))return;if(z>=4.5)return;
    under+='<g class="mt mr" transform="translate('+p[0]+' '+p[1]+') scale('+(.52/k)+')">'+mtGlyph(l[2])+'</g>'});
   MT.forEach(function(l){if(z<(l[3]<=1?1:l[3]===2?2.4:l[3]===3?5:10))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
-   var fj=l[0]==='Mont Fuji',sc=(fj?1.5:l[3]<=1?1.08:l[3]===2?.95:.8)/k,kd=MK[l[0]]||'h';
+   var fj=l[0]==='Mont Fuji',sc=(fj?1.2:l[3]<=1?1.08:l[3]===2?.95:.8)/k,kd=MK[l[0]]||'h';
    under+='<g class="mt'+(fj?' mf':'')+'" transform="translate('+p[0]+' '+p[1]+') scale('+sc+')">'+mtGlyph(kd,fj)+'</g>'});
   h+=under;
 
@@ -3006,7 +2986,7 @@ function jgMap(o){
     if(claim(q.x+px(7),q.y-px(6),q.n.length*5.6+8,12,'start'))rl+='<text class="sn" x="'+(q.x+px(7))+'" y="'+(q.y-px(6))+'" style="font-size:'+px(10)+'px;stroke-width:'+px(3)+'px">'+q.n+'</text>'})})});
 
   if(z>=14){DIST.forEach(function(l){var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;if(claim(p[0],p[1],l[0].length*7.2+8,12,'middle'))rl+='<text class="dl" x="'+p[0]+'" y="'+p[1]+'" text-anchor="middle" style="font-size:'+px(9)+'px">'+l[0]+'</text>'})}
-  svg.classList.toggle('zin',z>=5);var _ds=svg.querySelector('.dsea');if(_ds)_ds.style.opacity=z<1.9?1:z<3.2?.4:z<6?.25:0;
+  svg.classList.toggle('zin',z>=5);
   h+=rl+tl+plab+cpin;
   dyn.innerHTML=h;
   /* encart : libellé non nécessaire (Okinawa supprimé) */
