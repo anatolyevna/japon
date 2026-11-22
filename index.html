@@ -609,6 +609,17 @@ input,select,textarea{font-size:16px!important}
 /* mer : dégradé doux nord → sud + vagues très pâles (modèle F + 4) */
 .jm{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2714%27%20height%3D%277%27%20viewBox%3D%270%200%2014%207%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%238FB0C4%27%20stroke-opacity%3D%270.16%27%20stroke-width%3D%270.7%27%3E%3Ccircle%20cx%3D%277%27%20cy%3D%277%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%277%27%20cy%3D%277%27%20r%3D%273.325%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%273.325%27/%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%270%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%270%27%20r%3D%273.325%27/%3E%3C/g%3E%3C/svg%3E") 0 0/14px 7px,linear-gradient(180deg,#EEF3F5 0%,#DCE8EE 55%,#C6DAE5 100%)}
 
+/* mode « montrer » : la phrase en grand, plein écran */
+.shwb{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0 0;padding:8px 16px;border-radius:999px;border:1.5px solid var(--d,#CEC3BB);background:transparent;color:inherit;font:inherit;font-size:.92rem;cursor:pointer}
+.shwb svg{flex:none}
+.shw{position:fixed;inset:0;z-index:9999;background:#FFFBF5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:calc(env(safe-area-inset-top,0px) + 56px) 20px calc(env(safe-area-inset-bottom,0px) + 28px);text-align:center;cursor:pointer;overflow:auto}
+.shw .jp{color:#3E2F2A;font-weight:500;line-height:1.4;max-width:100%;text-wrap:balance}
+.shw .jp span{display:inline-block;max-width:100%;word-break:break-all}
+.shw .sub{color:#8A7B74;font-size:1rem;line-height:1.45}
+.shw .sub p{margin:2px 0}
+.shw .sub .fr{color:#5A4A44;font-weight:500}
+.shw .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:16px;width:44px;height:44px;border-radius:50%;border:1.5px solid #E4D9D0;background:#FFF;color:#5A4A44;display:grid;place-items:center;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -2304,7 +2315,30 @@ function card(w){
  if(w.no)e.append(el('p','ro',w.no,'font-size:.88rem;margin-top:8px'));
  if(w.vs&&Object.keys(w.vs).length>1){var cm=el('details','cmp');cm.append(el('summary',null,'Comparer les niveaux de langue'));
   REGO.forEach(function(r){var v=w.vs[r];if(!v)return;var R=REGS[r],c=sty(el('div','cv'),R.col);c.append(el('b',null,R.n));var sp=el('span',null,v.k||v.h);sp.lang='ja';c.append(sp,el('small','ro',v.ro));cm.append(c)});e.append(cm)}
+ if(w.reg){var sb=el('button','shwb');sb.type='button';sb.innerHTML=ico('expand','currentColor',18)+'<span>Montrer</span>';sb.onclick=function(){showBig(w)};e.append(sb)}
  return e}
+function showBig(w){
+ var old=document.getElementById('shw');if(old)old.remove();
+ var jp=(w.k&&!w.rare)?w.k:w.h,o=el('div','shw');o.id='shw';o.setAttribute('role','dialog');o.setAttribute('aria-label','Phrase en grand');
+ var t=el('div','jp');t.lang='ja';
+ /* coupes aux limites de mots : après une particule suivant un nom (niveau 1), puis aux expressions figées (niveau 2) ; jamais au milieu de « お願いします » tant que ça tient */
+ function build(level){t.replaceChildren();var cuts={},isN=function(c){return/[一-鿿々ァ-ヶー0-9A-Za-z]/.test(c||'')},m;
+  for(var i=0;i<jp.length;i++){var c=jp[i],nx=jp[i+1];
+   if(c==='、'||c==='。'||('をはがにでのもへと'.indexOf(c)>=0&&isN(jp[i-1])&&nx&&!(c==='で'&&'すし'.indexOf(nx)>=0)&&!(c==='と'&&nx==='こ')))cuts[i]=1}
+  if(level>=2){var ra=/(どうぞ|どうも|ありがとう|よろしく|すみません|ございます|ございました|ください|いただけますか|ですか|ますか|でしょうか|ましたか|ました|ません|ですね|です|ます|から|まで|ても|ところ|ので|(?:ここ|そこ|これ|それ|あれ|どこ)(?:を|に|は|が|の|で(?![すし]))?|何(?:を|に|は|が|の|と)?)/g;
+   while((m=ra.exec(jp)))cuts[m.index+m[0].length-1]=1;
+   var rb=/(ございます|ございました|ください|お願い|いただ|申し訳|誠に)/g;while((m=rb.exec(jp)))if(m.index>0)cuts[m.index-1]=1}
+  var cur='';for(var j=0;j<jp.length;j++){cur+=jp[j];if(cuts[j]||j===jp.length-1){t.append(el('span',null,cur));cur=''}}}
+ var x=el('button','x');x.type='button';x.setAttribute('aria-label','Fermer');
+ x.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+ var sub=el('div','sub');if(w.k&&!w.rare&&w.h!==w.k){var k2=el('p',null,w.h);k2.lang='ja';sub.append(k2)}sub.append(el('p','ro',w.ro),el('p','fr',w.fr));
+ function close(){o.remove();document.removeEventListener('keydown',kd)}
+ function kd(e){if(e.key==='Escape')close()}
+ x.onclick=function(ev){ev.stopPropagation();close()};o.onclick=close;document.addEventListener('keydown',kd);
+ o.append(x,t,sub);document.body.append(o);
+ var vw=window.innerWidth,vh=window.innerHeight,sz;
+ function fit(min){for(sz=Math.min(vw*.2,150);sz>=min;sz-=3){t.style.fontSize=sz+'px';var cut=[].slice.call(t.children).some(function(p){return p.getBoundingClientRect().height>sz*1.8});if(!cut&&t.getBoundingClientRect().height<=vh*.5)return true}return false}
+ build(1);if(!fit(vw*.12)){build(2);if(!fit(vw*.12)){fit(vw*.09);t.style.fontSize=Math.max(sz,vw*.09)+'px'}}}
 function kcard(ch){var c=KJ.filter(function(x){return x[0]===ch})[0];if(!c)return el('div');var col=KGROUPS[GOF[ch]][2],e=sty(el('div','entry kfc'),col),f=el('button','fav');f.type='button';f.setAttribute('aria-label','Retirer de mes mots');f.innerHTML=ico('star','currentColor',24,null,null,'currentColor');f.onclick=function(ev){ev.stopPropagation();toggleKfav(ch);renderCarnet()};
  var big=el('span','kcb',ch);big.lang='ja';var t=el('div','kct');t.append(el('b',null,c[1]),el('small','ro',(c[2]?romOn(c[2]):'')+(c[2]&&c[3]?'  ·  ':'')+(c[3]?romKun(c[3]):'')));
  var row=el('button','kcr');row.type='button';row.append(big,t);row.onclick=function(){showKanji(c)};e.append(row,f);return e}
