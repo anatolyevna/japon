@@ -556,6 +556,15 @@ input,select,textarea{font-size:16px!important}
 .lgi.d i{width:9px;height:9px;border-radius:50%;transform:none;background:#B0524C}
 .lgi.h i{width:9px;height:9px;border-radius:50%;transform:none;border:1.8px solid #B0524C;background:#FFFBF5;box-sizing:border-box}
 
+.jsv .mt{pointer-events:none;opacity:1}
+.jsv .mt .mb{fill:#C9B6A3;stroke:#9A8575;stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.jsv .mt .mb2{fill:#DCCDBE;stroke:#B3A090}
+.jsv .mt .ms{fill:#FFFBF5;stroke:none}
+.jsv .pkg path.pt{fill:none;stroke:#8A7561;stroke-width:1.8;stroke-linecap:round}
+.jsv .pkg path.pc{fill:#A9C79A;stroke:#6E9461;stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.jsv .lkw{pointer-events:none}
+.jsv .lkw path{fill:none;stroke:#FFFBF5;stroke-width:1.5;stroke-linecap:round;opacity:.85}
+
 </style>
 </head>
 <body>
@@ -2807,19 +2816,23 @@ function jgMap(o){
   /* ----- relief, lacs, parcs, sites : sous les itinéraires ----- */
   var under='';
   LK.forEach(function(l){if(z<(l[6]<=1?1:l[6]===2?2.4:l[6]===3?5:9))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;var uk=JG.u/(111.32*Math.cos(l[1]*Math.PI/180)),ax=Math.max(l[3]*uk,2.4/k),ay=Math.max(l[4]*uk,2.4/k);
-   under+='<ellipse class="lk" cx="'+p[0]+'" cy="'+p[1]+'" rx="'+ax+'" ry="'+ay+'" transform="rotate('+l[5]+' '+p[0]+' '+p[1]+')"/>'});
+   under+='<ellipse class="lk" cx="'+p[0]+'" cy="'+p[1]+'" rx="'+ax+'" ry="'+ay+'" transform="rotate('+l[5]+' '+p[0]+' '+p[1]+')"/>';
+   if(Math.min(ax,ay)*k>=2.2)under+='<g class="lkw" transform="translate('+p[0]+' '+p[1]+') scale('+(Math.min(1,Math.min(ax,ay)*k/7)/k)+')"><path d="M-5.5 -1.8Q-3.7 -3.6-1.8 -1.8T1.8 -1.8T5.5 -1.8"/><path d="M-5.5 1.8Q-3.7 0-1.8 1.8T1.8 1.8T5.5 1.8"/></g>'});
   if(z>=7){RV.forEach(function(r){var pl=r.map(function(c){var q=jgXY(c[1],c[0]);return q[0].toFixed(2)+','+q[1].toFixed(2)}).join(' ');under+='<polyline class="rv" points="'+pl+'" stroke-width="'+px(z>=30?4.2:2.6)+'"/>'})}
   if(z>=9){PKE.forEach(function(l){var p=jgXY(l[1],l[0]);if(!vis(p[0],p[1],mg))return;var uk=JG.u/(111.32*Math.cos(l[0]*Math.PI/180));under+='<ellipse class="pke" cx="'+p[0]+'" cy="'+p[1]+'" rx="'+Math.max(l[2]*uk,2/k)+'" ry="'+Math.max(l[3]*uk,2/k)+'"/>'})}
   /* faux réseau de métro (contexte) à fort zoom */
   if(z>=10){netLines().forEach(function(l){if(l.p.length<2)return;under+='<polyline class="nl" points="'+l.p.map(function(q){return q[0].toFixed(2)+','+q[1].toFixed(2)}).join(' ')+'" stroke="'+l.c+'" stroke-width="'+px(1.5)+'"/>'})}
   PK.forEach(function(l){if(z<(l[3]<=2?2.4:l[3]===3?5:l[3]===4?9:16))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
-   if(l[3]>=4)
-   under+='<g transform="translate('+p[0]+' '+p[1]+') scale('+(1/k)+')" class="pkg"><path d="M0 -7C-5 -7-6 -1 0 3 6 -1 5 -7 0 -7z" /><path d="M0 3V-4" /></g>'});
+   var ps=(l[3]<=3?1.15:1)/k;
+   under+='<g transform="translate('+p[0]+' '+p[1]+') scale('+ps+')" class="pkg"><path class="pt" d="M0 5.5V0.5"/><path class="pc" d="M-4.6 1.4C-6.6 -0.6-5.4 -3.4-3.2 -3.4C-3.2 -5.8-0.6 -7-0.0 -7C1.4 -7 3.2 -5.8 3.4 -3.4C5.6 -3.4 6.8 -0.6 4.6 1.4Z"/></g>'});
   /* sites */
   POI.forEach(function(l){if(z<(l[4]<=4?9:16))return;var p=jgXY(l[3],l[2]);if(!vis(p[0],p[1],mg))return;under+=glyph11(l[1],p[0],p[1],9/k)});
   /* montagnes */
   MT.forEach(function(l){if(z<(l[3]<=1?1:l[3]===2?2.4:l[3]===3?5:10))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
-   under+='<path class="mt" transform="translate('+p[0]+' '+p[1]+') scale('+(1/k)+')" d="M0 -7L6.5 3H-6.5Z"/>'});
+   var fj=l[0]==='Mont Fuji',sc=(fj?1.25:l[3]<=1?1.1:l[3]===2?1:.85)/k;
+   under+='<g class="mt" transform="translate('+p[0]+' '+p[1]+') scale('+sc+')">'+(fj
+    ?'<path class="mb" d="M-9.5 5.5L-2.6 -4.6Q0 -6.6 2.6 -4.6L9.5 5.5Z"/><path class="ms" d="M-4.9 0.2L-2.6 -4.6Q0 -6.6 2.6 -4.6L4.9 0.2L3.1 -1.1L1.6 0.7L0 -1.2L-1.6 0.7L-3.1 -1.1Z"/>'
+    :'<path class="mb mb2" d="M0.5 5.5L4.6 -2.6Q5.4 -3.9 6.2 -2.6L10.2 5.5Z"/><path class="mb" d="M-9.5 5.5L-3.2 -5.2Q-2.4 -6.6 -1.6 -5.2L4.6 5.5Z"/><path class="ms" d="M-5.9 -1L-3.2 -5.2Q-2.4 -6.6 -1.6 -5.2L0.9 -1L-0.5 -1.9L-1.8 -0.4L-3.1 -1.9L-4.4 -0.4Z"/>')+'</g>'});
   h+=under;
 
   /* ----- itinéraires ----- */
