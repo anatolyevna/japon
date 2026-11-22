@@ -549,6 +549,10 @@ input,select,textarea{font-size:16px!important}
 .mm circle:not(.lhit){pointer-events:none}
 .jsv .trl line{pointer-events:none!important}
 
+.note:empty,.jnote:empty{display:none}
+.tbox{display:flex;align-items:baseline;gap:8px;width:fit-content;margin:8px 0 12px auto;padding:4px 12px;border:1px solid var(--line,#E9DFD6);border-radius:999px;font-size:.78rem;color:var(--muted)}
+.tbox b{color:var(--ink);font-weight:600;font-size:.86rem}
+
 </style>
 </head>
 <body>
@@ -2943,10 +2947,6 @@ function mapFrame(){
  var lg=el('div','jleg');
  [['d','Destination'],['h','Envie'],['n','Trajet sur une ligne'],['s','Trajet à vol d’oiseau']].forEach(function(x){var i=el('span','lgi '+x[0]);i.append(el('i'),document.createTextNode(x[1]));lg.append(i)});d.append(lg);
  var n=[];
- if(ap)n.push(ap+(ap>1?' villes placées au centre de leur préfecture (repère plus clair)':' ville placée au centre de sa préfecture (repère plus clair)'));
- if(mt.ok.some(function(e){return e.net}))n.push('Circuits : tracés approximatifs entre gares de la ligne');
- if(mt.ok.some(function(e){return!e.net}))n.push('Sans ligne connue : ligne droite entre villes');
- if(mt.miss)n.push(mt.miss+(mt.miss>1?' trajets non placés':' trajet non placé'));
  if(n.length)d.append(el('p','jnote',n.join('\n')));return d}
 /* Destinations : carte réelle de la région */
 function regionMap(r,focus){
@@ -3021,7 +3021,7 @@ function calcCard(net,i,l){
   var sig=s1.value+'|'+s2.value,done=EADD[key]===sig,add=el('button','mini estadd'+(done?' done':''),done?'Ajouté à mes trajets ✓':'+ Ajouter à mes trajets');add.type='button';add.disabled=done;
   add.setAttribute('aria-label','Ajouter le trajet '+s1.value+' → '+s2.value+' à mes trajets');
   add.onclick=function(){
-   var note='Estimation : ≈ '+fmtMin(r.min)+(r.pr?' · ≈ '+r.pr.toLocaleString('fr-FR')+' ¥':'');
+   var note='';
    trips.push({id:++uid,m:TMI[net],a:s1.value,b:s2.value,date:'',dep:'',arr:'',price:r.pr||0,note:note});
    EADD[key]=sig;refresh()};
   act.append(add);
@@ -3083,7 +3083,6 @@ function geoSVG(net,sel){
  hubs.forEach(function(n){place(n,'b')});
  if(sel==null){var others={};data.forEach(function(l){l.s.forEach(function(n){if(SP[n]&&hubs.indexOf(n)<0)others[n]=1})});Object.keys(others).forEach(function(n){var p=SP[n];s+='<circle class="lhit" data-s="'+n+'" cx="'+p[0]+'" cy="'+p[1]+'" r="'+(9*k).toFixed(1)+'" fill="transparent"/><circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(2.5*k).toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+(1.3*k).toFixed(1)+'"/>'});Object.keys(others).forEach(function(n){place(n,'')})}
  var zbox=[];Z.forEach(function(z){var zy=z[2],zw=z[0].length*7.6*k*.62,zh=7.6*k*1.3,bx=z[1]-zw/2,by=zy-zh;var dot=nm.some(function(n){var p=SP[n];return p&&p[0]>bx-8*k&&p[0]<bx+zw+8*k&&p[1]>by-6*k&&p[1]<by+zh+6*k});if(bx>x0+4&&bx+zw<x1-4&&zy>y0&&zy<y1&&!dot&&!boxHit(boxes,bx-4*k,by-3*k,zw+8*k,zh+6*k)){zbox.push(1);s+=T(z[1],zy,'middle',z[0],7.6*k,'zn')}});
- if(net==='shink'&&sel==null){var h=SP['Hakata'];s+=T(h[0]+8*k,h[1]+20*k,'start','vers Kagoshima (non détaillé)',7.8*k,'gl m')}
  s+=geoParkLabels(boxes,x0,y0,W,H,k);
  return s+'</svg>'}
 function lineOfStation(net,name){var d=NETS[net].d,n=norm(name);
@@ -3112,6 +3111,36 @@ decoratePlan=function(){_dp18();var b=$('#pview'),nav=b&&b.querySelector('.pnav'
  var bt=el('button','todaybtn'+(cur?' cur':''),'Aujourd’hui');bt.type='button';bt.disabled=cur;
  bt.setAttribute('aria-label','Revenir à aujourd’hui');bt.onclick=function(){S.d=new Date();S.d.setHours(0,0,0,0);renderPlan()};
  var row=el('div','todayrow');row.append(bt);nav.after(row)};
+
+
+/* ---------- v19 : plus aucun texte ajouté de ma part ---------- */
+(function(){
+ verNote=function(){return ''};
+ var _mw=mapWrap;mapWrap=function(svg){return _mw(svg,'')};
+ try{SHINK.forEach(function(l){if(l.e)l.e=l.e.replace(/\s*\(prolongement[^)]*\)/,'')})}catch(e){}
+ ICONS.pin='M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 12h.01M12 12h.01M16 12h.01';
+ /* corrections de contenu (relecture) */
+ try{KJ.forEach(function(c){if(c[0]==='営'||c[0]==='業')c[6]='activité commerciale, ouvert';if(c[0]==='鹿')c[6]='cerf'})}catch(e){}
+ try{var OLD='Je parle seulement un peu japonais',NEW='Je parle seulement un peu le japonais';LEX.forEach(function(e){if(e.fr===OLD)e.fr=NEW});Object.keys(PH).forEach(function(t){PH[t].forEach(function(r){if(r[0]===OLD)r[0]=NEW})})}catch(e){}
+ /* total : petit encart à part */
+ totalCard=function(label,total){var c=el('div','tbox');c.append(el('span','tl','Total'),el('b',null,yenS(total)),el('span','te','≈ '+eurS(total)));return c};
+ var LAB=/\s*\((vide = [^)]*|si connue|seulement si le mot en a|romaji, français ou japonais|hiragana ou katakana)\)/;
+ function userNotes(){var s={};[places,trips,wishes,words].forEach(function(a){(a||[]).forEach(function(x){if(x&&x.note)s[String(x.note).trim()]=1})});return s}
+ function phOf(i){if(i.closest&&i.closest('.gate'))return;var p=i.placeholder;if(!p)return;var lb=i.closest&&i.closest('label'),n=(/commence|ville ou gare/i.test(p)||(lb&&/^Ville ou/.test(lb.firstChild&&lb.firstChild.nodeValue||'')))?'Commence à écrire…':(i.type==='search'?'Rechercher':'');if(p!==n)i.placeholder=n}
+ function clean(root){
+  if(!root||root.nodeType!==1)return;
+  var list=[root].concat([].slice.call(root.querySelectorAll('.note,.jnote,p.sub,input[placeholder],textarea[placeholder]')));
+  var un=null;
+  list.forEach(function(n){
+   if(n.matches&&n.matches('.note,.jnote')){var t=n.textContent.trim();if(t){un=un||userNotes();if(!un[t])n.remove()}}
+   else if(n.matches&&n.matches('p.sub')){if(/^Pas encore organisées/.test(n.textContent))n.remove()}
+   else if(n.placeholder!=null)phOf(n)});
+  if(root.querySelector&&root.querySelector('label')||root.tagName==='LABEL'){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),x;while(x=w.nextNode()){if(LAB.test(x.nodeValue))x.nodeValue=x.nodeValue.replace(LAB,'')}}}
+ new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(clean)})}).observe(document.body,{childList:true,subtree:true});
+ clean(document.body);
+ /* anciennes notes d'estimation que j'avais ajoutées aux trajets */
+ setInterval(function(){var ch=false;trips.forEach(function(t){if(t&&/^Estimation : ≈/.test(t.note||'')){t.note='';ch=true}});if(ch)refresh()},1500);
+})();
 
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
