@@ -2093,7 +2093,7 @@ applyDist('b');
 
 /* ---------- Données ajoutées : durées cumulées (min) et prix approximatifs (¥) ---------- */
 var TX={
- 'Kamakura':{tm:{'Tokyo':0,'Yokohama':27,'Kamakura':57},pr:940},
+ 'Kamakura':{tm:{'Tokyo':0,'Yokohama':27,'Kamakura':57},pr:945},
  'Hakone':{tm:{'Shinjuku':0,'Odawara':70,'Hakone-Yumoto':85},pr:2470},
  'Nikko':{tm:{'Tokyo':0,'Utsunomiya':50,'Nikko':95},pr:5900},
  'Narita':{tm:{'Ueno':0,'Narita':41},pr:2580},
@@ -2104,12 +2104,12 @@ var TX={
  'Nara':{tm:{'Kyoto':0,'Nara':45},pr:720},
  'Arashiyama':{tm:{'Kyoto':0,'Arashiyama':15},pr:240},
  'Haruka (Kansai)':{tm:{'Kyoto':0,'Kansai Airport':75},pr:3590},
- 'Koyasan':{tm:{'Osaka':0,'Koyasan':120},pr:2300},
- 'Miyajima':{tm:{'Hiroshima':0,'Miyajima':35},pr:600},
+ 'Koyasan':{tm:{'Osaka':0,'Koyasan':120},pr:1430},
+ 'Miyajima':{tm:{'Hiroshima':0,'Miyajima':35},pr:620},
  'Takamatsu':{tm:{'Okayama':0,'Takamatsu':55},pr:1700},
  'Yakumo':{tm:{'Okayama':0,'Izumo-shi':190}},
  'Matsushima':{tm:{'Sendai':0,'Matsushima':25},pr:420},
- 'Hakodate–Sapporo':{tm:{'Hakodate':0,'Sapporo':220},pr:9000},
+ 'Hakodate–Sapporo':{tm:{'Hakodate':0,'Sapporo':230},pr:9770},
  'Sapporo–Asahikawa':{tm:{'Sapporo':0,'Asahikawa':85},pr:5440},
  'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':32},pr:750},
  'New Chitose':{tm:{'Sapporo':0,'New Chitose Airport':37},pr:1150}};
@@ -2125,7 +2125,7 @@ var BX={
  'Tokyo–Sendai':{tm:{'Tokyo':0,'Sendai':350},pr:4500},
  'Narita':{tm:{'Tokyo':0,'Narita':75},pr:1300},
  'Haneda':{tm:{'Shinjuku':0,'Haneda Airport':50},pr:1400},
- 'Sapporo–Hakodate':{tm:{'Sapporo':0,'Hakodate':340},pr:5000},
+ 'Sapporo–Hakodate':{tm:{'Sapporo':0,'Hakodate':330},pr:5000},
  'Sapporo–Asahikawa':{tm:{'Sapporo':0,'Asahikawa':120},pr:2300},
  'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':65},pr:700}};
 TRAIN.forEach(function(l){var x=TX[l.n];if(x){l.tm=x.tm;if(x.pr)l.pr=x.pr}});
