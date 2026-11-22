@@ -605,7 +605,9 @@ input,select,textarea{font-size:16px!important}
 .jsv .rc2.ra{fill:#44718F}
 
 
-.wv{fill:none;stroke:#8FB0C4;opacity:.42;stroke-linecap:round;pointer-events:none}
+
+/* mer : dégradé doux nord → sud + vagues très pâles (modèle F + 4) */
+.jm{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2714%27%20height%3D%277%27%20viewBox%3D%270%200%2014%207%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%238FB0C4%27%20stroke-opacity%3D%270.16%27%20stroke-width%3D%270.7%27%3E%3Ccircle%20cx%3D%277%27%20cy%3D%277%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%277%27%20cy%3D%277%27%20r%3D%273.325%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%273.325%27/%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%270%27%20r%3D%276.125%27/%3E%3Ccircle%20cx%3D%2714%27%20cy%3D%270%27%20r%3D%273.325%27/%3E%3C/g%3E%3C/svg%3E") 0 0/14px 7px,linear-gradient(180deg,#EEF3F5 0%,#DCE8EE 55%,#C6DAE5 100%)}
 
 </style>
 </head>
@@ -3100,15 +3102,6 @@ function DECO(){
   /* aucun contour autour des côtes */
   return d}
 
-var LMASK=null;
-function landMask(){if(LMASK!==null)return LMASK;LMASK=false;
- try{var cw=520,ch=Math.round(cw*(H+2*PAD)/(W+2*PAD)),c=document.createElement('canvas');c.width=cw;c.height=ch;var x=c.getContext('2d'),sc=cw/NW;
-  x.setTransform(sc,0,0,sc,PAD*sc,PAD*sc);x.fillStyle='#000';x.strokeStyle='#000';x.lineJoin='round';x.lineWidth=NW*0.04;
-  Object.keys(JGD.pd).forEach(function(p){var q=new Path2D(JGD.pd[p]);x.fill(q,'evenodd');x.stroke(q)});
-  LMASK={w:cw,h:ch,sc:sc,d:x.getImageData(0,0,cw,ch).data}}catch(e){LMASK=false}
- return LMASK}
-function isSea(wx,wy){var m=landMask();if(!m)return false;var a=Math.floor((wx+PAD)*m.sc),b=Math.floor((wy+PAD)*m.sc);if(a<0||b<0||a>=m.w||b>=m.h)return true;return m.d[(b*m.w+a)*4+3]<20}
-function hh(i,j,s){var n=Math.sin(i*127.1+j*311.7+s*74.7)*43758.5453;return n-Math.floor(n)}
  var s='<svg class="jsv" viewBox="'+vb.x+' '+vb.y+' '+vb.w+' '+vb.h+'" role="group" aria-label="'+(reg?'Préfectures de la région '+reg.n:'Carte du Japon')+'">'+DECO();
  Object.keys(JGD.pd).forEach(function(p){var rg=prefRegion(p),dim=reg&&rg!==reg;
   s+='<path class="pf'+(dim?' dim':'')+'" data-p="'+p+'" data-r="'+rg.n+'" d="'+JGD.pd[p]+'" style="--c:'+rg.d+'" fill="'+rg.d+'" fill-rule="evenodd"'+(has[p]?'':' fill-opacity=".82"')+(dim?'':' tabindex="0" role="button" aria-label="'+p+(reg?'':', région '+rg.n)+'"')+'/>'});
@@ -3280,15 +3273,6 @@ function hh(i,j,s){var n=Math.sin(i*127.1+j*311.7+s*74.7)*43758.5453;return n-Ma
   if(z>=14){DIST.forEach(function(l){var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;if(claim(p[0],p[1],l[0].length*7.2+8,12,'middle'))rl+='<text class="dl" x="'+p[0]+'" y="'+p[1]+'" text-anchor="middle" style="font-size:'+px(9)+'px">'+l[0]+'</text>'})}
   svg.classList.toggle('zin',z>=5);
   h+=rl+tl+plab+cpin;
-  /* vaguelettes : rares, pâles, seulement en pleine mer (jamais sur la terre, les noms ou près des côtes) */
-  var wv='';
-  if(!o.mini&&z<=6.5&&landMask()){var sp=Math.pow(2,Math.round(Math.log(52/k)/Math.LN2)),r0=Math.floor((vb.y-sp)/sp),r1=Math.ceil((vb.y+vb.h+sp)/sp),c0=Math.floor((vb.x-sp)/sp),c1=Math.ceil((vb.x+vb.w+sp)/sp),ww=px(13);
-   for(var rr=r0;rr<=r1;rr++)for(var cc=c0;cc<=c1;cc++){if(hh(cc,rr,1)<.42)continue;
-    var wx=(cc+(rr&1?.5:0)+(hh(cc,rr,2)-.5)*.5)*sp,wy=(rr+(hh(cc,rr,3)-.5)*.5)*sp;
-    if(!vis(wx,wy,0))continue;if(!isSea(wx,wy))continue;
-    if(!free([wx-ww/2,wy-px(8),wx+ww/2,wy+px(8)]))continue;
-    wv+='<path class="wv" d="M-6.5 0Q-3.25 -3.6 0 0T6.5 0" transform="translate('+wx.toFixed(2)+' '+wy.toFixed(2)+') scale('+(1/k)+')" stroke-width="1.15"/>'}}
-  h=wv+h;
   dyn.innerHTML=h;
   /* encart : libellé non nécessaire (Okinawa supprimé) */
  }
