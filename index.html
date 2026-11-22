@@ -411,7 +411,7 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 
 /* v13 : carte du Japon */
 #carte .lead{display:none!important}
-.jm{position:relative;margin-top:16px;border-radius:26px;overflow:hidden;border:1px solid var(--line);background:color-mix(in srgb,var(--t4) 24%,var(--card))}
+.jm{position:relative;margin-top:16px;border-radius:26px;overflow:hidden;border:1px solid var(--line);--sea:color-mix(in srgb,var(--t4) 24%,var(--card));background:var(--sea)}
 .jm.reg{margin-top:12px}
 .jsv{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
 .jsv .pf{cursor:pointer;outline:none;transition:filter .12s}
@@ -604,6 +604,8 @@ input,select,textarea{font-size:16px!important}
 .jsv .rc2.ro{fill:#A8573B}
 .jsv .rc2.ra{fill:#44718F}
 
+.dring{stroke:var(--sea)}
+
 </style>
 </head>
 <body>
@@ -646,7 +648,7 @@ var REG=[
 {n:'Kyushu',d:'#CEC3BB',l:['Fukuoka','Saga','Nagasaki','Kumamoto','Oita','Miyazaki','Kagoshima','Okinawa']}];
 var ICONS={temple:'M3 6h18M5 9.5h14M7 9.5V20M17 9.5V20M12 6v3.5',museum:'M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18',nature:'M3 19l6-10 4 6 3-4 5 8z',onsen:'M8 9c0-2 2-2 2-4M13 9c0-2 2-2 2-4M3 13h18v1.5a5.5 5.5 0 0 1-5.5 5.5h-7A5.5 5.5 0 0 1 3 14.5z',hotel:'M3 19V8M3 15h18v4M21 15v-3a3 3 0 0 0-3-3h-7v6',food:'M4 12h16a8 8 0 0 1-16 0zM9 4l1 5M15 4l-1 5',cafe:'M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h2a2 2 0 0 1 0 4h-2M9 4v2M12 4v2',shop:'M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0',village:'M3 20l5-9 5 9M11 20l5-6 5 6',pin:'M12 21s6-5.5 6-10a6 6 0 0 0-12 0c0 4.5 6 10 6 10zM12 11h.01',train:'M7 3h10a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V5a2 2 0 0 1 2-2zM5 11h14M8 21l2-4M16 21l-2-4',shin:'M5 17c0-8 4-13 14-13v7c0 3-2 6-6 6zM8 21l2-4M15 21l-2-4',metro:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 16V8l4 5 4-5v8',bus:'M5 4h14a1 1 0 0 1 1 1v11H4V5a1 1 0 0 1 1-1zM4 11h16M7 20v-4M17 20v-4',car:'M5 16l1.5-5.5A2 2 0 0 1 8.4 9h7.2a2 2 0 0 1 1.9 1.5L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5',walk:'M13 4.5h.01M10 21l2-6 3 2v4M12 15l-1-5 4 1 2 3M10 11l-3 2',plane:'M3 11l18-8-6 18-4-7zM11 14L21 3',cal:'M3 6h18v14H3zM3 10h18M8 3v4M16 3v4',star:'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z',search:'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4',smile:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8.5 14a4.2 4.2 0 0 0 7 0M9 9.5v.5M15 9.5v.5',heart:'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z',compass:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z',chat:'M4 5h16v11H10l-4 4v-4H4z',alert:'M12 4l9 16H3zM12 10v4M12 17v.5',health:'M9 4h6v5h5v6h-5v5H9v-5H4V9h5z',camera:'M4 8h3l1.5-2h7L17 8h3v11H4zM12 11a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z',check:'M5 12.5l4.5 4.5L19 7.5',crown:'M4 18h16M4 8l4.5 4L12 5l3.5 7L20 8l-1.5 10h-13z'};
 function ico(k,c,s,x,y,f){return '<svg'+(x!=null?' x="'+x+'" y="'+y+'"':'')+' width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="'+(f||'none')+'" stroke="'+c+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+ICONS[k]+'"/></svg>'}
-var TYPES=[['Temple ou sanctuaire','#C4A8C9','temple'],['Musée ou monument','#9FB0D6','museum'],['Nature et paysage','#B4CA9C','nature'],['Onsen','#EEB87D','onsen'],['Hébergement','#A4BED3','hotel'],['Restaurant','#E8A094','food'],['Café','#8EC6BD','cafe'],['Shopping','#EDA5B0','shop'],['Village traditionnel','#D8B59A','village'],['Autre','#CEC3BB','pin']];
+var TYPES=[['Temple ou sanctuaire','#C4A8C9','temple'],['Musée ou monument','#6F86C9','museum'],['Nature et paysage','#B4CA9C','nature'],['Onsen','#EEB87D','onsen'],['Hébergement','#A4BED3','hotel'],['Restaurant','#E8A094','food'],['Café','#8EC6BD','cafe'],['Shopping','#EDA5B0','shop'],['Village traditionnel','#A9805F','village'],['Aéroport','#5B9AA8','plane'],['Autre','#CEC3BB','pin']];
 var MODES=[['Train','#A4BED3','train'],['Shinkansen','#E8A094','shin'],['Métro','#EEB87D','metro'],['Bus et autocar','#B4CA9C','bus'],['Voiture','#C4A8C9','car'],['Marche à pied','#EDA5B0','walk'],['Avion','#8EC6BD','plane']];
 var CITIES=[['Sapporo','Hokkaido'],['Hakodate','Hokkaido'],['Otaru','Hokkaido'],['Asahikawa','Hokkaido'],['Sendai','Miyagi'],['Matsushima','Miyagi'],['Nikko','Tochigi'],['Kamakura','Kanagawa'],['Yokohama','Kanagawa'],['Hakone','Kanagawa'],['Kanazawa','Ishikawa'],['Takayama','Gifu'],['Shirakawa-go','Gifu'],['Nagoya','Aichi'],['Matsumoto','Nagano'],['Kyoto','Kyoto'],['Osaka','Osaka'],['Kobe','Hyogo'],['Nara','Nara'],['Himeji','Hyogo'],['Koyasan','Wakayama'],['Hiroshima','Hiroshima'],['Miyajima','Hiroshima'],['Okayama','Okayama'],['Kurashiki','Okayama'],['Matsue','Shimane'],['Takamatsu','Kagawa'],['Naoshima','Kagawa'],['Matsuyama','Ehime'],['Kochi','Kochi'],['Tokyo','Tokyo'],['Shinjuku','Tokyo'],['Shibuya','Tokyo'],['Asakusa','Tokyo'],['Akihabara','Tokyo'],['Kawaguchiko','Yamanashi'],['Fukuoka','Fukuoka'],['Nagasaki','Nagasaki'],['Kumamoto','Kumamoto'],['Kagoshima','Kagoshima'],['Naha','Okinawa']];
 var METRO=[
@@ -713,7 +715,7 @@ function fold(s){return hira(norm(s))}
 function sty(e,d){e.style.setProperty('--d',d);return e}
 function dk(c,t){t=t==null?.62:t;var a=[1,3,5].map(function(i){return parseInt(c.substr(i,2),16)}),b=[0x4B,0x3D,0x3A];return '#'+a.map(function(v,i){return('0'+Math.round(v*t+b[i]*(1-t)).toString(16)).slice(-2)}).join('')}
 function money(n){return n?Number(n).toLocaleString('fr-FR')+' ¥':''}
-function typeInfo(l){for(var i=0;i<TYPES.length;i++)if(TYPES[i][0]===l)return TYPES[i];return TYPES[9]}
+function typeInfo(l){for(var i=0;i<TYPES.length;i++)if(TYPES[i][0]===l)return TYPES[i];return TYPES[TYPES.length-1]}
 function prefRegion(p){for(var i=0;i<REG.length;i++)if(REG[i].l.indexOf(p)>=0)return REG[i];return REG[0]}
 function cityPref(c){var n=norm(c);for(var i=0;i<CITIES.length;i++)if(norm(CITIES[i][0])===n)return CITIES[i][1];if(PREFS.some(function(p){return norm(p)===n}))return PREFS.filter(function(p){return norm(p)===n})[0];return ''}
 function canon(c){var n=norm(c),i;for(i=0;i<CITIES.length;i++)if(norm(CITIES[i][0])===n)return CITIES[i][0];for(i=0;i<places.length;i++)if(norm(places[i].city)===n)return places[i].city;return c}
@@ -1054,7 +1056,7 @@ function renderCarnet(){
   s.addEventListener('input',run);b.append(s,out);run();
  }else if(cv==='phrases'){
   if(!PT){b.append(el('p','lead','Choisis un thème pour afficher ses phrases.'));var l=el('div','list');THEMES.forEach(function(t){l.append(rowBtn(thc(t),t,'',P[t].length+' phrases',function(){PT=t;renderCarnet();window.scrollTo(0,0)}))});b.append(l)}
-  else{b.append(backBtn('Thèmes',function(){PT=null;renderCarnet()}),grp(thc(PT),PT,'h2',6));P[PT].forEach(function(x){b.append(card({k:x[0],h:x[1],ro:x[2],fr:x[3],th:PT,rare:x[4]||''}))})}
+  else{b.append(grp(thc(PT),PT,'h2',6));P[PT].forEach(function(x){b.append(card({k:x[0],h:x[1],ro:x[2],fr:x[3],th:PT,rare:x[4]||''}))})}
  }else if(cv==='vocab'){
   b.append(el('p','lead','Les mots que tu enregistres, classés par thème et retrouvables dans le dictionnaire.'));
   if(!words.length)b.append(emptyBox('Ton vocabulaire est vide.\nAppuie sur + pour ajouter un mot, ou sur « Ajouter à mon vocabulaire » depuis une fiche.'));
@@ -1066,7 +1068,7 @@ function renderCarnet(){
   if(!fl.length)b.append(emptyBox('Aucun favori pour l’instant.\nAppuie sur l’étoile d’une fiche pour la retrouver ici.'));else fl.forEach(function(w){b.append(w.kj?kcard(w.kj):card(w))});
  }
 }
-$('#cseg').addEventListener('click',function(e){var t=e.target.closest('button');if(t){cv=t.dataset.v;renderCarnet()}});
+$('#cseg').addEventListener('click',function(e){var t=e.target.closest('button');if(t){if(t.dataset.v==='phrases'&&cv==='phrases')PT=null;cv=t.dataset.v;renderCarnet();if(t.dataset.v==='phrases')window.scrollTo(0,0)}});
 
 
 /* =====================================================================
@@ -1074,7 +1076,7 @@ $('#cseg').addEventListener('click',function(e){var t=e.target.closest('button')
    semainier vertical. Les fonctions ci-dessous remplacent les anciennes.
    ===================================================================== */
 DV={t:'regions'};
-var KWP={'Temple ou sanctuaire':'Temple','Musée ou monument':'Musée','Nature et paysage':'Nature','Onsen':'Onsen','Hébergement':'Hôtel','Restaurant':'Resto','Café':'Café','Shopping':'Shop','Village traditionnel':'Village','Autre':'Autre'};
+var KWP={'Temple ou sanctuaire':'Temple','Musée ou monument':'Musée','Nature et paysage':'Nature','Onsen':'Onsen','Hébergement':'Hôtel','Restaurant':'Resto','Café':'Café','Shopping':'Shop','Village traditionnel':'Village','Aéroport':'Aéroport','Autre':'Autre'};
 var KWM={'Train':'Train','Shinkansen':'Shink.','Métro':'Métro','Bus et autocar':'Bus','Voiture':'Voiture','Marche à pied':'Marche','Avion':'Avion'};
 
 /* ---------- Phrases par niveau de langue : [français, familier, poli, soutenu] ---------- */
@@ -1099,14 +1101,12 @@ var PH={
  ['Oui','|うん|un','|はい|hai',''],
  ['Non','|ううん|uun','|いいえ|iie','']],
 'Restaurants':[
- ['Nous sommes deux','','二人です|ふたりです|futari desu',''],
  ['Je prends ceci','|これにする|kore ni suru','|これをください|kore o kudasai','こちらをお願いいたします|こちらをおねがいいたします|kochira o onegai itashimasu'],
  ['De l’eau, s’il vous plaît','水ちょうだい|みずちょうだい|mizu chōdai','水をください|みずをください|mizu o kudasai','お水をお願いいたします|おみずをおねがいいたします|omizu o onegai itashimasu'],
  ['C’est délicieux','|おいしい|oishii','|おいしいです|oishii desu','|とてもおいしゅうございます|totemo oishū gozaimasu'],
  ['L’addition, s’il vous plaît','お会計お願い|おかいけいおねがい|okaikei onegai','お会計をお願いします|おかいけいをおねがいします|okaikei o onegai shimasu','お会計をお願いいたします|おかいけいをおねがいいたします|okaikei o onegai itashimasu'],
  ['Bon appétit (avant de manger)','','|いただきます|itadakimasu',''],
- ['Merci pour le repas (à la fin)','|ごちそうさま|gochisōsama','|ごちそうさまでした|gochisōsama deshita',''],
- ['Je suis végétarien(ne)','','|ベジタリアンです|bejitarian desu','']],
+ ['Merci pour le repas (à la fin)','|ごちそうさま|gochisōsama','|ごちそうさまでした|gochisōsama deshita','']],
 'Hôtels':[
  ['J’ai une réservation','','予約しています|よやくしています|yoyaku shite imasu','予約をしております|よやくをしております|yoyaku o shite orimasu'],
  ['Pouvez-vous garder mes bagages ?','','荷物を預かってもらえますか|にもつをあずかってもらえますか|nimotsu o azukatte moraemasu ka','荷物を預かっていただけますか|にもつをあずかっていただけますか|nimotsu o azukatte itadakemasu ka'],
@@ -1167,8 +1167,289 @@ var PH={
  ['Que recommandez-vous ?','|おすすめは？|osusume wa?','おすすめは何ですか|おすすめはなんですか|osusume wa nan desu ka','|おすすめはございますか|osusume wa gozaimasu ka'],
  ['Où est l’office de tourisme ?','','観光案内所はどこですか|かんこうあんないじょはどこですか|kankō annaijo wa doko desu ka','観光案内所はどちらでしょうか|かんこうあんないじょはどちらでしょうか|kankō annaijo wa dochira deshō ka']]
 };
+/* ---------- Phrases ajoutées (voyageuse seule) ---------- */
+(function(){var X={
+ 'Salutations':[['Je m’appelle … (ton prénom)','','私の名前は…です|わたしのなまえは…です|watashi no namae wa … desu',''],
+  ['Je viens de Belgique','','ベルギーから来ました|ベルギーからきました|Berugī kara kimashita',''],
+  ['Je suis belge','','ベルギー人です|ベルギーじんです|Berugī-jin desu',''],
+  ['C’est mon premier voyage au Japon','','日本は初めてです|にほんははじめてです|Nihon wa hajimete desu',''],
+  ['Je vais bien, merci','','元気です、ありがとうございます|げんきです、ありがとうございます|genki desu, arigatō gozaimasu',''],
+  ['Et vous ?','','|そちらはどうですか|sochira wa dō desu ka',''],
+  ['À bientôt','|またね|mata ne','また会いましょう|またあいましょう|mata aimashō','またお目にかかりましょう|またおめにかかりましょう|mata ome ni kakarimashō'],
+  ['Faites attention à vous (en se quittant)','気をつけてね|きをつけてね|ki o tsukete ne','お気をつけて|おきをつけて|oki o tsukete','']],
+ 'Politesse et remerciements':[['Merci beaucoup','|どうも|dōmo','|どうもありがとうございます|dōmo arigatō gozaimasu',''],
+  ['Merci (pour ce que vous avez fait)','|ありがとう|arigatō','|ありがとうございました|arigatō gozaimashita','誠にありがとうございました|まことにありがとうございました|makoto ni arigatō gozaimashita'],
+  ['Pardon, je passe','','すみません、通ります|すみません、とおります|sumimasen, tōrimasu','前を失礼いたします|まえをしつれいいたします|mae o shitsurei itashimasu'],
+  ['Pardon de vous déranger','','お忙しいところすみません|おいそがしいところすみません|oisogashii tokoro sumimasen','お忙しいところ恐れ入ります|おいそがしいところおそれいります|oisogashii tokoro osore irimasu'],
+  ['Non merci','ううん、大丈夫|ううん、だいじょうぶ|uun, daijōbu','結構です|けっこうです|kekkō desu','遠慮しておきます|えんりょしておきます|enryo shite okimasu'],
+  ['Après vous / Je vous en prie','','お先にどうぞ|おさきにどうぞ|osaki ni dōzo',''],
+  ['Un instant, s’il vous plaît','ちょっと待って|ちょっとまって|chotto matte','ちょっと待ってください|ちょっとまってください|chotto matte kudasai','少々お待ちいただけますか|しょうしょうおまちいただけますか|shōshō omachi itadakemasu ka']],
+ 'Voyager seule':[['Je voyage seule','','一人で旅行しています|ひとりでりょこうしています|hitori de ryokō shite imasu',''],
+  ['Une personne (au restaurant, à l’entrée)','','一人です|ひとりです|hitori desu','一名です|いちめいです|ichi-mei desu'],
+  ['Est-ce possible même seule ?','','一人でも大丈夫ですか|ひとりでもだいじょうぶですか|hitori demo daijōbu desu ka','一人でもよろしいでしょうか|ひとりでもよろしいでしょうか|hitori demo yoroshii deshō ka'],
+  ['Peut-on réserver pour une seule personne ?','','一人で予約できますか|ひとりでよやくできますか|hitori de yoyaku dekimasu ka',''],
+  ['Une chambre pour une personne','','一人部屋をお願いします|ひとりべやをおねがいします|hitoribeya o onegai shimasu','一人部屋をお願いいたします|ひとりべやをおねがいいたします|hitoribeya o onegai itashimasu'],
+  ['Une portion pour une personne','','一人前でお願いします|いちにんまえでおねがいします|ichi-nin-mae de onegai shimasu',''],
+  ['Y a-t-il un endroit où l’on entre facilement seule ?','','一人で入りやすいお店はありますか|ひとりではいりやすいおみせはありますか|hitori de hairiyasui omise wa arimasu ka',''],
+  ['Une chambre réservée aux femmes ?','','女性専用の部屋はありますか|じょせいせんようのへやはありますか|josei sen’yō no heya wa arimasu ka','女性専用のお部屋はございますか|じょせいせんようのおへやはございますか|josei sen’yō no oheya wa gozaimasu ka'],
+  ['Un lit en dortoir réservé aux femmes ?','','女性専用ドミトリーはありますか|じょせいせんようドミトリーはありますか|josei sen’yō domitorī wa arimasu ka',''],
+  ['Est-ce la voiture réservée aux femmes ?','','女性専用車両ですか|じょせいせんようしゃりょうですか|josei sen’yō sharyō desu ka',''],
+  ['Est-ce sûr de marcher ici la nuit ?','','この辺は夜も安全ですか|このへんはよるもあんぜんですか|kono hen wa yoru mo anzen desu ka',''],
+  ['Pouvez-vous m’accompagner jusqu’à la station ?','','駅まで一緒に来てもらえますか|えきまでいっしょにきてもらえますか|eki made issho ni kite moraemasu ka','駅まで一緒に来ていただけますか|えきまでいっしょにきていただけますか|eki made issho ni kite itadakemasu ka'],
+  ['Pouvez-vous appeler mon hôtel ?','','ホテルに電話してもらえますか|ホテルにでんわしてもらえますか|hoteru ni denwa shite moraemasu ka','ホテルに電話していただけますか|ホテルにでんわしていただけますか|hoteru ni denwa shite itadakemasu ka']],
+ 'Restaurants':[['Une place au comptoir, s’il vous plaît','','カウンター席をお願いします|カウンターせきをおねがいします|kauntā seki o onegai shimasu','カウンター席をお願いいたします|カウンターせきをおねがいいたします|kauntā seki o onegai itashimasu'],
+  ['Y a-t-il une place libre ?','','席はありますか|せきはありますか|seki wa arimasu ka','席はございますか|せきはございますか|seki wa gozaimasu ka'],
+  ['Puis-je m’asseoir ici ?','ここ座っていい？|ここすわっていい？|koko suwatte ii?','ここに座ってもいいですか|ここにすわってもいいですか|koko ni suwatte mo ii desu ka','ここに座ってもよろしいでしょうか|ここにすわってもよろしいでしょうか|koko ni suwatte mo yoroshii deshō ka'],
+  ['Combien de temps faut-il attendre ?','','どのくらい待ちますか|どのくらいまちますか|dono kurai machimasu ka','どのくらいお待ちすればよろしいでしょうか|どのくらいおまちすればよろしいでしょうか|dono kurai omachi sureba yoroshii deshō ka'],
+  ['Le menu, s’il vous plaît','|メニューちょうだい|menyū chōdai','|メニューをください|menyū o kudasai','メニューをお願いいたします|メニューをおねがいいたします|menyū o onegai itashimasu'],
+  ['Avez-vous un menu en anglais ?','','英語のメニューはありますか|えいごのメニューはありますか|eigo no menyū wa arimasu ka','英語のメニューはございますか|えいごのメニューはございますか|eigo no menyū wa gozaimasu ka'],
+  ['Je voudrais commander','','すみません、注文をお願いします|すみません、ちゅうもんをおねがいします|sumimasen, chūmon o onegai shimasu','すみません、注文をお願いいたします|すみません、ちゅうもんをおねがいいたします|sumimasen, chūmon o onegai itashimasu'],
+  ['Qu’est-ce que c’est ?','これ何？|これなに？|kore nani?','これは何ですか|これはなんですか|kore wa nan desu ka','こちらは何でしょうか|こちらはなんでしょうか|kochira wa nan deshō ka'],
+  ['Qu’y a-t-il dedans ?','','何が入っていますか|なにがはいっていますか|nani ga haitte imasu ka',''],
+  ['Quelle est la spécialité d’ici ?','','ここの名物は何ですか|ここのめいぶつはなんですか|koko no meibutsu wa nan desu ka',''],
+  ['Je prends la même chose','','同じものをください|おなじものをください|onaji mono o kudasai','同じものをお願いいたします|おなじものをおねがいいたします|onaji mono o onegai itashimasu'],
+  ['Je prends le menu du jour','','日替わり定食をください|ひがわりていしょくをください|higawari teishoku o kudasai',''],
+  ['Du thé, s’il vous plaît','','お茶をください|おちゃをください|ocha o kudasai','お茶をお願いいたします|おちゃをおねがいいたします|ocha o onegai itashimasu'],
+  ['Sans glaçons, s’il vous plaît','','氷なしでお願いします|こおりなしでおねがいします|kōri nashi de onegai shimasu',''],
+  ['Encore un(e), s’il vous plaît','','もう一つお願いします|もうひとつおねがいします|mō hitotsu onegai shimasu','もう一つお願いいたします|もうひとつおねがいいたします|mō hitotsu onegai itashimasu'],
+  ['Ce n’est pas ce que j’ai commandé','','これは注文していません|これはちゅうもんしていません|kore wa chūmon shite imasen',''],
+  ['C’est trop épicé','辛すぎる|からすぎる|karasugiru','辛すぎます|からすぎます|karasugimasu',''],
+  ['Pas trop épicé, s’il vous plaît','','辛くしないでください|からくしないでください|karaku shinai de kudasai',''],
+  ['Comment est-ce que je le mange ?','どうやって食べる？|どうやってたべる？|dō yatte taberu?','どうやって食べますか|どうやってたべますか|dō yatte tabemasu ka','どのようにお召し上がりすればよろしいですか|どのようにおめしあがりすればよろしいですか|dono yō ni omeshiagari sureba yoroshii desu ka'],
+  ['Je n’ai pas fini','','まだ食べています|まだたべています|mada tabete imasu',''],
+  ['Je n’en veux plus, merci','','もう結構です|もうけっこうです|mō kekkō desu',''],
+  ['Sur place','','ここで食べます|ここでたべます|koko de tabemasu',''],
+  ['À emporter','','持ち帰りでお願いします|もちかえりでおねがいします|mochikaeri de onegai shimasu','持ち帰りでお願いいたします|もちかえりでおねがいいたします|mochikaeri de onegai itashimasu'],
+  ['Faut-il acheter un ticket au distributeur ?','','食券を買うんですか|しょっけんをかうんですか|shokken o kau n desu ka',''],
+  ['Où est-ce que je paie ?','','お会計はどこですか|おかいけいはどこですか|okaikei wa doko desu ka','お会計はどちらでしょうか|おかいけいはどちらでしょうか|okaikei wa dochira deshō ka'],
+  ['Je paie en espèces','','現金で払います|げんきんではらいます|genkin de haraimasu',''],
+  ['Un reçu, s’il vous plaît','|レシートちょうだい|reshīto chōdai','|レシートをください|reshīto o kudasai','レシートをお願いいたします|レシートをおねがいいたします|reshīto o onegai itashimasu'],
+  ['Une fourchette, s’il vous plaît','','|フォークをください|fōku o kudasai',''],
+  ['Des baguettes, s’il vous plaît','','お箸をください|おはしをください|ohashi o kudasai','お箸をお願いいたします|おはしをおねがいいたします|ohashi o onegai itashimasu'],
+  ['Puis-je réserver pour ce soir ?','','今夜、予約できますか|こんや、よやくできますか|kon’ya, yoyaku dekimasu ka','今夜の予約をお願いできますでしょうか|こんやのよやくをおねがいできますでしょうか|kon’ya no yoyaku o onegai dekimasu deshō ka']],
+ 'Bars et izakaya':[['Une bière pression, s’il vous plaît','','生ビールをお願いします|なまビールをおねがいします|nama bīru o onegai shimasu','生ビールをお願いいたします|なまビールをおねがいいたします|nama bīru o onegai itashimasu'],
+  ['Santé !','','乾杯|かんぱい|kanpai',''],
+  ['Un verre de vin rouge','','赤ワインをください|あかワインをください|aka wain o kudasai',''],
+  ['Un verre de vin blanc','','白ワインをください|しろワインをください|shiro wain o kudasai',''],
+  ['Du saké, s’il vous plaît','','日本酒をください|にほんしゅをください|nihonshu o kudasai','日本酒をお願いいたします|にほんしゅをおねがいいたします|nihonshu o onegai itashimasu'],
+  ['Du saké froid','','冷酒でお願いします|れいしゅでおねがいします|reishu de onegai shimasu',''],
+  ['Du saké chaud','','燗でお願いします|かんでおねがいします|kan de onegai shimasu',''],
+  ['Que me conseillez-vous comme boisson ?','','おすすめの飲み物は何ですか|おすすめののみものはなんですか|osusume no nomimono wa nan desu ka',''],
+  ['Avez-vous des boissons sans alcool ?','','|ノンアルコールはありますか|non’arukōru wa arimasu ka','|ノンアルコールはございますか|non’arukōru wa gozaimasu ka'],
+  ['Un thé oolong, s’il vous plaît','','ウーロン茶をください|ウーロンちゃをください|ūroncha o kudasai',''],
+  ['Un jus d’orange, s’il vous plaît','','|オレンジジュースをください|orenji jūsu o kudasai',''],
+  ['Un autre verre, s’il vous plaît','','おかわりをお願いします|おかわりをおねがいします|okawari o onegai shimasu','おかわりをお願いいたします|おかわりをおねがいいたします|okawari o onegai itashimasu'],
+  ['C’est fort (en alcool) ?','強い？|つよい？|tsuyoi?','強いですか|つよいですか|tsuyoi desu ka',''],
+  ['À quelle heure est la dernière commande ?','','ラストオーダーは何時ですか|ラストオーダーはなんじですか|rasuto ōdā wa nan-ji desu ka','']],
+ 'Konbini et distributeurs':[['Un sac, s’il vous plaît','','袋をください|ふくろをください|fukuro o kudasai',''],
+  ['Pouvez-vous le réchauffer ?','','温めてください|あたためてください|atatamete kudasai','温めていただけますか|あたためていただけますか|atatamete itadakemasu ka'],
+  ['Une cuillère, s’il vous plaît','','|スプーンをください|supūn o kudasai',''],
+  ['Un café, s’il vous plaît','','コーヒーを一つください|コーヒーをひとつください|kōhī o hitotsu kudasai',''],
+  ['Où est le distributeur de boissons ?','','自動販売機はどこですか|じどうはんばいきはどこですか|jidō hanbaiki wa doko desu ka',''],
+  ['Pouvez-vous m’expliquer comment l’utiliser ?','','使い方を教えてください|つかいかたをおしえてください|tsukaikata o oshiete kudasai','使い方を教えていただけますか|つかいかたをおしえていただけますか|tsukaikata o oshiete itadakemasu ka']],
+ 'Hôtels':[['J’ai réservé au nom de …','','…の名前で予約しています|…のなまえでよやくしています|… no namae de yoyaku shite imasu','…の名前で予約をしております|…のなまえでよやくをしております|… no namae de yoyaku o shite orimasu'],
+  ['Je voudrais faire le check-in','','チェックインをお願いします|チェックインをおねがいします|chekku-in o onegai shimasu','チェックインをお願いいたします|チェックインをおねがいいたします|chekku-in o onegai itashimasu'],
+  ['Puis-je faire le check-in plus tôt ?','','早めにチェックインできますか|はやめにチェックインできますか|hayame ni chekku-in dekimasu ka','早めのチェックインは可能でしょうか|はやめのチェックインはかのうでしょうか|hayame no chekku-in wa kanō deshō ka'],
+  ['Je voudrais prolonger d’une nuit','','もう一泊したいのですが|もういっぱくしたいのですが|mō ippaku shitai no desu ga','もう一泊させていただきたいのですが|もういっぱくさせていただきたいのですが|mō ippaku sasete itadakitai no desu ga'],
+  ['Puis-je changer de chambre ?','','部屋を変えてもらえますか|へやをかえてもらえますか|heya o kaete moraemasu ka','お部屋を変えていただけますか|おへやをかえていただけますか|oheya o kaete itadakemasu ka'],
+  ['Le petit-déjeuner est-il compris ?','','朝食は含まれていますか|ちょうしょくはふくまれていますか|chōshoku wa fukumarete imasu ka','朝食は含まれておりますか|ちょうしょくはふくまれておりますか|chōshoku wa fukumarete orimasu ka'],
+  ['À quelle heure est le petit-déjeuner ?','','朝食は何時からですか|ちょうしょくはなんじからですか|chōshoku wa nan-ji kara desu ka','朝食は何時からでしょうか|ちょうしょくはなんじからでしょうか|chōshoku wa nan-ji kara deshō ka'],
+  ['À quelle heure est le dîner ?','','夕食は何時ですか|ゆうしょくはなんじですか|yūshoku wa nan-ji desu ka','夕食は何時でしょうか|ゆうしょくはなんじでしょうか|yūshoku wa nan-ji deshō ka'],
+  ['La climatisation ne marche pas','','エアコンが動きません|エアコンがうごきません|eakon ga ugokimasen',''],
+  ['Il n’y a pas d’eau chaude','','お湯が出ません|おゆがでません|oyu ga demasen',''],
+  ['La clé ne fonctionne pas','','鍵が使えません|かぎがつかえません|kagi ga tsukaemasen',''],
+  ['J’ai oublié ma clé dans la chambre','','部屋に鍵を忘れました|へやにかぎをわすれました|heya ni kagi o wasuremashita',''],
+  ['Pouvez-vous appeler un taxi ?','','タクシーを呼んでもらえますか|タクシーをよんでもらえますか|takushī o yonde moraemasu ka','タクシーを呼んでいただけますか|タクシーをよんでいただけますか|takushī o yonde itadakemasu ka'],
+  ['Pas besoin de nettoyer la chambre','','部屋の掃除は結構です|へやのそうじはけっこうです|heya no sōji wa kekkō desu',''],
+  ['Une brosse à dents, s’il vous plaît','','歯ブラシをもらえますか|はブラシをもらえますか|haburashi o moraemasu ka','歯ブラシをいただけますか|はブラシをいただけますか|haburashi o itadakemasu ka'],
+  ['Une couverture supplémentaire, s’il vous plaît','','もう一枚毛布をもらえますか|もういちまいもうふをもらえますか|mō ichi-mai mōfu o moraemasu ka','もう一枚毛布をいただけますか|もういちまいもうふをいただけますか|mō ichi-mai mōfu o itadakemasu ka'],
+  ['Un oreiller supplémentaire, s’il vous plaît','','枕をもう一つもらえますか|まくらをもうひとつもらえますか|makura o mō hitotsu moraemasu ka',''],
+  ['Y a-t-il un sèche-cheveux ?','','|ドライヤーはありますか|doraiyā wa arimasu ka','|ドライヤーはございますか|doraiyā wa gozaimasu ka'],
+  ['Pouvez-vous envoyer ma valise à l’hôtel suivant ?','','荷物を次のホテルに送れますか|にもつをつぎのホテルにおくれますか|nimotsu o tsugi no hoteru ni okuremasu ka',''],
+  ['Je voudrais envoyer ma valise à l’aéroport','','空港まで荷物を送りたいです|くうこうまでにもつをおくりたいです|kūkō made nimotsu o okuritai desu',''],
+  ['Combien de jours pour la livraison ?','','何日で届きますか|なんにちでとどきますか|nan-nichi de todokimasu ka','']],
+ 'Trains et transports':[['Un billet pour Kyoto, s’il vous plaît','','京都までの切符をください|きょうとまでのきっぷをください|Kyōto made no kippu o kudasai','京都までの切符をお願いいたします|きょうとまでのきっぷをおねがいいたします|Kyōto made no kippu o onegai itashimasu'],
+  ['Un aller simple','','片道でお願いします|かたみちでおねがいします|katamichi de onegai shimasu',''],
+  ['Un aller-retour','','往復でお願いします|おうふくでおねがいします|ōfuku de onegai shimasu',''],
+  ['Une place réservée, s’il vous plaît','','指定席をお願いします|していせきをおねがいします|shiteiseki o onegai shimasu','指定席をお願いいたします|していせきをおねがいいたします|shiteiseki o onegai itashimasu'],
+  ['Une place non réservée','','自由席をお願いします|じゆうせきをおねがいします|jiyūseki o onegai shimasu',''],
+  ['Côté fenêtre, s’il vous plaît','','窓側の席をお願いします|まどがわのせきをおねがいします|madogawa no seki o onegai shimasu',''],
+  ['Côté couloir, s’il vous plaît','','通路側の席をお願いします|つうろがわのせきをおねがいします|tsūrogawa no seki o onegai shimasu',''],
+  ['Une place avec vue sur le mont Fuji','','富士山が見える席をお願いします|ふじさんがみえるせきをおねがいします|Fuji-san ga mieru seki o onegai shimasu',''],
+  ['Je voudrais acheter une carte IC','','ICカードを買いたいです|アイシーカードをかいたいです|aishī kādo o kaitai desu',''],
+  ['Je voudrais recharger ma carte','','チャージをお願いします|チャージをおねがいします|chāji o onegai shimasu',''],
+  ['Ce train va-t-il à Kyoto ?','','この電車は京都に行きますか|このでんしゃはきょうとにいきますか|kono densha wa Kyōto ni ikimasu ka','この電車は京都に行きますでしょうか|このでんしゃはきょうとにいきますでしょうか|kono densha wa Kyōto ni ikimasu deshō ka'],
+  ['Ce train s’arrête-t-il à Shin-Osaka ?','','この電車は新大阪に止まりますか|このでんしゃはしんおおさかにとまりますか|kono densha wa Shin-Ōsaka ni tomarimasu ka',''],
+  ['Où dois-je changer ?','','どこで乗り換えますか|どこでのりかえますか|doko de norikaemasu ka','どこで乗り換えればよろしいでしょうか|どこでのりかえればよろしいでしょうか|doko de norikaereba yoroshii deshō ka'],
+  ['Est-ce le bon quai ?','','このホームで合っていますか|このホームであっていますか|kono hōmu de atte imasu ka',''],
+  ['Quelle est la prochaine gare ?','','次の駅はどこですか|つぎのえきはどこですか|tsugi no eki wa doko desu ka',''],
+  ['Où est la sortie ?','','出口はどこですか|でぐちはどこですか|deguchi wa doko desu ka','出口はどちらでしょうか|でぐちはどちらでしょうか|deguchi wa dochira deshō ka'],
+  ['Quelle sortie pour y aller ?','','何番出口ですか|なんばんでぐちですか|nan-ban deguchi desu ka',''],
+  ['Je me suis trompée de train','','電車を間違えました|でんしゃをまちがえました|densha o machigaemashita',''],
+  ['J’ai raté mon train','','電車に乗り遅れました|でんしゃにのりおくれました|densha ni noriokuremashita',''],
+  ['Le train est-il en retard ?','','電車は遅れていますか|でんしゃはおくれていますか|densha wa okurete imasu ka',''],
+  ['À quelle heure est le dernier train ?','','終電は何時ですか|しゅうでんはなんじですか|shūden wa nan-ji desu ka','終電は何時でしょうか|しゅうでんはなんじでしょうか|shūden wa nan-ji deshō ka'],
+  ['Où est la billetterie ?','','切符売り場はどこですか|きっぷうりばはどこですか|kippu uriba wa doko desu ka','切符売り場はどちらでしょうか|きっぷうりばはどちらでしょうか|kippu uriba wa dochira deshō ka'],
+  ['Où sont les consignes à bagages ?','','|コインロッカーはどこですか|koin rokkā wa doko desu ka',''],
+  ['Pouvez-vous m’expliquer ce distributeur ?','','この券売機の使い方を教えてください|このけんばいきのつかいかたをおしえてください|kono kenbaiki no tsukaikata o oshiete kudasai','この券売機の使い方を教えていただけますか|このけんばいきのつかいかたをおしえていただけますか|kono kenbaiki no tsukaikata o oshiete itadakemasu ka'],
+  ['Je voudrais un remboursement','','払い戻しをお願いします|はらいもどしをおねがいします|haraimodoshi o onegai shimasu','払い戻しをお願いいたします|はらいもどしをおねがいいたします|haraimodoshi o onegai itashimasu'],
+  ['Je voudrais changer ma réservation','','予約を変更したいです|よやくをへんこうしたいです|yoyaku o henkō shitai desu','予約を変更したいのですが|よやくをへんこうしたいのですが|yoyaku o henkō shitai no desu ga']],
+ 'Taxi et bus':[['À cette adresse, s’il vous plaît','','この住所までお願いします|このじゅうしょまでおねがいします|kono jūsho made onegai shimasu','この住所までお願いいたします|このじゅうしょまでおねがいいたします|kono jūsho made onegai itashimasu'],
+  ['À la gare de Kyoto, s’il vous plaît','','京都駅までお願いします|きょうとえきまでおねがいします|Kyōto-eki made onegai shimasu',''],
+  ['Combien cela coûtera-t-il environ ?','','|いくらぐらいかかりますか|ikura gurai kakarimasu ka',''],
+  ['Arrêtez-vous ici, s’il vous plaît','','ここで止めてください|ここでとめてください|koko de tomete kudasai',''],
+  ['Pouvez-vous ouvrir le coffre ?','','トランクを開けてください|トランクをあけてください|toranku o akete kudasai',''],
+  ['Pouvez-vous m’attendre un instant ?','','ちょっと待っていてください|ちょっとまっていてください|chotto matte ite kudasai',''],
+  ['Où est l’arrêt de bus ?','','バス停はどこですか|バスていはどこですか|basutei wa doko desu ka',''],
+  ['Ce bus va-t-il à la gare ?','','このバスは駅に行きますか|このバスはえきにいきますか|kono basu wa eki ni ikimasu ka',''],
+  ['Est-ce que je paie en descendant ?','','降りるときに払いますか|おりるときにはらいますか|oriru toki ni haraimasu ka',''],
+  ['Pouvez-vous me prévenir à l’arrivée ?','','着いたら教えてください|ついたらおしえてください|tsuitara oshiete kudasai','着いたら教えていただけますか|ついたらおしえていただけますか|tsuitara oshiete itadakemasu ka'],
+  ['Je descends au prochain arrêt','','次で降ります|つぎでおります|tsugi de orimasu','']],
+ 'Aéroport':[['Où est le comptoir d’enregistrement ?','','|チェックインカウンターはどこですか|chekku-in kauntā wa doko desu ka','|チェックインカウンターはどちらでしょうか|chekku-in kauntā wa dochira deshō ka'],
+  ['Où est la porte d’embarquement ?','','搭乗口はどこですか|とうじょうぐちはどこですか|tōjōguchi wa doko desu ka','搭乗口はどちらでしょうか|とうじょうぐちはどちらでしょうか|tōjōguchi wa dochira deshō ka'],
+  ['À quelle heure commence l’embarquement ?','','搭乗は何時からですか|とうじょうはなんじからですか|tōjō wa nan-ji kara desu ka',''],
+  ['Mon vol est-il annulé ?','','この便は欠航になりましたか|このびんはけっこうになりましたか|kono bin wa kekkō ni narimashita ka',''],
+  ['Ma valise n’est pas arrivée','','荷物が出てきません|にもつがでてきません|nimotsu ga detekimasen',''],
+  ['Je ne retrouve pas ma valise','','スーツケースが見つかりません|スーツケースがみつかりません|sūtsukēsu ga mitsukarimasen',''],
+  ['Où est la récupération des bagages ?','','手荷物受取所はどこですか|てにもつうけとりじょはどこですか|tenimotsu uketorijo wa doko desu ka',''],
+  ['Où est le contrôle des passeports ?','','入国審査はどこですか|にゅうこくしんさはどこですか|nyūkoku shinsa wa doko desu ka',''],
+  ['Je suis venue pour du tourisme','','観光で来ました|かんこうできました|kankō de kimashita','観光で参りました|かんこうでまいりました|kankō de mairimashita'],
+  ['Je reste une semaine','','一週間滞在します|いっしゅうかんたいざいします|isshūkan taizai shimasu',''],
+  ['Je loge à l’hôtel …','','…ホテルに泊まります|…ホテルにとまります|… hoteru ni tomarimasu',''],
+  ['J’ai une correspondance','','乗り継ぎです|のりつぎです|noritsugi desu',''],
+  ['Où est la gare de l’aéroport ?','','空港駅はどこですか|くうこうえきはどこですか|kūkō-eki wa doko desu ka','空港駅はどちらでしょうか|くうこうえきはどちらでしょうか|kūkō-eki wa dochira deshō ka'],
+  ['Où est le bus pour le centre-ville ?','','市内へ行くバスはどこから出ますか|しないへいくバスはどこからでますか|shinai e iku basu wa doko kara demasu ka',''],
+  ['Où est le comptoir de détaxe ?','','免税カウンターはどこですか|めんぜいカウンターはどこですか|menzei kauntā wa doko desu ka',''],
+  ['Où est le terminal 2 ?','','第2ターミナルはどこですか|だいにターミナルはどこですか|dai-ni tāminaru wa doko desu ka','']],
+ 'Directions':[['Je cherche cette adresse (en montrant)','','この場所を探しています|このばしょをさがしています|kono basho o sagashite imasu','この場所を探しているのですが|このばしょをさがしているのですが|kono basho o sagashite iru no desu ga'],
+  ['Pouvez-vous m’indiquer le chemin ?','','道を教えてください|みちをおしえてください|michi o oshiete kudasai','道を教えていただけますか|みちをおしえていただけますか|michi o oshiete itadakemasu ka'],
+  ['Où suis-je sur cette carte ?','','|ここはどこですか|koko wa doko desu ka',''],
+  ['C’est loin d’ici ?','遠い？|とおい？|tōi?','ここから遠いですか|ここからとおいですか|koko kara tōi desu ka',''],
+  ['Combien de minutes à pied ?','','歩いて何分ですか|あるいてなんぷんですか|aruite nan-pun desu ka','歩いて何分ほどかかりますか|あるいてなんぷんほどかかりますか|aruite nan-pun hodo kakarimasu ka'],
+  ['Peut-on y aller à pied ?','','歩いて行けますか|あるいていけますか|aruite ikemasu ka','歩いて行けますでしょうか|あるいていけますでしょうか|aruite ikemasu deshō ka'],
+  ['Où est la station la plus proche ?','','一番近い駅はどこですか|いちばんちかいえきはどこですか|ichiban chikai eki wa doko desu ka','一番近い駅はどちらでしょうか|いちばんちかいえきはどちらでしょうか|ichiban chikai eki wa dochira deshō ka'],
+  ['Y a-t-il un konbini près d’ici ?','','近くにコンビニはありますか|ちかくにコンビニはありますか|chikaku ni konbini wa arimasu ka','近くにコンビニはございますか|ちかくにコンビニはございますか|chikaku ni konbini wa gozaimasu ka'],
+  ['Où est le distributeur de billets (ATM) ?','','|エーティーエムはどこですか|ētīemu wa doko desu ka',''],
+  ['Où est l’ascenseur ?','','|エレベーターはどこですか|erebētā wa doko desu ka','|エレベーターはどちらでしょうか|erebētā wa dochira deshō ka'],
+  ['Est-ce de ce côté ?','','|こちらですか|kochira desu ka','']],
+ 'Shopping':[['Avez-vous une taille plus grande ?','','もっと大きいサイズはありますか|もっとおおきいサイズはありますか|motto ōkii saizu wa arimasu ka','もっと大きいサイズはございますか|もっとおおきいサイズはございますか|motto ōkii saizu wa gozaimasu ka'],
+  ['Avez-vous une taille plus petite ?','','もっと小さいサイズはありますか|もっとちいさいサイズはありますか|motto chiisai saizu wa arimasu ka','もっと小さいサイズはございますか|もっとちいさいサイズはございますか|motto chiisai saizu wa gozaimasu ka'],
+  ['Avez-vous d’autres couleurs ?','','他の色はありますか|ほかのいろはありますか|hoka no iro wa arimasu ka','他の色はございますか|ほかのいろはございますか|hoka no iro wa gozaimasu ka'],
+  ['Où est la cabine d’essayage ?','','試着室はどこですか|しちゃくしつはどこですか|shichakushitsu wa doko desu ka','試着室はどちらでしょうか|しちゃくしつはどちらでしょうか|shichakushitsu wa dochira deshō ka'],
+  ['Je le prends','','これを買います|これをかいます|kore o kaimasu','|こちらをいただきます|kochira o itadakimasu'],
+  ['C’est trop cher','高い|たかい|takai','高すぎます|たかすぎます|takasugimasu',''],
+  ['Avez-vous moins cher ?','','もっと安いものはありますか|もっとやすいものはありますか|motto yasui mono wa arimasu ka','もっと安いものはございますか|もっとやすいものはございますか|motto yasui mono wa gozaimasu ka'],
+  ['Pouvez-vous l’emballer pour un cadeau ?','','プレゼント用に包んでもらえますか|プレゼントようにつつんでもらえますか|purezento-yō ni tsutsunde moraemasu ka','贈答用に包んでいただけますか|ぞうとうようにつつんでいただけますか|zōtō-yō ni tsutsunde itadakemasu ka'],
+  ['Pouvez-vous les emballer séparément ?','','別々に包んでもらえますか|べつべつにつつんでもらえますか|betsubetsu ni tsutsunde moraemasu ka','別々に包んでいただけますか|べつべつにつつんでいただけますか|betsubetsu ni tsutsunde itadakemasu ka'],
+  ['Je voudrais la détaxe','','免税でお願いします|めんぜいでおねがいします|menzei de onegai shimasu','免税でお願いいたします|めんぜいでおねがいいたします|menzei de onegai itashimasu'],
+  ['C’est fabriqué au Japon ?','','これは日本製ですか|これはにほんせいですか|kore wa Nihon-sei desu ka',''],
+  ['Quel souvenir de la région conseillez-vous ?','','この地域のお土産でおすすめはありますか|このちいきのおみやげでおすすめはありますか|kono chiiki no omiyage de osusume wa arimasu ka',''],
+  ['Quel est le souvenir le plus populaire ?','','人気のお土産は何ですか|にんきのおみやげはなんですか|ninki no omiyage wa nan desu ka',''],
+  ['Puis-je goûter ?','','試食してもいいですか|ししょくしてもいいですか|shishoku shite mo ii desu ka','試食してもよろしいでしょうか|ししょくしてもよろしいでしょうか|shishoku shite mo yoroshii deshō ka'],
+  ['Jusqu’à quand se conserve-t-il ?','','賞味期限はいつまでですか|しょうみきげんはいつまでですか|shōmi kigen wa itsu made desu ka',''],
+  ['Je paie par carte','','カードでお願いします|カードでおねがいします|kādo de onegai shimasu','カードでお願いいたします|カードでおねがいいたします|kādo de onegai itashimasu'],
+  ['Le paiement sans contact est-il possible ?','','タッチ決済は使えますか|タッチけっさいはつかえますか|tatchi kessai wa tsukaemasu ka','タッチ決済は使えますでしょうか|タッチけっさいはつかえますでしょうか|tatchi kessai wa tsukaemasu deshō ka'],
+  ['Où est le magasin à 100 yens ?','','百円ショップはどこですか|ひゃくえんショップはどこですか|hyakuen shoppu wa doko desu ka',''],
+  ['Où est le drugstore ?','','|ドラッグストアはどこですか|doraggu sutoa wa doko desu ka',''],
+  ['Où est le supermarché ?','','|スーパーはどこですか|sūpā wa doko desu ka',''],
+  ['Où est la laverie ?','','|コインランドリーはどこですか|koin randorī wa doko desu ka','']],
+ 'Argent':[['Où puis-je changer de l’argent ?','','両替はどこでできますか|りょうがえはどこでできますか|ryōgae wa doko de dekimasu ka','両替はどちらでできますか|りょうがえはどちらでできますか|ryōgae wa dochira de dekimasu ka'],
+  ['Un distributeur acceptant les cartes étrangères ?','','海外のカードが使えるATMはありますか|かいがいのカードがつかえるエーティーエムはありますか|kaigai no kādo ga tsukaeru ētīemu wa arimasu ka',''],
+  ['Ma carte ne passe pas','','カードが使えません|カードがつかえません|kādo ga tsukaemasen',''],
+  ['Le distributeur ne me rend pas ma carte','','カードがATMから出てきません|カードがエーティーエムからでてきません|kādo ga ētīemu kara dete kimasen',''],
+  ['Je crois qu’il y a une erreur sur l’addition','','会計が間違っているようです|かいけいがまちがっているようです|kaikei ga machigatte iru yō desu',''],
+  ['Pouvez-vous me faire la monnaie ?','','両替してもらえますか|りょうがえしてもらえますか|ryōgae shite moraemasu ka','両替していただけますか|りょうがえしていただけますか|ryōgae shite itadakemasu ka']],
+ 'Conversations quotidiennes':[['Je comprends','分かる|わかる|wakaru','分かります|わかります|wakarimasu',''],
+  ['Je ne sais pas','分からない|わからない|wakaranai','分かりません|わかりません|wakarimasen',''],
+  ['Je comprends un peu','','少し分かります|すこしわかります|sukoshi wakarimasu',''],
+  ['Je ne sais pas lire le japonais','','日本語は読めません|にほんごはよめません|nihongo wa yomemasen',''],
+  ['Y a-t-il quelqu’un qui parle anglais ?','','英語が話せる人はいますか|えいごがはなせるひとはいますか|eigo ga hanaseru hito wa imasu ka','英語を話せる方はいらっしゃいますか|えいごをはなせるかたはいらっしゃいますか|eigo o hanaseru kata wa irasshaimasu ka'],
+  ['Y a-t-il quelqu’un qui parle français ?','','フランス語が話せる人はいますか|フランスごがはなせるひとはいますか|Furansu-go ga hanaseru hito wa imasu ka','フランス語を話せる方はいらっしゃいますか|フランスごをはなせるかたはいらっしゃいますか|Furansu-go o hanaseru kata wa irasshaimasu ka'],
+  ['Pouvez-vous l’écrire ?','','書いてもらえますか|かいてもらえますか|kaite moraemasu ka','書いていただけますか|かいていただけますか|kaite itadakemasu ka'],
+  ['Comment dit-on cela en japonais ?','','これは日本語で何と言いますか|これはにほんごでなんといいますか|kore wa nihongo de nan to iimasu ka',''],
+  ['Comment ça se lit ?','','どう読みますか|どうよみますか|dō yomimasu ka',''],
+  ['Que veut dire ce mot ?','','これはどういう意味ですか|これはどういういみですか|kore wa dō iu imi desu ka',''],
+  ['Puis-je utiliser mon téléphone pour traduire ?','','翻訳アプリを使ってもいいですか|ほんやくアプリをつかってもいいですか|honyaku apuri o tsukatte mo ii desu ka','翻訳アプリを使ってもよろしいでしょうか|ほんやくアプリをつかってもよろしいでしょうか|honyaku apuri o tsukatte mo yoroshii deshō ka'],
+  ['Quelle heure est-il ?','','今何時ですか|いまなんじですか|ima nan-ji desu ka','今何時でしょうか|いまなんじでしょうか|ima nan-ji deshō ka'],
+  ['C’est magnifique','|きれい|kirei','|きれいですね|kirei desu ne','素晴らしい景色ですね|すばらしいけしきですね|subarashii keshiki desu ne'],
+  ['C’est incroyable','|すごい|sugoi','|すごいですね|sugoi desu ne',''],
+  ['J’adore le Japon','日本、大好き|にほん、だいすき|Nihon, daisuki','日本が大好きです|にほんがだいすきです|Nihon ga daisuki desu',''],
+  ['J’adore la cuisine japonaise','','日本料理が大好きです|にほんりょうりがだいすきです|nihon ryōri ga daisuki desu',''],
+  ['Quel beau temps','','いい天気ですね|いいてんきですね|ii tenki desu ne',''],
+  ['Il fait chaud','暑い|あつい|atsui','暑いですね|あついですね|atsui desu ne',''],
+  ['Il fait froid','寒い|さむい|samui','寒いですね|さむいですね|samui desu ne',''],
+  ['Va-t-il pleuvoir aujourd’hui ?','','今日は雨が降りますか|きょうはあめがふりますか|kyō wa ame ga furimasu ka','']],
+ 'Téléphone et internet':[['Y a-t-il du Wi-Fi ici ?','','|ワイファイはありますか|waifai wa arimasu ka','|ワイファイはございますか|waifai wa gozaimasu ka'],
+  ['Puis-je recharger mon téléphone ici ?','','ここで充電してもいいですか|ここでじゅうでんしてもいいですか|koko de jūden shite mo ii desu ka','ここで充電してもよろしいでしょうか|ここでじゅうでんしてもよろしいでしょうか|koko de jūden shite mo yoroshii deshō ka'],
+  ['Où puis-je recharger mon téléphone ?','','スマホを充電できる場所はありますか|スマホをじゅうでんできるばしょはありますか|sumaho o jūden dekiru basho wa arimasu ka',''],
+  ['Où acheter une carte SIM ?','','SIMカードはどこで買えますか|シムカードはどこでかえますか|shimu kādo wa doko de kaemasu ka',''],
+  ['Mon téléphone n’a plus de batterie','','スマホの電池が切れました|スマホのでんちがきれました|sumaho no denchi ga kiremashita',''],
+  ['Le Wi-Fi ne marche pas','','|ワイファイがつながりません|waifai ga tsunagarimasen','']],
+ 'Urgences':[['Pouvez-vous m’aider ?','手伝って|てつだって|tetsudatte','手伝ってもらえますか|てつだってもらえますか|tetsudatte moraemasu ka','手伝っていただけますか|てつだっていただけますか|tetsudatte itadakemasu ka'],
+  ['Arrêtez ! (quelqu’un vous importune)','|やめて|yamete','|やめてください|yamete kudasai',''],
+  ['Quelqu’un me suit','','誰かにつけられています|だれかにつけられています|dareka ni tsukerarete imasu',''],
+  ['On m’a volé mon sac','','バッグを盗まれました|バッグをぬすまれました|baggu o nusumaremashita',''],
+  ['On m’a volé mon portefeuille','','財布を盗まれました|さいふをぬすまれました|saifu o nusumaremashita',''],
+  ['J’ai perdu mon téléphone','','|スマホをなくしました|sumaho o nakushimashita',''],
+  ['J’ai oublié mon sac dans le train','','電車にバッグを忘れました|でんしゃにバッグをわすれました|densha ni baggu o wasuremashita',''],
+  ['Où sont les objets trouvés ?','','忘れ物センターはどこですか|わすれものセンターはどこですか|wasuremono sentā wa doko desu ka',''],
+  ['Où est le poste de police (kōban) ?','','交番はどこですか|こうばんはどこですか|kōban wa doko desu ka','交番はどちらでしょうか|こうばんはどちらでしょうか|kōban wa dochira deshō ka'],
+  ['Je voudrais déclarer un vol','','盗難届を出したいです|とうなんとどけをだしたいです|tōnan todoke o dashitai desu','盗難届を出したいのですが|とうなんとどけをだしたいのですが|tōnan todoke o dashitai no desu ga'],
+  ['Il y a le feu !','','火事です|かじです|kaji desu',''],
+  ['Il y a eu un accident','','事故です|じこです|jiko desu',''],
+  ['Où est la sortie de secours ?','','非常口はどこですか|ひじょうぐちはどこですか|hijōguchi wa doko desu ka','非常口はどちらでしょうか|ひじょうぐちはどちらでしょうか|hijōguchi wa dochira deshō ka'],
+  ['Où est l’abri le plus proche ?','','一番近い避難所はどこですか|いちばんちかいひなんじょはどこですか|ichiban chikai hinanjo wa doko desu ka',''],
+  ['Je voudrais joindre l’ambassade de Belgique','','ベルギー大使館に連絡したいです|ベルギーたいしかんにれんらくしたいです|Berugī taishikan ni renraku shitai desu','ベルギー大使館に連絡したいのですが|ベルギーたいしかんにれんらくしたいのですが|Berugī taishikan ni renraku shitai no desu ga']],
+ 'Santé et besoins personnels':[['J’ai mal au ventre','','お腹が痛いです|おなかがいたいです|onaka ga itai desu',''],
+  ['J’ai de la fièvre','','熱があります|ねつがあります|netsu ga arimasu',''],
+  ['J’ai mal à la gorge','','喉が痛いです|のどがいたいです|nodo ga itai desu',''],
+  ['J’ai la nausée','','吐き気がします|はきけがします|hakike ga shimasu',''],
+  ['Je me suis blessée','','|けがをしました|kega o shimashita|怪我をしました',''],
+  ['J’ai mal ici (en montrant)','','ここが痛いです|ここがいたいです|koko ga itai desu',''],
+  ['Je voudrais voir un médecin','','医者に診てもらいたいです|いしゃにみてもらいたいです|isha ni mite moraitai desu','医師の診察を受けたいのですが|いしのしんさつをうけたいのですが|ishi no shinsatsu o uketai no desu ga'],
+  ['Y a-t-il un médecin qui parle anglais ?','','英語が話せる医師はいますか|えいごがはなせるいしはいますか|eigo ga hanaseru ishi wa imasu ka',''],
+  ['Je voudrais un médicament contre le rhume','','風邪薬がほしいです|かぜぐすりがほしいです|kazegusuri ga hoshii desu','風邪薬をいただきたいのですが|かぜぐすりをいただきたいのですが|kazegusuri o itadakitai no desu ga'],
+  ['Je voudrais un antidouleur','','痛み止めがほしいです|いたみどめがほしいです|itamidome ga hoshii desu','痛み止めをいただきたいのですが|いたみどめをいただきたいのですが|itamidome o itadakitai no desu ga'],
+  ['Avez-vous un médicament contre le mal des transports ?','','酔い止めはありますか|よいどめはありますか|yoidome wa arimasu ka','酔い止めはございますか|よいどめはございますか|yoidome wa gozaimasu ka'],
+  ['Un pansement, s’il vous plaît','','絆創膏をください|ばんそうこうをください|bansōkō o kudasai',''],
+  ['Je suis très fatiguée','疲れた|つかれた|tsukareta','疲れました|つかれました|tsukaremashita',''],
+  ['J’ai besoin de me reposer','','休みたいです|やすみたいです|yasumitai desu',''],
+  ['J’ai faim','お腹すいた|おなかすいた|onaka suita','お腹がすきました|おなかがすきました|onaka ga sukimashita',''],
+  ['J’ai soif','喉かわいた|のどかわいた|nodo kawaita','喉が渇きました|のどがかわきました|nodo ga kawakimashita',''],
+  ['Où puis-je m’asseoir un moment ?','','どこか座れる場所はありますか|どこかすわれるばしょはありますか|dokoka suwareru basho wa arimasu ka','']],
+ 'Onsen et bains':[['Où est le vestiaire ?','','脱衣所はどこですか|だついじょはどこですか|datsuijo wa doko desu ka','脱衣所はどちらでしょうか|だついじょはどちらでしょうか|datsuijo wa dochira deshō ka'],
+  ['Où est le bain des femmes ?','','女湯はどこですか|おんなゆはどこですか|onna-yu wa doko desu ka','女湯はどちらでしょうか|おんなゆはどちらでしょうか|onna-yu wa dochira deshō ka'],
+  ['À partir de quelle heure peut-on se baigner ?','','温泉は何時から入れますか|おんせんはなんじからはいれますか|onsen wa nan-ji kara hairemasu ka',''],
+  ['Je voudrais réserver un bain privatif','','貸切風呂を予約したいです|かしきりぶろをよやくしたいです|kashikiri-buro o yoyaku shitai desu','貸切風呂を予約したいのですが|かしきりぶろをよやくしたいのですが|kashikiri-buro o yoyaku shitai no desu ga'],
+  ['Peut-on se baigner en maillot ?','','水着で入れますか|みずぎではいれますか|mizugi de hairemasu ka',''],
+  ['Où puis-je laisser mes affaires ?','','荷物はどこに置けますか|にもつはどこにおけますか|nimotsu wa doko ni okemasu ka',''],
+  ['Où est le casier ?','','|ロッカーはどこですか|rokkā wa doko desu ka','|ロッカーはどちらでしょうか|rokkā wa dochira deshō ka'],
+  ['Puis-je acheter une serviette ?','','タオルを買えますか|タオルをかえますか|taoru o kaemasu ka',''],
+  ['L’eau est trop chaude','','お湯が熱すぎます|おゆがあつすぎます|oyu ga atsusugimasu',''],
+  ['Peut-on venir juste pour le bain, sans dormir ?','','日帰り入浴はできますか|ひがえりにゅうよくはできますか|higaeri nyūyoku wa dekimasu ka','日帰り入浴は可能でしょうか|ひがえりにゅうよくはかのうでしょうか|higaeri nyūyoku wa kanō deshō ka'],
+  ['Y a-t-il un bain en plein air ?','','露天風呂はありますか|ろてんぶろはありますか|rotenburo wa arimasu ka','露天風呂はございますか|ろてんぶろはございますか|rotenburo wa gozaimasu ka']],
+ 'Tourisme et temples':[['Comment prier dans un sanctuaire ?','','お参りの仕方を教えてください|おまいりのしかたをおしえてください|omairi no shikata o oshiete kudasai','お参りの作法を教えていただけますか|おまいりのさほうをおしえていただけますか|omairi no sahō o oshiete itadakemasu ka'],
+  ['Je voudrais un goshuin (cachet du temple)','','御朱印をお願いします|ごしゅいんをおねがいします|goshuin o onegai shimasu','御朱印をお願いいたします|ごしゅいんをおねがいいたします|goshuin o onegai itashimasu'],
+  ['Puis-je entrer ?','','入ってもいいですか|はいってもいいですか|haitte mo ii desu ka','入ってもよろしいでしょうか|はいってもよろしいでしょうか|haitte mo yoroshii deshō ka'],
+  ['L’entrée est-elle gratuite ?','','入場は無料ですか|にゅうじょうはむりょうですか|nyūjō wa muryō desu ka',''],
+  ['Un billet adulte, s’il vous plaît','','大人一枚お願いします|おとないちまいおねがいします|otona ichi-mai onegai shimasu','大人一枚お願いいたします|おとないちまいおねがいいたします|otona ichi-mai onegai itashimasu'],
+  ['Y a-t-il une visite guidée en anglais ?','','英語のガイドツアーはありますか|えいごのガイドツアーはありますか|eigo no gaido tsuā wa arimasu ka','英語のガイドツアーはございますか|えいごのガイドツアーはございますか|eigo no gaido tsuā wa gozaimasu ka'],
+  ['Y a-t-il un audioguide ?','','音声ガイドはありますか|おんせいガイドはありますか|onsei gaido wa arimasu ka','音声ガイドはございますか|おんせいガイドはございますか|onsei gaido wa gozaimasu ka'],
+  ['Avez-vous un plan en anglais ?','','英語の地図はありますか|えいごのちずはありますか|eigo no chizu wa arimasu ka','英語の地図はございますか|えいごのちずはございますか|eigo no chizu wa gozaimasu ka'],
+  ['Pouvez-vous me prendre en photo ?','','写真を撮ってもらえますか|しゃしんをとってもらえますか|shashin o totte moraemasu ka','写真を撮っていただけますか|しゃしんをとっていただけますか|shashin o totte itadakemasu ka'],
+  ['Une autre photo, s’il vous plaît','','もう一枚お願いします|もういちまいおねがいします|mō ichi-mai onegai shimasu','もう一枚お願いいたします|もういちまいおねがいいたします|mō ichi-mai onegai itashimasu'],
+  ['La photo est-elle interdite ici ?','','ここは撮影禁止ですか|ここはさつえいきんしですか|koko wa satsuei kinshi desu ka',''],
+  ['Où est le meilleur point de vue ?','','景色がきれいな場所はどこですか|けしきがきれいなばしょはどこですか|keshiki ga kirei na basho wa doko desu ka',''],
+  ['À quelle heure est la dernière entrée ?','','最終入場は何時ですか|さいしゅうにゅうじょうはなんじですか|saishū nyūjō wa nan-ji desu ka',''],
+  ['Est-ce ouvert aujourd’hui ?','','今日は開いていますか|きょうはあいていますか|kyō wa aite imasu ka','本日は営業していますか|ほんじつはえいぎょうしていますか|honjitsu wa eigyō shite imasu ka'],
+  ['Quel est le jour de fermeture ?','','定休日はいつですか|ていきゅうびはいつですか|teikyūbi wa itsu desu ka','']]
+};var ORD=["Salutations", "Politesse et remerciements", "Voyager seule", "Restaurants", "Bars et izakaya", "Konbini et distributeurs", "Hôtels", "Trains et transports", "Taxi et bus", "Aéroport", "Directions", "Shopping", "Argent", "Conversations quotidiennes", "Téléphone et internet", "Urgences", "Santé et besoins personnels", "Onsen et bains", "Tourisme et temples"],o={};ORD.forEach(function(t){o[t]=(PH[t]||[]).concat(X[t]||[])});PH=o})();
 THEMES=Object.keys(PH);
 var THICON={'Salutations':'smile','Politesse et remerciements':'heart','Restaurants':'food','Hôtels':'hotel','Trains et transports':'train','Directions':'compass','Shopping':'shop','Conversations quotidiennes':'chat','Urgences':'alert','Santé et besoins personnels':'health','Onsen et bains':'onsen','Tourisme':'camera'};
+THICON['Voyager seule']='user';THICON['Bars et izakaya']='beer';THICON['Konbini et distributeurs']='cart';THICON['Taxi et bus']='bus';THICON['Aéroport']='plane';THICON['Argent']='yen';THICON['Téléphone et internet']='phone';THICON['Tourisme et temples']='temple';THICON['Tourisme']='camera';
+ICONS.user='M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4.5 20c0-3.8 3.4-6 7.5-6s7.5 2.200 7.500 6';ICONS.beer='M6 4h10v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2zM16 8h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M10 8v8M13 8v8';ICONS.cart='M3 4h2l2.200 11h11l2-8H6.500M9 20h.01M17 20h.01';ICONS.yen='M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9 8l3 4 3-4M12 12v5M9.500 13.500h5M9.500 15.500h5';ICONS.phone='M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2';
+var THCT=THC.concat(['#C9B8E0','#E3C58A','#7FB7B0','#E7A9C3','#B5C98A','#9DB4CF','#D9B0A0']);
+thc=function(t){var i=THEMES.indexOf(t);return THCT[(i<0?0:i)%THCT.length]};
 var REGS={c:{n:'Familier',who:'ami(e), famille, enfant',col:'#EDA5B0',ic:'chat',lv:1},p:{n:'Poli',who:'inconnu, vendeur, serveur',col:'#A4BED3',ic:'check',lv:2},f:{n:'Soutenu',who:'personne âgée, supérieur, situation formelle',col:'#C4A8C9',ic:'crown',lv:3}};
 var REGO=['c','p','f'],PREG='p';
 function parseV(s){var a=s.split('|');return{k:a[0],h:a[1],ro:a[2],rare:a[3]||''}}
@@ -1383,7 +1664,7 @@ function renderCarnet(){
    b.append(el('h3',null,'Thèmes','margin-top:26px'));var g=el('div','bubs');
    THEMES.forEach(function(t){var c=sty(el('button','bub'),thc(t));c.type='button';c.innerHTML='<span class="ic">'+ico(THICON[t],'currentColor',26)+'</span><b>'+t+'</b><small>'+PH[t].length+' phrases</small>';c.onclick=function(){PT=t;renderCarnet();window.scrollTo(0,0)};g.append(c)});b.append(g);
   }else{
-   b.append(backBtn('Thèmes',function(){PT=null;renderCarnet()}),grp(thc(PT),PT,'h2',6));
+   b.append(grp(thc(PT),PT,'h2',6));
    PH[PT].forEach(function(x){b.append(card(ph(PT,x)))});
   }
  }else if(cv==='vocab'){
@@ -2066,7 +2347,7 @@ function renderCarnet(){
    var g=el('div','bubs');
    THEMES.forEach(function(t){var c=sty(el('button','bub'),thc(t));c.type='button';c.innerHTML='<span class="ic">'+ico(THICON[t],'currentColor',26)+'</span><b>'+t+'</b><small>'+PH[t].length+' phrases</small>';c.onclick=function(){PT=t;renderCarnet();window.scrollTo(0,0)};g.append(c)});b.append(g);
   }else{
-   b.append(backBtn('Thèmes',function(){PT=null;renderCarnet()}),grp(thc(PT),PT,'h2',6));
+   b.append(grp(thc(PT),PT,'h2',6));
    PH[PT].forEach(function(x){b.append(card(ph(PT,x)))});
   }
  }else if(cv==='vocab'){
@@ -2630,7 +2911,7 @@ function addPlace(pre){
   if(!v.city)return'Écris la ville ou la zone.';
   var city=canon(v.city),pf=v.pref||cityPref(city);if(!pf)return'Choisis la préfecture de cette ville.';
   if(v.time&&!v.date)return'Choisis aussi une date pour ajouter une heure.';
-  var only=!v.n&&v.type==='Autre'&&!v.date&&!v.addr&&!v.url;
+  var only=!v.n&&(v.type==='Autre'||v.type===pre.type)&&!v.date&&!v.addr&&!v.url;
   if(only&&places.some(function(p){return norm(p.city)===norm(city)}))return'Cette destination existe déjà.';
   places.push({id:++uid,city:city,pref:pf,n:v.n,type:v.type,price:+v.price||0,date:v.date,time:v.time,note:v.note,addr:v.addr,url:v.url,cityOnly:only});
   if(pre.wish){var wi=wishes.findIndex(function(w){return w.id===pre.wish});if(wi>=0)wishes.splice(wi,1)}
@@ -2811,11 +3092,12 @@ function jgMap(o){
   if(fb){foc=fit(fb,1.25)}}
  var has={};cityGroups().forEach(function(g){if(g.items.length)has[g.pref]=1});
 
- function DECO(){
+ function tapType(r){return r[5]==='o'?'Onsen':(r[5]==='a'?'Aéroport':undefined)}
+function DECO(){
   function P(lat,lon){return jgXY(lon,lat)}
   var d='';
-  /* halo côtier : vagues concentriques autour de toutes les côtes */
-  d+='<g class="dhalo" pointer-events="none" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="'+JGD.cs+'" stroke="#C5D8E2" stroke-width="15" opacity=".34" vector-effect="non-scaling-stroke"/><path d="'+JGD.cs+'" stroke="#B5CCD8" stroke-width="8.5" opacity=".4" vector-effect="non-scaling-stroke"/></g>';
+  /* sillage côtier : deux fines lignes nettes (aucun flou) */
+  d+='<g class="dhalo" pointer-events="none" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="'+JGD.cs+'" stroke="#8FB0C4" stroke-width="32" opacity=".30" vector-effect="non-scaling-stroke"/><path class="dring" d="'+JGD.cs+'" stroke-width="30.2" vector-effect="non-scaling-stroke"/><path d="'+JGD.cs+'" stroke="#8FB0C4" stroke-width="15" opacity=".5" vector-effect="non-scaling-stroke"/><path class="dring" d="'+JGD.cs+'" stroke-width="13.4" vector-effect="non-scaling-stroke"/></g>';
   return d}
  var s='<svg class="jsv" viewBox="'+vb.x+' '+vb.y+' '+vb.w+' '+vb.h+'" role="group" aria-label="'+(reg?'Préfectures de la région '+reg.n:'Carte du Japon')+'">'+DECO();
  Object.keys(JGD.pd).forEach(function(p){var rg=prefRegion(p),dim=reg&&rg!==reg;
@@ -3030,13 +3312,13 @@ function jgMap(o){
  function up(e){if(!ptr[e.pointerId])return;delete ptr[e.pointerId];svg.querySelectorAll('.pf.hot').forEach(function(n){n.classList.remove('hot')});
   if(Object.keys(ptr).length<2)pin0=null;
   if(e.type==='pointerup'&&moved<=10&&drag){var sx=drag.x,sy=drag.y,t=document.elementFromPoint(sx,sy);
-   if(!(t&&t.closest&&t.closest('.pin'))){var cg=cityAt(sx,sy);if(cg){var rl3=REFC[+cg.dataset.i];if(rl3&&typeof addPlace==='function'){closeSheet();addPlace({city:rl3[7]||rl3[0],pref:rl3[4]})}drag=null;if(!Object.keys(ptr).length)drag=null;return}}
+   if(!(t&&t.closest&&t.closest('.pin'))){var cg=cityAt(sx,sy);if(cg){var rl3=REFC[+cg.dataset.i];if(rl3&&typeof addPlace==='function'){closeSheet();addPlace({city:rl3[7]||rl3[0],pref:rl3[4],type:tapType(rl3)})}drag=null;if(!Object.keys(ptr).length)drag=null;return}}
    if(t)hit(t)}
   if(!Object.keys(ptr).length)drag=null}
  svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
  svg.addEventListener('wheel',function(e){if(!e.ctrlKey&&!e.metaKey&&vb.w>=NW*0.97&&!reg)return;e.preventDefault();var m=pt(e);zoomAt(e.deltaY<0?1.3:1/1.3,m.x,m.y)},{passive:false});
  function hit(t){
-  var rc=t.closest&&t.closest('.rcity');if(rc){var rl2=REFC[+rc.dataset.i];if(rl2&&typeof addPlace==='function'){closeSheet();addPlace({city:rl2[7]||rl2[0],pref:rl2[4]})}return}
+  var rc=t.closest&&t.closest('.rcity');if(rc){var rl2=REFC[+rc.dataset.i];if(rl2&&typeof addPlace==='function'){closeSheet();addPlace({city:rl2[7]||rl2[0],pref:rl2[4],type:tapType(rl2)})}return}
   var n=t.closest&&t.closest('.pin');
   if(n){if(n.classList.contains('cl')){var ms=n.dataset.c.split(',').map(function(i){return pins[+i]}),xs=ms.map(function(p){return p.x}),ys=ms.map(function(p){return p.y});
      var x0=Math.min.apply(0,xs),x1=Math.max.apply(0,xs),y0=Math.min.apply(0,ys),y1=Math.max.apply(0,ys);if(x1-x0<0.2)x1=x0+0.2;if(y1-y0<0.2)y1=y0+0.2;zoomTo(x0,y0,x1,y1)}
@@ -3268,7 +3550,7 @@ L.forEach(function(c){REFC.push([c[0],c[4],c[1],c[2],c[3]]);var k=norm(c[0]);GAZ
 var OFF={'Naha':1,'Amami':1};for(var i=REFC.length-1;i>=0;i--)if(OFF[REFC[i][0]])REFC.splice(i,1);
 
 /* onsen réputés + aéroports : points de repère supplémentaires (kind 'o' / 'a') */
-var X=[["o", "Noboribetsu", "Hokkaido", 42.4949, 141.1437, "Noboribetsu Onsen", "Noboribetsu Onsen", 1], ["o", "Jozankei", "Hokkaido", 42.9652, 141.1652, "Jozankei", "Jozankei Onsen", 0], ["o", "Toyako", "Hokkaido", 42.5636, 140.8178, "Toyako", "Toyako Onsen", 0], ["o", "Yunokawa", "Hokkaido", 41.7777, 140.7879, "Yunokawa", "Yunokawa Onsen", 0], ["o", "Sounkyo", "Hokkaido", 43.727, 142.948, "Sounkyo", "Sounkyo Onsen", 0], ["o", "Kawayu", "Hokkaido", 43.6403, 144.4409, "Kawayu", "Kawayu Onsen", 0], ["o", "Akanko", "Hokkaido", 43.4347, 144.0872, "Akanko", "Akanko Onsen", 0], ["o", "Sukayu", "Aomori", 40.6503, 140.8516, "Sukayu", "Sukayu Onsen", 0], ["o", "Asamushi", "Aomori", 40.8883, 140.8646, "Asamushi", "Asamushi Onsen", 0], ["o", "Hanamaki", "Iwate", 39.4538, 141.0694, "Hanamaki Onsen", "Hanamaki Onsen", 0], ["o", "Naruko", "Miyagi", 38.7631, 140.716, "Naruko", "Naruko Onsen", 1], ["o", "Akiu", "Miyagi", 38.2288, 140.7183, "Akiu", "Akiu Onsen", 0], ["o", "Nyuto", "Akita", 39.8033, 140.7977, "Nyuto", "Nyuto Onsen", 0], ["o", "Tamagawa", "Akita", 39.9616, 140.7157, "Tamagawa", "Tamagawa Onsen", 0], ["o", "Ginzan", "Yamagata", 38.5672, 140.5256, "Ginzan", "Ginzan Onsen", 1], ["o", "Zao", "Yamagata", 38.1679, 140.4003, "Zao", "Zao Onsen", 1], ["o", "Iizaka", "Fukushima", 37.8299, 140.4543, "Iizaka", "Iizaka Onsen", 0], ["o", "Higashiyama", "Fukushima", 37.4788, 139.9604, "Higashiyama", "Higashiyama Onsen", 0], ["M", "Kusatsu", "Gunma", 1], ["M", "Ikaho", "Gunma", 0], ["M", "Minakami", "Gunma", 0], ["o", "Shima", "Gunma", 36.6745, 138.7842, "Shima", "Shima Onsen", 0], ["o", "Kinugawa", "Tochigi", 36.8226, 139.7167, "Kinugawa", "Kinugawa Onsen", 0], ["o", "Nasu", "Tochigi", 37.0833, 139.9833, "Nasu", "Nasu Onsen", 0], ["o", "Shiobara", "Tochigi", 36.9687, 139.8235, "Shiobara", "Shiobara Onsen", 0], ["M", "Hakone", "Kanagawa", 1], ["o", "Yugawara", "Kanagawa", 35.15, 139.0667, "Yugawara", "Yugawara Onsen", 0], ["M", "Atami", "Shizuoka", 1], ["M", "Ito", "Shizuoka", 0], ["o", "Shuzenji", "Shizuoka", 34.9757, 138.9369, "Shuzenji", "Shuzenji Onsen", 0], ["o", "Kawazu", "Shizuoka", 34.7947, 138.9353, "Kawazu", "Kawazu Onsen", 0], ["M", "Gero", "Gifu", 1], ["o", "Hirayu", "Gifu", 36.1915, 137.5537, "Hirayu", "Hirayu Onsen", 0], ["o", "Unazuki", "Toyama", 36.8161, 137.5828, "Unazuki", "Unazuki Onsen", 0], ["o", "Wakura", "Ishikawa", 37.0749, 136.9257, "Wakura", "Wakura Onsen", 0], ["o", "Yamashiro", "Ishikawa", 36.2918, 136.3607, "Yamashiro", "Yamashiro Onsen", 0], ["o", "Yamanaka", "Ishikawa", 36.2501, 136.3747, "Yamanaka", "Yamanaka Onsen", 1], ["o", "Awara", "Fukui", 36.2154, 136.2352, "Awara", "Awara Onsen", 0], ["o", "Yudanaka", "Nagano", 36.7421, 138.413, "Yudanaka", "Yudanaka Onsen", 0], ["o", "Bessho", "Nagano", 36.3555, 138.1606, "Bessho", "Bessho Onsen", 0], ["o", "Asama", "Nagano", 36.2626, 137.9887, "Asama", "Asama Onsen", 0], ["o", "Yuzawa", "Niigata", 36.938, 138.8133, "Yuzawa", "Yuzawa Onsen", 0], ["o", "Arima", "Hyogo", 34.7993, 135.2463, "Arima", "Arima Onsen", 1], ["o", "Kinosaki", "Hyogo", 35.6237, 134.8136, "Kinosaki", "Kinosaki Onsen", 1], ["o", "Shirahama", "Wakayama", 33.6833, 135.35, "Shirahama", "Shirahama Onsen", 1], ["o", "Yunomine", "Wakayama", 33.8288, 135.7576, "Yunomine", "Yunomine Onsen", 0], ["o", "Kurama", "Kyoto", 35.1192, 135.7765, "Kurama", "Kurama Onsen", 0], ["o", "Yunoyama", "Mie", 35.0118, 136.474, "Yunoyama", "Yunoyama Onsen", 0], ["o", "Tamatsukuri", "Shimane", 35.4308, 133.0122, "Tamatsukuri", "Tamatsukuri Onsen", 0], ["o", "Yunotsu", "Shimane", 35.0913, 132.3507, "Yunotsu", "Yunotsu Onsen", 0], ["o", "Misasa", "Tottori", 35.4091, 133.8935, "Misasa", "Misasa Onsen", 0], ["o", "Yubara", "Okayama", 35.2015, 133.7314, "Yubara", "Yubara Onsen", 0], ["o", "Yuda", "Yamaguchi", 34.1651, 131.4579, "Yuda", "Yuda Onsen", 0], ["o", "Nagatoyumoto", "Yamaguchi", 34.3345, 131.1726, "Nagatoyumoto", "Nagatoyumoto Onsen", 0], ["o", "Dogo", "Ehime", 33.8504, 132.7851, "Dogo", "Dogo Onsen", 1], ["M", "Beppu", "Oita", 1], ["M", "Yufuin", "Oita", 1], ["o", "Kurokawa", "Kumamoto", 33.0777, 131.1419, "Kurokawa", "Kurokawa Onsen", 1], ["M", "Unzen", "Nagasaki", 0], ["M", "Ibusuki", "Kagoshima", 1], ["o", "Kirishima", "Kagoshima", 31.8684, 130.7343, "Kirishima Onsen", "Kirishima Onsen", 0], ["M", "Takeo", "Saga", 0], ["M", "Ureshino", "Saga", 0], ["a", "Haneda", "Tokyo", 35.5523, 139.7797, "Haneda · HND", "Aéroport Haneda (HND)", 1], ["a", "Narita", "Chiba", 35.7647, 140.3864, "Narita · NRT", "Aéroport Narita (NRT)", 1], ["a", "Kansai", "Osaka", 34.4273, 135.2441, "Kansai · KIX", "Aéroport Kansai (KIX)", 1], ["a", "Itami", "Hyogo", 34.7855, 135.4382, "Itami · ITM", "Aéroport Itami (ITM)", 1], ["a", "Kobe", "Hyogo", 34.6367, 135.2279, "Kobe · UKB", "Aéroport Kobe (UKB)", 0], ["a", "Chubu Centrair", "Aichi", 34.8584, 136.8054, "Chubu Centrair · NGO", "Aéroport Chubu Centrair (NGO)", 1], ["a", "Fukuoka", "Fukuoka", 33.5859, 130.4507, "Fukuoka · FUK", "Aéroport Fukuoka (FUK)", 1], ["a", "New Chitose", "Hokkaido", 42.7752, 141.6923, "New Chitose · CTS", "Aéroport New Chitose (CTS)", 1], ["a", "Hakodate", "Hokkaido", 41.77, 140.8219, "Hakodate · HKD", "Aéroport Hakodate (HKD)", 0], ["a", "Asahikawa", "Hokkaido", 43.6708, 142.4475, "Asahikawa · AKJ", "Aéroport Asahikawa (AKJ)", 0], ["a", "Kushiro", "Hokkaido", 43.041, 144.193, "Kushiro · KUH", "Aéroport Kushiro (KUH)", 0], ["a", "Memanbetsu", "Hokkaido", 43.8806, 144.1641, "Memanbetsu · MMB", "Aéroport Memanbetsu (MMB)", 0], ["a", "Obihiro", "Hokkaido", 42.7333, 143.2167, "Obihiro · OBO", "Aéroport Obihiro (OBO)", 0], ["a", "Wakkanai", "Hokkaido", 45.4042, 141.8008, "Wakkanai · WKJ", "Aéroport Wakkanai (WKJ)", 0], ["a", "Aomori", "Aomori", 40.7347, 140.6908, "Aomori · AOJ", "Aéroport Aomori (AOJ)", 0], ["a", "Hanamaki", "Iwate", 39.4286, 141.1353, "Hanamaki · HNA", "Aéroport Hanamaki (HNA)", 0], ["a", "Sendai", "Miyagi", 38.1397, 140.9169, "Sendai · SDJ", "Aéroport Sendai (SDJ)", 1], ["a", "Akita", "Akita", 39.6156, 140.2186, "Akita · AXT", "Aéroport Akita (AXT)", 0], ["a", "Yamagata", "Yamagata", 38.4119, 140.3713, "Yamagata · GAJ", "Aéroport Yamagata (GAJ)", 0], ["a", "Fukushima", "Fukushima", 37.2274, 140.4307, "Fukushima · FKS", "Aéroport Fukushima (FKS)", 0], ["a", "Niigata", "Niigata", 37.9559, 139.1207, "Niigata · KIJ", "Aéroport Niigata (KIJ)", 0], ["a", "Toyama", "Toyama", 36.6483, 137.1875, "Toyama · TOY", "Aéroport Toyama (TOY)", 0], ["a", "Komatsu", "Ishikawa", 36.3946, 136.4065, "Komatsu · KMQ", "Aéroport Komatsu (KMQ)", 0], ["a", "Noto", "Ishikawa", 37.2931, 136.962, "Noto · NTQ", "Aéroport Noto (NTQ)", 0], ["a", "Shizuoka", "Shizuoka", 34.797, 138.1815, "Shizuoka · FSZ", "Aéroport Shizuoka (FSZ)", 0], ["a", "Matsumoto", "Nagano", 36.1668, 137.9227, "Matsumoto · MMJ", "Aéroport Matsumoto (MMJ)", 0], ["a", "Hiroshima", "Hiroshima", 34.4361, 132.9194, "Hiroshima · HIJ", "Aéroport Hiroshima (HIJ)", 1], ["a", "Okayama", "Okayama", 34.7569, 133.8553, "Okayama · OKJ", "Aéroport Okayama (OKJ)", 0], ["a", "Yonago", "Tottori", 35.4978, 133.2455, "Yonago · YGJ", "Aéroport Yonago (YGJ)", 0], ["a", "Izumo", "Shimane", 35.4136, 132.89, "Izumo · IZO", "Aéroport Izumo (IZO)", 0], ["a", "Tottori", "Tottori", 35.5301, 134.1666, "Tottori · TTJ", "Aéroport Tottori (TTJ)", 0], ["a", "Yamaguchi Ube", "Yamaguchi", 33.93, 131.2786, "Yamaguchi Ube · UBJ", "Aéroport Yamaguchi Ube (UBJ)", 0], ["a", "Takamatsu", "Kagawa", 34.2142, 134.0156, "Takamatsu · TAK", "Aéroport Takamatsu (TAK)", 0], ["a", "Matsuyama", "Ehime", 33.8272, 132.6997, "Matsuyama · MYJ", "Aéroport Matsuyama (MYJ)", 0], ["a", "Kochi", "Kochi", 33.5461, 133.6694, "Kochi · KCZ", "Aéroport Kochi (KCZ)", 0], ["a", "Tokushima", "Tokushima", 34.1328, 134.6066, "Tokushima · TKS", "Aéroport Tokushima (TKS)", 0], ["a", "Kitakyushu", "Fukuoka", 33.8459, 131.0347, "Kitakyushu · KKJ", "Aéroport Kitakyushu (KKJ)", 0], ["a", "Saga", "Saga", 33.1497, 130.3022, "Saga · HSG", "Aéroport Saga (HSG)", 0], ["a", "Nagasaki", "Nagasaki", 32.9169, 129.9136, "Nagasaki · NGS", "Aéroport Nagasaki (NGS)", 0], ["a", "Kumamoto", "Kumamoto", 32.8373, 130.8551, "Kumamoto · KMJ", "Aéroport Kumamoto (KMJ)", 0], ["a", "Oita", "Oita", 33.4794, 131.7372, "Oita · OIT", "Aéroport Oita (OIT)", 0], ["a", "Miyazaki", "Miyazaki", 31.8772, 131.4486, "Miyazaki · KMI", "Aéroport Miyazaki (KMI)", 0], ["a", "Kagoshima", "Kagoshima", 31.8034, 130.7194, "Kagoshima · KOJ", "Aéroport Kagoshima (KOJ)", 1], ["a", "Ibaraki", "Ibaraki", 36.1811, 140.4154, "Ibaraki · IBR", "Aéroport Ibaraki (IBR)", 0], ["a", "Nanki-Shirahama", "Wakayama", 33.6622, 135.3644, "Nanki-Shirahama · SHM", "Aéroport Nanki-Shirahama (SHM)", 0], ["a", "Shonai", "Yamagata", 38.8122, 139.7872, "Shonai · SYO", "Aéroport Shonai (SYO)", 0]];
+var X=[["o", "Noboribetsu", "Hokkaido", 42.4949, 141.1437, "Noboribetsu Onsen", "Noboribetsu Onsen", 1], ["o", "Jozankei", "Hokkaido", 42.9652, 141.1652, "Jozankei", "Jozankei Onsen", 0], ["o", "Toyako", "Hokkaido", 42.5636, 140.8178, "Toyako", "Toyako Onsen", 0], ["o", "Yunokawa", "Hokkaido", 41.7777, 140.7879, "Yunokawa", "Yunokawa Onsen", 0], ["o", "Sounkyo", "Hokkaido", 43.727, 142.948, "Sounkyo", "Sounkyo Onsen", 0], ["o", "Kawayu", "Hokkaido", 43.6403, 144.4409, "Kawayu", "Kawayu Onsen", 0], ["o", "Akanko", "Hokkaido", 43.4347, 144.0872, "Akanko", "Akanko Onsen", 0], ["o", "Sukayu", "Aomori", 40.6503, 140.8516, "Sukayu", "Sukayu Onsen", 0], ["o", "Asamushi", "Aomori", 40.8883, 140.8646, "Asamushi", "Asamushi Onsen", 0], ["o", "Hanamaki", "Iwate", 39.4538, 141.0694, "Hanamaki Onsen", "Hanamaki Onsen", 0], ["o", "Naruko", "Miyagi", 38.7631, 140.716, "Naruko", "Naruko Onsen", 1], ["o", "Akiu", "Miyagi", 38.2288, 140.7183, "Akiu", "Akiu Onsen", 0], ["o", "Nyuto", "Akita", 39.8033, 140.7977, "Nyuto", "Nyuto Onsen", 0], ["o", "Tamagawa", "Akita", 39.9616, 140.7157, "Tamagawa", "Tamagawa Onsen", 0], ["o", "Ginzan", "Yamagata", 38.5672, 140.5256, "Ginzan", "Ginzan Onsen", 1], ["o", "Zao", "Yamagata", 38.1679, 140.4003, "Zao", "Zao Onsen", 1], ["o", "Iizaka", "Fukushima", 37.8299, 140.4543, "Iizaka", "Iizaka Onsen", 0], ["o", "Higashiyama", "Fukushima", 37.4788, 139.9604, "Higashiyama", "Higashiyama Onsen", 0], ["M", "Kusatsu", "Gunma", 1], ["M", "Ikaho", "Gunma", 0], ["M", "Minakami", "Gunma", 0], ["o", "Shima", "Gunma", 36.6745, 138.7842, "Shima", "Shima Onsen", 0], ["o", "Kinugawa", "Tochigi", 36.8226, 139.7167, "Kinugawa", "Kinugawa Onsen", 0], ["o", "Nasu", "Tochigi", 37.0833, 139.9833, "Nasu", "Nasu Onsen", 0], ["o", "Shiobara", "Tochigi", 36.9687, 139.8235, "Shiobara", "Shiobara Onsen", 0], ["M", "Hakone", "Kanagawa", 1], ["o", "Yugawara", "Kanagawa", 35.15, 139.0667, "Yugawara", "Yugawara Onsen", 0], ["M", "Atami", "Shizuoka", 1], ["M", "Ito", "Shizuoka", 0], ["o", "Shuzenji", "Shizuoka", 34.9757, 138.9369, "Shuzenji", "Shuzenji Onsen", 0], ["o", "Kawazu", "Shizuoka", 34.7947, 138.9353, "Kawazu", "Kawazu Onsen", 0], ["M", "Gero", "Gifu", 1], ["o", "Hirayu", "Gifu", 36.1915, 137.5537, "Hirayu", "Hirayu Onsen", 0], ["o", "Unazuki", "Toyama", 36.8161, 137.5828, "Unazuki", "Unazuki Onsen", 0], ["o", "Wakura", "Ishikawa", 37.0749, 136.9257, "Wakura", "Wakura Onsen", 0], ["o", "Yamashiro", "Ishikawa", 36.2918, 136.3607, "Yamashiro", "Yamashiro Onsen", 0], ["o", "Yamanaka", "Ishikawa", 36.2501, 136.3747, "Yamanaka", "Yamanaka Onsen", 1], ["o", "Awara", "Fukui", 36.2154, 136.2352, "Awara", "Awara Onsen", 0], ["o", "Yudanaka", "Nagano", 36.7421, 138.413, "Yudanaka", "Yudanaka Onsen", 0], ["o", "Bessho", "Nagano", 36.3555, 138.1606, "Bessho", "Bessho Onsen", 0], ["o", "Asama", "Nagano", 36.2626, 137.9887, "Asama", "Asama Onsen", 0], ["o", "Yuzawa", "Niigata", 36.938, 138.8133, "Yuzawa", "Yuzawa Onsen", 0], ["o", "Arima", "Hyogo", 34.7993, 135.2463, "Arima", "Arima Onsen", 1], ["o", "Kinosaki", "Hyogo", 35.6237, 134.8136, "Kinosaki", "Kinosaki Onsen", 1], ["o", "Shirahama", "Wakayama", 33.6833, 135.35, "Shirahama", "Shirahama Onsen", 1], ["o", "Yunomine", "Wakayama", 33.8288, 135.7576, "Yunomine", "Yunomine Onsen", 0], ["o", "Kurama", "Kyoto", 35.1192, 135.7765, "Kurama", "Kurama Onsen", 0], ["o", "Yunoyama", "Mie", 35.0118, 136.474, "Yunoyama", "Yunoyama Onsen", 0], ["o", "Tamatsukuri", "Shimane", 35.4308, 133.0122, "Tamatsukuri", "Tamatsukuri Onsen", 0], ["o", "Yunotsu", "Shimane", 35.0913, 132.3507, "Yunotsu", "Yunotsu Onsen", 0], ["o", "Misasa", "Tottori", 35.4091, 133.8935, "Misasa", "Misasa Onsen", 0], ["o", "Yubara", "Okayama", 35.2015, 133.7314, "Yubara", "Yubara Onsen", 0], ["o", "Yuda", "Yamaguchi", 34.1651, 131.4579, "Yuda", "Yuda Onsen", 0], ["o", "Nagatoyumoto", "Yamaguchi", 34.3345, 131.1726, "Nagatoyumoto", "Nagatoyumoto Onsen", 0], ["o", "Dogo", "Ehime", 33.8504, 132.7851, "Dogo", "Dogo Onsen", 1], ["M", "Beppu", "Oita", 1], ["M", "Yufuin", "Oita", 1], ["o", "Kurokawa", "Kumamoto", 33.0777, 131.1419, "Kurokawa", "Kurokawa Onsen", 1], ["M", "Unzen", "Nagasaki", 0], ["M", "Ibusuki", "Kagoshima", 1], ["o", "Kirishima", "Kagoshima", 31.8684, 130.7343, "Kirishima Onsen", "Kirishima Onsen", 0], ["M", "Takeo", "Saga", 0], ["M", "Ureshino", "Saga", 0], ["a", "Haneda", "Tokyo", 35.5523, 139.7797, "Haneda · HND", "Haneda Airport", 1], ["a", "Narita", "Chiba", 35.7647, 140.3864, "Narita · NRT", "Narita Airport", 1], ["a", "Kansai", "Osaka", 34.4273, 135.2441, "Kansai · KIX", "Kansai Airport", 1], ["a", "Itami", "Hyogo", 34.7855, 135.4382, "Itami · ITM", "Itami Airport", 1], ["a", "Kobe", "Hyogo", 34.6367, 135.2279, "Kobe · UKB", "Kobe Airport", 0], ["a", "Chubu Centrair", "Aichi", 34.8584, 136.8054, "Chubu Centrair · NGO", "Chubu Centrair Airport", 1], ["a", "Fukuoka", "Fukuoka", 33.5859, 130.4507, "Fukuoka · FUK", "Fukuoka Airport", 1], ["a", "New Chitose", "Hokkaido", 42.7752, 141.6923, "New Chitose · CTS", "New Chitose Airport", 1], ["a", "Hakodate", "Hokkaido", 41.77, 140.8219, "Hakodate · HKD", "Hakodate Airport", 0], ["a", "Asahikawa", "Hokkaido", 43.6708, 142.4475, "Asahikawa · AKJ", "Asahikawa Airport", 0], ["a", "Kushiro", "Hokkaido", 43.041, 144.193, "Kushiro · KUH", "Kushiro Airport", 0], ["a", "Memanbetsu", "Hokkaido", 43.8806, 144.1641, "Memanbetsu · MMB", "Memanbetsu Airport", 0], ["a", "Obihiro", "Hokkaido", 42.7333, 143.2167, "Obihiro · OBO", "Obihiro Airport", 0], ["a", "Wakkanai", "Hokkaido", 45.4042, 141.8008, "Wakkanai · WKJ", "Wakkanai Airport", 0], ["a", "Aomori", "Aomori", 40.7347, 140.6908, "Aomori · AOJ", "Aomori Airport", 0], ["a", "Hanamaki", "Iwate", 39.4286, 141.1353, "Hanamaki · HNA", "Hanamaki Airport", 0], ["a", "Sendai", "Miyagi", 38.1397, 140.9169, "Sendai · SDJ", "Sendai Airport", 1], ["a", "Akita", "Akita", 39.6156, 140.2186, "Akita · AXT", "Akita Airport", 0], ["a", "Yamagata", "Yamagata", 38.4119, 140.3713, "Yamagata · GAJ", "Yamagata Airport", 0], ["a", "Fukushima", "Fukushima", 37.2274, 140.4307, "Fukushima · FKS", "Fukushima Airport", 0], ["a", "Niigata", "Niigata", 37.9559, 139.1207, "Niigata · KIJ", "Niigata Airport", 0], ["a", "Toyama", "Toyama", 36.6483, 137.1875, "Toyama · TOY", "Toyama Airport", 0], ["a", "Komatsu", "Ishikawa", 36.3946, 136.4065, "Komatsu · KMQ", "Komatsu Airport", 0], ["a", "Noto", "Ishikawa", 37.2931, 136.962, "Noto · NTQ", "Noto Airport", 0], ["a", "Shizuoka", "Shizuoka", 34.797, 138.1815, "Shizuoka · FSZ", "Shizuoka Airport", 0], ["a", "Matsumoto", "Nagano", 36.1668, 137.9227, "Matsumoto · MMJ", "Matsumoto Airport", 0], ["a", "Hiroshima", "Hiroshima", 34.4361, 132.9194, "Hiroshima · HIJ", "Hiroshima Airport", 1], ["a", "Okayama", "Okayama", 34.7569, 133.8553, "Okayama · OKJ", "Okayama Airport", 0], ["a", "Yonago", "Tottori", 35.4978, 133.2455, "Yonago · YGJ", "Yonago Airport", 0], ["a", "Izumo", "Shimane", 35.4136, 132.89, "Izumo · IZO", "Izumo Airport", 0], ["a", "Tottori", "Tottori", 35.5301, 134.1666, "Tottori · TTJ", "Tottori Airport", 0], ["a", "Yamaguchi Ube", "Yamaguchi", 33.93, 131.2786, "Yamaguchi Ube · UBJ", "Yamaguchi Ube Airport", 0], ["a", "Takamatsu", "Kagawa", 34.2142, 134.0156, "Takamatsu · TAK", "Takamatsu Airport", 0], ["a", "Matsuyama", "Ehime", 33.8272, 132.6997, "Matsuyama · MYJ", "Matsuyama Airport", 0], ["a", "Kochi", "Kochi", 33.5461, 133.6694, "Kochi · KCZ", "Kochi Airport", 0], ["a", "Tokushima", "Tokushima", 34.1328, 134.6066, "Tokushima · TKS", "Tokushima Airport", 0], ["a", "Kitakyushu", "Fukuoka", 33.8459, 131.0347, "Kitakyushu · KKJ", "Kitakyushu Airport", 0], ["a", "Saga", "Saga", 33.1497, 130.3022, "Saga · HSG", "Saga Airport", 0], ["a", "Nagasaki", "Nagasaki", 32.9169, 129.9136, "Nagasaki · NGS", "Nagasaki Airport", 0], ["a", "Kumamoto", "Kumamoto", 32.8373, 130.8551, "Kumamoto · KMJ", "Kumamoto Airport", 0], ["a", "Oita", "Oita", 33.4794, 131.7372, "Oita · OIT", "Oita Airport", 0], ["a", "Miyazaki", "Miyazaki", 31.8772, 131.4486, "Miyazaki · KMI", "Miyazaki Airport", 0], ["a", "Kagoshima", "Kagoshima", 31.8034, 130.7194, "Kagoshima · KOJ", "Kagoshima Airport", 1], ["a", "Ibaraki", "Ibaraki", 36.1811, 140.4154, "Ibaraki · IBR", "Ibaraki Airport", 0], ["a", "Nanki-Shirahama", "Wakayama", 33.6622, 135.3644, "Nanki-Shirahama · SHM", "Nanki-Shirahama Airport", 0], ["a", "Shonai", "Yamagata", 38.8122, 139.7872, "Shonai · SYO", "Shonai Airport", 0]];
 X.forEach(function(e){
  if(e[0]==='M'){REFC.forEach(function(r){if(r[0]===e[1]&&r[4]===e[2]){r[5]='o';if(e[3])r[1]=1}});return}
  var full=e[6],k=norm(full);
