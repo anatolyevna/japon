@@ -534,6 +534,20 @@ input,select,textarea{font-size:16px!important}
 .estadd.done{opacity:.75}
 .estact .mini{margin-top:0}
 
+/* v18 */
+/* aujourd'hui : rouge plein, très distinct */
+.mc.today{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important;font-weight:800;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,var(--bg))}
+.mc.today .dn{font-size:1.1rem;font-weight:800}
+.mc.today .dots i{box-shadow:inset 0 0 0 1px rgba(255,255,255,.9)}
+.wc.today .wd{background:var(--accent)!important;border-color:var(--accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,var(--bg))}
+.wc.today .wd small,.wc.today .wd strong{color:#fff!important}
+.todayrow{display:flex;justify-content:center;margin-top:12px}
+.todaybtn{border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:999px;padding:7px 18px;font-weight:700;font-size:.9rem;min-height:36px}
+.todaybtn.cur{opacity:.45;border-color:color-mix(in srgb,var(--ink) 20%,var(--bg));color:var(--muted)}
+/* plans de lignes cliquables */
+.mm .lhit,.mm [data-s],.mm text.gl,.mm text.hl{cursor:pointer}
+.mm circle:not(.lhit){pointer-events:none}
+
 </style>
 </head>
 <body>
@@ -3013,6 +3027,90 @@ function calcCard(net,i,l){
   if(done){var go=el('button','mini estgo','Voir mes trajets');go.type='button';go.onclick=function(){TV='trajets';renderTrans();window.scrollTo(0,0)};act.append(go)}}
  s1.onchange=s2.onchange=up;up();
  var l1=el('label',null,'De'),l2=el('label',null,'À');l1.append(s1);l2.append(s2);box.append(l1,l2);c.append(box,out,act);return c}
+
+
+/* ---------- v18 : plans de lignes cliquables, retour au plan, bouton Aujourd'hui ---------- */
+function metroSVG(sel){
+ var B=metroBox(),k=B[2]/358,s='<svg class="mm" viewBox="'+B.map(function(v){return v.toFixed(0)}).join(' ')+'" role="img" aria-label="Schéma simplifié des lignes de métro de Tokyo, positions approximatives">'+metroBack();
+ var ycol=METRO[0].c,ring=spline(MP[0].n.map(pj),true);
+ s+='<path d="'+ring+'" fill="none" stroke="'+ycol+'" stroke-width="'+(14*k).toFixed(1)+'" stroke-opacity="'+(sel==null||sel===0?.16:.06)+'" stroke-linejoin="round"/>';
+ var order=MP.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
+ order.forEach(function(i){var L=MP[i],c=mstroke(METRO[i].c),pts=L.n.map(pj),dim=sel!=null&&i!==sel,on=sel===i,w=(on?5:3)*k,op=dim?.15:(on?1:.72);
+  var d=L.smooth?spline(pts,!!L.closed):rpath(L.closed?pts.concat([pts[0]]):pts,9);
+  s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w.toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"/>';
+  s+='<path class="lhit" data-l="'+i+'" d="'+d+'" fill="none" stroke="transparent" stroke-width="'+(16*k).toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round"/>';
+  (L.stubs||[]).forEach(function(st){var p=st.at==='start'?pts[0]:pts[pts.length-1],n=Math.sqrt(st.d[0]*st.d[0]+st.d[1]*st.d[1]),q=[p[0]+st.d[0]/n*22,p[1]+st.d[1]/n*22];
+   s+='<path d="M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'L'+q[0].toFixed(1)+' '+q[1].toFixed(1)+'" stroke="'+c+'" stroke-width="'+(2.4*k).toFixed(1)+'" stroke-dasharray="1.5 5" stroke-linecap="round" opacity="'+(dim?.15:.8)+'"/>'})});
+ var boxes=[],hubNames={};HUBS.forEach(function(h){hubNames[h[0]]=1});
+ var fh=11*k,fs=9.2*k;
+ HUBS.forEach(function(h){var p=pj(h[0]),w=h[0].length*fh*.58,bx=h[3]==='end'?p[0]+h[1]-w:h[3]==='middle'?p[0]+h[1]-w/2:p[0]+h[1];boxes.push([bx,p[1]+h[2]-fh,w,fh*1.15])});
+ if(sel!=null){var lst=METRO[sel].full||[],cs=mstroke(METRO[sel].c);
+  lst.forEach(function(nm){if(GEO[nm]&&!hubNames[nm]&&MP[sel].n.indexOf(nm)>=0){var p=pj(nm),right=p[0]<B[0]+B[2]*.62,w=nm.length*fs*.56,bx=right?p[0]+6*k:p[0]-6*k-w,by=p[1]-fs*.5;
+   s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(3.2*k).toFixed(1)+'" fill="#FFFBF5" stroke="'+cs+'" stroke-width="'+(2*k).toFixed(1)+'"/>';
+   if(!boxHit(boxes,bx,by,w,fs*1.2)){boxes.push([bx,by,w,fs*1.2]);s+=T(right?p[0]+6*k:p[0]-6*k,p[1]+fs*.34,right?'start':'end',nm,fs,'sl')}}})}
+ HUBS.forEach(function(h){var p=pj(h[0]);s+='<circle class="lhit" data-s="'+h[0]+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(9*k).toFixed(1)+'" fill="transparent"/><circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(3.8*k).toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+(1.7*k).toFixed(1)+'"/>'+T(p[0]+h[1]*k,p[1]+h[2]*k,h[3],h[0],fh,'hl')});
+ s+=metroMarks9(k);
+ s+='</svg>';
+ return s}
+function geoSVG(net,sel){
+ var data=NETS[net].d,defs=data.map(function(l,i){return lineGeo(net,i,l)}),xs=[],ys=[],cnt={},ends={};
+ data.forEach(function(l){var s=l.s;s.forEach(function(n){cnt[n]=(cnt[n]||0)+1});ends[s[0]]=1;ends[s[s.length-1]]=1});
+ defs.forEach(function(g){g.f.concat(g.dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})});
+ if(sel!=null){xs=[];ys=[];defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})}
+ var nm=[];if(sel!=null)defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){nm.push(n)});else defs.forEach(function(g){g.f.forEach(function(n){nm.push(n)})});
+ var kk=1.1,x0,x1;
+ for(var it=0;it<3;it++){x0=1e9;x1=-1e9;nm.forEach(function(n){var p=SP[n];if(!p)return;var w=n.length*10*kk*.56+9*kk,d=LBL[n]||'r';x0=Math.min(x0,p[0]-(d==='l'?w:7*kk));x1=Math.max(x1,p[0]+(d==='r'?w:7*kk))});x0-=10;x1+=10;kk=Math.max(x1-x0,300)/358}
+ var y0=Math.min.apply(0,ys)-46,y1=Math.max.apply(0,ys)+40;
+ if(x1-x0<300){var m=(x0+x1)/2;x0=m-150;x1=m+150}
+ if(y1-y0<170){var m2=(y0+y1)/2;y0=m2-85;y1=m2+85}
+ var W=x1-x0,H=y1-y0,k=W/358,fs=10*k,s='<svg class="mm" viewBox="'+x0.toFixed(0)+' '+y0.toFixed(0)+' '+W.toFixed(0)+' '+H.toFixed(0)+'" role="img" aria-label="Schéma simplifié, positions de principe, hors échelle">'+geoBack(x0,y0,W,H,k);
+ var Z=[['HOKKAIDO',318,6],['TOHOKU',286,196],['KANTO',250,320],['CHUBU',70,262],['KANSAI',44,470],['CHUGOKU',20,552]];
+ var order=data.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);var bus=net==='bus';
+ order.forEach(function(i){var g=defs[i],l=data[i],dim=sel!=null&&i!==sel,on=sel===i,names=on?g.f:g.f.slice(g.from||0),pts=names.map(function(n){return SP[n]}).filter(Boolean);if(pts.length<2)return;
+  var op=dim?.15:(on?1:.72),col=mstroke(l.c),w=(on?4.6:3)*k;
+  s+='<path d="'+rpath(pts,8)+'" fill="none" stroke="'+col+'" stroke-width="'+w.toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"'+(bus?' stroke-dasharray="'+(8*k).toFixed(1)+' '+(5*k).toFixed(1)+'"':'')+'/>';
+  s+='<path class="lhit" data-l="'+i+'" d="'+rpath(pts,8)+'" fill="none" stroke="transparent" stroke-width="'+(16*k).toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round"/>';
+  if(g.dash){var dp=g.dash.map(function(n){return SP[n]});s+='<path d="'+rpath(dp,8)+'" fill="none" stroke="'+col+'" stroke-width="'+(3*k).toFixed(1)+'" stroke-linecap="round" stroke-dasharray="1 '+(6*k).toFixed(1)+'" opacity="'+op+'"/>'}});
+ var boxes=[];function place(n,cls){var p=SP[n];if(!p)return;var dir=LBL[n]||'r',w=n.length*fs*.56+2,h=fs*1.25,x=p[0],y=p[1],bx,by,ta,gap=7*k;
+  if(dir==='r'){bx=x+gap;by=y-h/2;ta='start'}else if(dir==='l'){bx=x-gap-w;by=y-h/2;ta='end'}else if(dir==='t'){bx=x-w/2;by=y-gap-h;ta='middle'}else{bx=x-w/2;by=y+gap;ta='middle'}
+  if(boxHit(boxes,bx,by,w,h))return;boxes.push([bx,by,w,h]);var tx=dir==='r'?x+gap:dir==='l'?x-gap:x,ty=dir==='t'?y-gap-h*.2:dir==='b'?y+gap+h*.78:y+fs*.34;
+  s+=T(tx,ty,ta,n,fs,'gl '+cls)}
+ var R=3.6*k,sw=1.8*k;
+ if(sel!=null){var ln=data[sel];ln.s.forEach(function(n){var p=SP[n];if(p)s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(3.4*k).toFixed(1)+'" fill="#FFFBF5" stroke="'+mstroke(ln.c)+'" stroke-width="'+(2.2*k).toFixed(1)+'"/>'});ln.s.forEach(function(n){place(n,'')})}
+ var hubs=Object.keys(cnt).filter(function(n){return(cnt[n]>=2||ends[n])&&SP[n]&&(sel==null||(nm.indexOf(n)>=0&&x0<SP[n][0]&&SP[n][0]<x1&&y0<SP[n][1]&&SP[n][1]<y1))}).sort(function(a,b){return(cnt[b]||0)-(cnt[a]||0)});
+ hubs.forEach(function(n){var p=SP[n];s+='<circle class="lhit" data-s="'+n+'" cx="'+p[0]+'" cy="'+p[1]+'" r="'+(9*k).toFixed(1)+'" fill="transparent"/><circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+R.toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+sw.toFixed(1)+'"/>'});
+ hubs.forEach(function(n){place(n,'b')});
+ if(sel==null){var others={};data.forEach(function(l){l.s.forEach(function(n){if(SP[n]&&hubs.indexOf(n)<0)others[n]=1})});Object.keys(others).forEach(function(n){var p=SP[n];s+='<circle class="lhit" data-s="'+n+'" cx="'+p[0]+'" cy="'+p[1]+'" r="'+(9*k).toFixed(1)+'" fill="transparent"/><circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(2.5*k).toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+(1.3*k).toFixed(1)+'"/>'});Object.keys(others).forEach(function(n){place(n,'')})}
+ var zbox=[];Z.forEach(function(z){var zy=z[2],zw=z[0].length*7.6*k*.62,zh=7.6*k*1.3,bx=z[1]-zw/2,by=zy-zh;var dot=nm.some(function(n){var p=SP[n];return p&&p[0]>bx-8*k&&p[0]<bx+zw+8*k&&p[1]>by-6*k&&p[1]<by+zh+6*k});if(bx>x0+4&&bx+zw<x1-4&&zy>y0&&zy<y1&&!dot&&!boxHit(boxes,bx-4*k,by-3*k,zw+8*k,zh+6*k)){zbox.push(1);s+=T(z[1],zy,'middle',z[0],7.6*k,'zn')}});
+ if(net==='shink'&&sel==null){var h=SP['Hakata'];s+=T(h[0]+8*k,h[1]+20*k,'start','vers Kagoshima (non détaillé)',7.8*k,'gl m')}
+ s+=geoParkLabels(boxes,x0,y0,W,H,k);
+ return s+'</svg>'}
+function lineOfStation(net,name){var d=NETS[net].d,n=norm(name);
+ for(var i=0;i<d.length;i++){var st=net==='metro'?(d[i].full||d[i].s||[]):(d[i].s||[]);if(st.some(function(x){return norm(x)===n}))return i}return null}
+function mapPick(net,t,close){
+ var n=t.closest&&t.closest('[data-l]'),i=null;
+ if(n)i=+n.getAttribute('data-l');
+ else{n=t.closest&&t.closest('[data-s]');var nm=n?n.getAttribute('data-s'):((t.tagName||'').toLowerCase()==='text'?t.textContent:null);if(nm)i=lineOfStation(net,nm)}
+ if(i==null||isNaN(i)||TSEL[net]===i)return;
+ if(close)close();TSEL[net]=i;renderTrans();window.scrollTo(0,0)}
+function mapWrap2(net,svg,note){var d=mapWrap(svg,note),h=d.querySelector('.mmh'),bt=d.querySelector('.mexp');
+ if(h)h.addEventListener('click',function(e){mapPick(net,e.target)});
+ if(bt)bt.onclick=function(){bigMap(svg);var w=document.querySelector('#dlg .bigmap');if(w)w.addEventListener('click',function(e){mapPick(net,e.target,function(){$('#dlg').close()})})};
+ return d}
+function metroMap(sel){return mapWrap2('metro',metroSVG(sel),'Schéma simplifié, hors échelle. Repères en fond, très discrets.')}
+function geoMap(net,sel){return mapWrap2(net,geoSVG(net,sel),net==='bus'?'Schéma de principe, hors échelle. Pointillés = autocar.':'Schéma de principe, hors échelle, non géographique.')}
+/* plus de bouton « Toutes les lignes » : on revient au plan en appuyant sur l'onglet */
+var _rt18=renderTrans;
+renderTrans=function(){_rt18();document.querySelectorAll('#tview .back').forEach(function(b){if(/Toutes les lignes/.test(b.textContent))b.remove()})};
+$('#tseg').addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('button');if(t&&TSEL.hasOwnProperty(t.dataset.v))TSEL[t.dataset.v]=null},true);
+/* planning : bouton Aujourd'hui */
+var _dp18=decoratePlan;
+decoratePlan=function(){_dp18();var b=$('#pview'),nav=b&&b.querySelector('.pnav');if(!nav)return;
+ var t0=new Date();t0.setHours(0,0,0,0);
+ var cur=S.m==='jour'?K(S.d)===K(t0):S.m==='semaine'?K(mon(S.d))===K(mon(t0)):(S.d.getFullYear()===t0.getFullYear()&&S.d.getMonth()===t0.getMonth());
+ var bt=el('button','todaybtn'+(cur?' cur':''),'Aujourd’hui');bt.type='button';bt.disabled=cur;
+ bt.setAttribute('aria-label','Revenir à aujourd’hui');bt.onclick=function(){S.d=new Date();S.d.setHours(0,0,0,0);renderPlan()};
+ var row=el('div','todayrow');row.append(bt);nav.after(row)};
 
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
