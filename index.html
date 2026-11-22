@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Voyage au Japon</title>
+<title>Carnet de voyage du Japon d’Alina</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Japon">
+<meta name="apple-mobile-web-app-title" content="Japon d’Alina">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#FCF4EB">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -491,7 +491,8 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .gate{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) 20px max(20px,env(safe-area-inset-bottom,0px))}
 .gate[hidden]{display:none}
 .gcard{width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
-.gcard .mark{margin-bottom:6px}
+.fuji{display:block;flex:none;line-height:0}.fuji svg{display:block}
+.gcard .fuji{margin-bottom:6px}
 .gcard h2{margin-bottom:10px}
 .gcard input{font:inherit;font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;width:100%;outline:none}
 .gcard input:focus{border-color:var(--accent)}
@@ -504,7 +505,7 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 </head>
 <body>
 <main class="app">
-<header class="top"><span class="mark"></span><div><h1>Voyage au Japon</h1><p id="syncst">Pas encore connecté</p></div></header>
+<header class="top"><span class="fuji"><svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg></span><div><h1>Carnet de voyage du Japon d’Alina</h1><p id="syncst">Pas encore connecté</p></div></header>
 <section id="carte" class="on"><h2>Carte</h2>
 <p class="lead">La carte simplifiée du Japon (régions, préfectures, tes lieux et tes trajets) se construit à la phase 4. En attendant, les régions ci-dessous mènent à tes destinations.</p>
 <div id="tiles"></div></section>
@@ -2893,20 +2894,21 @@ function mapFrame(){
  d.append(m);
  var lg=el('div','jleg');
  [['d','Destination'],['h','Envie'],['n','Trajet sur une ligne'],['s','Trajet à vol d’oiseau']].forEach(function(x){var i=el('span','lgi '+x[0]);i.append(el('i'),document.createTextNode(x[1]));lg.append(i)});d.append(lg);
- var n=['Contours simplifiés (Global Map Japan, GSI) · Okinawa et petites îles omises · reliefs, lacs, villes et gares placés de mémoire (± quelques centaines de m à quelques km) · détail de ville : Tokyo seulement'];
+ var n=[];
  if(ap)n.push(ap+(ap>1?' villes placées au centre de leur préfecture (repère plus clair)':' ville placée au centre de sa préfecture (repère plus clair)'));
  if(mt.ok.some(function(e){return e.net}))n.push('Circuits : tracés approximatifs entre gares de la ligne');
  if(mt.ok.some(function(e){return!e.net}))n.push('Sans ligne connue : ligne droite entre villes');
  if(mt.miss)n.push(mt.miss+(mt.miss>1?' trajets non placés':' trajet non placé'));
- d.append(el('p','jnote',n.join('\n')));return d}
+ if(n.length)d.append(el('p','jnote',n.join('\n')));return d}
 /* Destinations : carte réelle de la région */
 function regionMap(r,focus){
  if(!JGD)return el('div');
  var c=el('div','regcard2'),m=jgMap({reg:r,focus:focus,onPref:function(p){if(p===focus)return;DV={t:'pref',r:r,p:p};renderDest()}});
- c.append(m,el('p','jnote','Contours simplifiés · Global Map Japan (GSI)'));return c}
+ c.append(m);return c}
 
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
+var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
 (function(){
  var SB_URL='https://qrmviyztnsmwmheuruyh.supabase.co',SB_KEY='sb_publishable_EgJoZATjRURsTIkOO36atw_ANDw1_YD';
  var KEYS=['places','trips','words','wishes','favs','known','kknown','uid'],LSK='jp_state_v1',LSD='jp_dirty_v1';
@@ -2983,7 +2985,7 @@ function regionMap(r,focus){
   var msg=el('p','gmsg');msg.setAttribute('role','alert');
   var go=el('button','btn','Se connecter');go.type='submit';
   var mk=el('button','mini','Première fois : créer mon accès');mk.type='button';
-  card.append(el('span','mark'),el('h2',null,'Voyage au Japon'),em,pw,msg,go,mk);gate.append(card);document.body.append(gate);
+  var lg=el('span','fuji');lg.innerHTML=FUJI;card.append(lg,el('h2',null,'Carnet de voyage du Japon d’Alina'),em,pw,msg,go,mk);gate.append(card);document.body.append(gate);
   var busy=false;
   function run(mode){if(busy)return;var e=em.value.trim(),p=pw.value;if(!e||!p){msg.textContent='Entre ton e-mail et ton code.';return}
    if(!sb){msg.textContent='Connexion à Internet requise pour la première ouverture.';return}
