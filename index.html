@@ -501,6 +501,34 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .gmsg{min-height:1.4em;font-size:.88rem;color:var(--accent)}
 #syncst{min-height:1.2em}
 
+/* v16 */
+/* plus de zoom automatique de l'iPhone dans les formulaires : champs à 16 px minimum */
+input,select,textarea{font-size:16px!important}
+/* carte : légende plus petite */
+.jleg{font-size:.66rem;gap:3px 12px;margin-top:6px}
+.lgi{gap:5px}
+.lgi.d i,.lgi.h i{width:8px;height:8px}
+.lgi.n i{width:16px;height:3px}
+.lgi.s i{width:16px;border-top-width:2px}
+/* planning : jours spéciaux */
+.mc.sp{border-color:var(--sp);box-shadow:inset 0 0 0 1.5px var(--sp);background:color-mix(in srgb,var(--sp) 26%,var(--card))}
+.wc.sp .wd{box-shadow:0 0 0 2px var(--sp);background:color-mix(in srgb,var(--sp) 30%,var(--card))}
+.wc.sp .wb{border-color:var(--sp);background:color-mix(in srgb,var(--sp) 14%,var(--card))}
+.wc.sp.today .wd{box-shadow:0 0 0 2px var(--sp),0 0 0 4px var(--accent)}
+.spt{display:block;font-size:.5rem;letter-spacing:-.1px;line-height:1.15;font-weight:700;color:color-mix(in srgb,var(--sp) 40%,var(--ink));text-align:center;padding:0 2px;word-break:normal;overflow-wrap:normal}
+.spl{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:12px}
+.spi{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.78rem;background:color-mix(in srgb,var(--sp) 24%,var(--card));border:1px solid var(--sp)}
+.spi i{width:8px;height:8px;border-radius:50%;background:var(--sp)}
+.spday{margin-top:12px;display:inline-block;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.9rem;background:color-mix(in srgb,var(--sp) 28%,var(--card));border:1.5px solid var(--sp)}
+/* envies : une section par type */
+.wsec{margin-top:22px}
+.whd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wbub{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 8px;border-radius:999px;background:color-mix(in srgb,var(--d) 24%,var(--card));border:1px solid color-mix(in srgb,var(--d) 60%,var(--card));font-size:.95rem}
+.wbub .wbi{display:inline-flex}
+.wbub em{font-style:normal;font-size:.78rem;color:var(--muted);background:var(--card);border-radius:999px;padding:0 7px;line-height:1.5}
+.wadd{width:34px;height:34px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 16%,var(--bg));background:var(--card);font-size:1.2rem;line-height:1;padding:0;color:var(--muted)}
+.wsec.empty0 .whd{padding-bottom:10px;border-bottom:1.5px dashed color-mix(in srgb,var(--ink) 16%,var(--bg))}
+.wsec .list{margin-top:6px}
 </style>
 </head>
 <body>
@@ -2905,6 +2933,54 @@ function regionMap(r,focus){
  if(!JGD)return el('div');
  var c=el('div','regcard2'),m=jgMap({reg:r,focus:focus,onPref:function(p){if(p===focus)return;DV={t:'pref',r:r,p:p};renderDest()}});
  c.append(m);return c}
+
+
+/* ---------- v16 : jours spéciaux du planning, envies par type ---------- */
+/* Jours fixes chaque année (mois-jour) et dates précises du voyage */
+var SPDAYS={
+ '12-24':{l:'Réveillon de Noël',s:'Réveillon',c:'#E8A094'},
+ '12-25':{l:'Noël',s:'Noël',c:'#E8A094'},
+ '12-31':{l:'Réveillon du Nouvel An',s:'Réveillon',c:'#EEB87D'},
+ '01-01':{l:'Jour de l’An',s:'Jour de l’An',c:'#EEB87D'},
+ '01-03':{l:'Mon anniversaire',s:'Anniv.',c:'#C4A8C9'},
+ '2026-12-21':{l:'Arrivée',s:'Arrivée',c:'#8EC6BD'},
+ '2026-12-22':{l:'Arrivée',s:'Arrivée',c:'#8EC6BD'},
+ '2027-02-09':{l:'Départ',s:'Départ',c:'#A4BED3'},
+ '2027-02-10':{l:'Départ',s:'Départ',c:'#A4BED3'}};
+function spOf(d){var k=K(d);return SPDAYS[k]||SPDAYS[k.slice(5)]||null}
+function spApply(node,sp,short){node.classList.add('sp');node.style.setProperty('--sp',sp.c);node.setAttribute('aria-label',(node.getAttribute('aria-label')||'')+' · '+sp.l)}
+function decoratePlan(){
+ var b=$('#pview');if(!b)return;
+ if(S.m==='mois'){
+  var f0=new Date(S.d.getFullYear(),S.d.getMonth(),1),a2=mon(f0),cells=b.querySelectorAll('.mg .mc'),groups=[];
+  cells.forEach(function(c,j){var d=addD(a2,j),sp=spOf(d);if(!sp)return;spApply(c,sp);
+   if(d.getMonth()!==f0.getMonth())return;
+   var g=groups.filter(function(x){return x.l===sp.l&&x.days[x.days.length-1]===d.getDate()-1})[0];
+   if(g)g.days.push(d.getDate());else groups.push({l:sp.l,c:sp.c,days:[d.getDate()]})});
+  if(groups.length){var lg=el('div','spl');groups.forEach(function(g){var it=el('span','spi');it.style.setProperty('--sp',g.c);it.append(el('i'),document.createTextNode(g.days.length>1?g.days[0]+'–'+g.days[g.days.length-1]+' · '+g.l:g.days[0]+' · '+g.l));lg.append(it)});var mg=b.querySelector('.mg');if(mg)mg.after(lg);else b.append(lg)}
+ }else if(S.m==='semaine'){
+  var a=mon(S.d);b.querySelectorAll('.wkv .wc').forEach(function(w,i){var sp=spOf(addD(a,i));if(!sp)return;spApply(w,sp);var wb=w.querySelector('.wb');if(wb)wb.prepend(el('small','spt',sp.s))})
+ }else{
+  var sp=spOf(S.d);if(sp){var nav=b.querySelector('.pnav');var tag=el('div','spday');tag.style.setProperty('--sp',sp.c);tag.textContent=sp.l;if(nav)nav.after(tag)}}
+}
+var _rp16=renderPlan;
+renderPlan=function(){_rp16();decoratePlan()};
+
+/* Envies : une bulle par type, même vide */
+function wishRow(w){var ti=typeInfo(w.type);return rowBtn(ti[1],w.n,w.city||'Ville pas encore choisie',w.price?money(w.price).split(' · ')[0]:'',function(){showWish(w.id)},ti[2])}
+function renderWish(){var box=$('#wish');if(!box)return;box.replaceChildren();
+ box.append(el('h2',null,'Envies'));
+ if(wishes.length){var tot=0,np=0;wishes.forEach(function(w){if(w.price)tot+=w.price;else np++});
+  box.append(el('p','sub',wishes.length+(wishes.length>1?' envies':' envie')+(tot?' · '+money(tot).replace(' · ≈ ',' (≈ ')+')'+(np?' · '+np+' sans prix':''):'')))}
+ TYPES.forEach(function(t){
+  var its=wishes.filter(function(w){return(w.type||'Autre')===t[0]||(TYPES.every(function(x){return x[0]!==w.type})&&t[0]==='Autre')});
+  its.sort(function(a,b){return(a.city||'￿').localeCompare(b.city||'￿','fr')});
+  var sec=el('div','wsec'+(its.length?'':' empty0')),hd=el('div','whd'),bub=sty(el('span','wbub'),t[1]);
+  var ic=el('span','wbi');ic.innerHTML=eiH(t[2],18);bub.append(ic,el('b',null,t[0]));if(its.length)bub.append(el('em',null,String(its.length)));
+  var pl=el('button','wadd','+');pl.type='button';pl.setAttribute('aria-label','Ajouter une envie : '+t[0]);(function(tt){pl.onclick=function(){addWish({type:tt})}})(t[0]);
+  hd.append(bub,pl);sec.append(hd);
+  if(its.length){var l=el('div','list');its.forEach(function(w){l.append(wishRow(w))});sec.append(l)}
+  box.append(sec)})}
 
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
