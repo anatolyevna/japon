@@ -1778,8 +1778,8 @@ var SHK_D=[
 {d:'Shin-Osaka ↔ Hakata ≈ 2 h 20 (service le plus rapide)',tm:{'Shin-Osaka':0,'Okayama':45,'Hiroshima':80,'Kokura':122,'Hakata':140}},
 {d:'Tokyo ↔ Shin-Aomori ≈ 3 h 10 (service le plus rapide)',tm:{'Tokyo':0,'Ueno':4,'Omiya':25,'Utsunomiya':48,'Sendai':90,'Morioka':135,'Shin-Aomori':190}},
 {d:'Shin-Aomori ↔ Shin-Hakodate-Hokuto ≈ 1 h · Tokyo ↔ Shin-Hakodate-Hokuto ≈ 4 h',tm:{'Shin-Aomori':0,'Shin-Hakodate-Hokuto':60}},
-{d:'Tokyo ↔ Niigata ≈ 1 h 40 (service le plus rapide)',tm:{'Tokyo':0,'Omiya':25,'Takasaki':50,'Echigo-Yuzawa':70,'Niigata':100}},
-{d:'Tokyo ↔ Kanazawa ≈ 2 h 30 (service le plus rapide)',tm:{'Tokyo':0,'Omiya':25,'Karuizawa':65,'Nagano':80,'Toyama':130,'Kanazawa':150}}];
+{d:'Tokyo ↔ Niigata ≈ 1 h 40 (service le plus rapide)',tm:{'Tokyo':0,'Omiya':25,'Takasaki':50,'Echigo-Yuzawa':70,'Niigata':97}},
+{d:'Tokyo ↔ Tsuruga ≈ 3 h 10 · Tokyo ↔ Kanazawa ≈ 2 h 30 (service le plus rapide)',tm:{'Tokyo':0,'Omiya':25,'Karuizawa':65,'Nagano':80,'Toyama':130,'Kanazawa':150,'Tsuruga':190}}];
 SHINK.forEach(function(l,i){l.d=SHK_D[i].d;l.tm=SHK_D[i].tm});
 var PAL=['#A4BED3','#E8A094','#EEB87D','#B4CA9C','#C4A8C9','#EDA5B0','#8EC6BD','#D8B59A','#9FB0D6','#D9A08A','#A9B98E','#B9A2B8'];
 SHINK.forEach(function(l,i){l.c=PAL[i%PAL.length]});
@@ -2093,31 +2093,31 @@ applyDist('b');
 
 /* ---------- Données ajoutées : durées cumulées (min) et prix approximatifs (¥) ---------- */
 var TX={
- 'Kamakura':{tm:{'Tokyo':0,'Yokohama':27,'Kamakura':57},pr:945},
+ 'Kamakura':{tm:{'Tokyo':0,'Yokohama':27,'Kamakura':57},pr:1040},
  'Hakone':{tm:{'Shinjuku':0,'Odawara':70,'Hakone-Yumoto':85},pr:2470},
  'Nikko':{tm:{'Tokyo':0,'Utsunomiya':50,'Nikko':95},pr:5900},
  'Narita':{tm:{'Ueno':0,'Narita':41},pr:2580},
  'Haneda':{tm:{'Shinagawa':0,'Haneda Airport':15},pr:330},
- 'Chuo':{tm:{'Shinjuku':0,'Kofu':90,'Matsumoto':150},pr:5720},
- 'Shinano':{tm:{'Nagoya':0,'Nagano':190},pr:7100},
+ 'Chuo':{tm:{'Shinjuku':0,'Kofu':90,'Matsumoto':150},pr:6730},
+ 'Shinano':{tm:{'Nagoya':0,'Nagano':180},pr:7730},
  'Hida':{tm:{'Nagoya':0,'Takayama':150,'Toyama':250}},
  'Nara':{tm:{'Kyoto':0,'Nara':45},pr:720},
  'Arashiyama':{tm:{'Kyoto':0,'Arashiyama':15},pr:240},
  'Haruka (Kansai)':{tm:{'Kyoto':0,'Kansai Airport':75},pr:3590},
  'Koyasan':{tm:{'Osaka':0,'Koyasan':120},pr:1430},
  'Miyajima':{tm:{'Hiroshima':0,'Miyajima':35},pr:620},
- 'Takamatsu':{tm:{'Okayama':0,'Takamatsu':55},pr:1700},
+ 'Takamatsu':{tm:{'Okayama':0,'Takamatsu':55},pr:1660},
  'Yakumo':{tm:{'Okayama':0,'Izumo-shi':190}},
- 'Matsushima':{tm:{'Sendai':0,'Matsushima':25},pr:420},
+ 'Matsushima':{tm:{'Sendai':0,'Matsushima':25},pr:440},
  'Hakodate–Sapporo':{tm:{'Hakodate':0,'Sapporo':230},pr:9770},
  'Sapporo–Asahikawa':{tm:{'Sapporo':0,'Asahikawa':85},pr:5440},
- 'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':32},pr:750},
- 'New Chitose':{tm:{'Sapporo':0,'New Chitose Airport':37},pr:1150}};
+ 'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':32},pr:800},
+ 'New Chitose':{tm:{'Sapporo':0,'New Chitose Airport':37},pr:1230}};
 var BX={
  'Tokyo–Osaka (nuit)':{tm:{'Tokyo':0,'Osaka':510},pr:5500},
  'Tokyo–Nagoya':{tm:{'Tokyo':0,'Nagoya':360},pr:3500},
- 'Mont Fuji':{tm:{'Shinjuku':0,'Kawaguchiko':105},pr:2100},
- 'Tokyo–Matsumoto':{tm:{'Shinjuku':0,'Matsumoto':215},pr:3700},
+ 'Mont Fuji':{tm:{'Shinjuku':0,'Kawaguchiko':105},pr:2200},
+ 'Tokyo–Matsumoto':{tm:{'Shinjuku':0,'Matsumoto':195},pr:3800},
  'Alpes japonaises':{tm:{'Matsumoto':0,'Takayama':150,'Shirakawa-go':210,'Kanazawa':285},pr:8400},
  'Nagoya–Takayama':{tm:{'Nagoya':0,'Takayama':165},pr:3500},
  'Osaka–Kanazawa':{tm:{'Osaka':0,'Kanazawa':300},pr:4500},
@@ -2127,7 +2127,7 @@ var BX={
  'Haneda':{tm:{'Shinjuku':0,'Haneda Airport':50},pr:1400},
  'Sapporo–Hakodate':{tm:{'Sapporo':0,'Hakodate':330},pr:5000},
  'Sapporo–Asahikawa':{tm:{'Sapporo':0,'Asahikawa':120},pr:2300},
- 'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':65},pr:700}};
+ 'Sapporo–Otaru':{tm:{'Sapporo':0,'Otaru':60},pr:730}};
 TRAIN.forEach(function(l){var x=TX[l.n];if(x){l.tm=x.tm;if(x.pr)l.pr=x.pr}});
 BUS.forEach(function(l){var x=BX[l.n];if(x){l.tm=x.tm;if(x.pr)l.pr=x.pr}});
 var SPR={'Tokaido':14700,'Sanyo':15500,'Tohoku':17500,'Hokkaido':6900,'Joetsu':10700,'Hokuriku':14400};
@@ -2339,7 +2339,7 @@ calc=function(net,i,l,a,b){var r=_calc10(net,i,l,a,b);
   if(v)r.pr=v;else{var dx=(GEO[a][0]-GEO[b][0])*91,dy=(GEO[a][1]-GEO[b][1])*111;r.pr=bandFare(0,Math.sqrt(dx*dx+dy*dy)*1.4)}}
  return r};
 // Shinkansen : prix d'un trajet complet, place réservée
-SPR={'Tokaido':14720,'Sanyo':15740,'Tohoku':17910,'Hokkaido':7850,'Joetsu':10780,'Hokuriku':14700};
+SPR={'Tokaido':14720,'Sanyo':15740,'Tohoku':17910,'Hokkaido':7850,'Joetsu':10780,'Hokuriku':16580};
 SHINK.forEach(function(l){if(SPR[l.n])l.pr=SPR[l.n]});
 SHINK[1].tm={'Shin-Osaka':0,'Okayama':45,'Hiroshima':80,'Kokura':120,'Hakata':137};
 SHINK[3].tm={'Shin-Aomori':0,'Shin-Hakodate-Hokuto':57};
