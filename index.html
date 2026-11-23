@@ -4449,6 +4449,82 @@ renderTrans=function(){_rt27();if(TV!=='trajets')return;var b=$('#tview');if(!b)
  var btn=rowBtn(MODES[1][1],'Pass JR ou billets','Comparer le coût','',jrOpen,MODES[1][2]);btn.style.marginTop='18px';btn.dataset.jr='1';h.before(btn)};
 
 
+/* ---------- v28 : propositions de lieux quand on écrit un nom (lieux connus de l'app + OpenStreetMap via Photon) ---------- */
+var PS=(function(){
+ var TT={t:'Temple ou sanctuaire',m:'Musée ou monument',n:'Nature et paysage',o:'Onsen',h:'Hébergement',r:'Restaurant',c:'Café',s:'Shopping',v:'Village traditionnel',a:'Aéroport'};
+ var KM={temple:TT.t,torii:TT.t,castle:TT.m,tower:TT.m,bridge:TT.m,house:TT.v};
+ function local(){var o=[],L=window.SITES6;if(!L)return o;
+  L.S.forEach(function(x){o.push({n:x[0],type:KM[x[1]]||'Autre',city:x[6],pref:x[5],loc:1})});
+  L.P.forEach(function(x){o.push({n:x[0],type:TT.n,city:x[5],pref:x[4],loc:1})});return o}
+ function toks(q){return norm(q).split(/[^a-z0-9\u3040-\u30ff\u4e00-\u9fff]+/).filter(Boolean)}
+ function localMatch(q){var t=toks(q);if(!t.length)return[];
+  var r=local().filter(function(x){var h=norm(x.n+' '+x.city);return t.every(function(w){return h.indexOf(w)>=0})});
+  r.sort(function(a,b){var qa=norm(a.n).indexOf(t[0]),qb=norm(b.n).indexOf(t[0]);qa=qa<0?99:qa;qb=qb<0?99:qb;return qa-qb||a.n.length-b.n.length});
+  return r.slice(0,3)}
+ /* OSM → type de l'app (liste blanche : le reste — arbres, panneaux, routes… — est ignoré) */
+ function typeOf(k,v){
+  if(k==='amenity'){if(v==='place_of_worship')return TT.t;if(v==='public_bath')return TT.o;if(v==='restaurant'||v==='fast_food'||v==='food_court'||v==='bar'||v==='pub'||v==='izakaya')return TT.r;if(v==='cafe')return TT.c;if(v==='marketplace')return TT.s;if(v==='theatre'||v==='cinema'||v==='arts_centre')return TT.m;return null}
+  if(k==='tourism'){if(/^(hotel|hostel|guest_house|motel|apartment|ryokan|resort)$/.test(v))return TT.h;if(/^(museum|gallery|attraction|zoo|aquarium|theme_park)$/.test(v))return TT.m;if(v==='viewpoint')return TT.n;return null}
+  if(k==='historic')return/^(castle|monument|memorial|ruins|archaeological_site|city_gate|building|fort|manor)$/.test(v)?TT.m:(/^(shrine|temple|wayside_shrine)$/.test(v)?TT.t:null);
+  if(k==='building'){if(v==='shrine'||v==='temple'||v==='pagoda')return TT.t;if(v==='castle')return TT.m;if(v==='retail'||v==='mall'||v==='department_store')return TT.s;if(v==='hotel')return TT.h;return null}
+  if(k==='leisure')return/^(park|garden|nature_reserve|water_park)$/.test(v)?TT.n:null;
+  if(k==='natural'){if(v==='hot_spring')return TT.o;return/^(peak|volcano|beach|waterfall|bay|valley|cave|cape|island)$/.test(v)?TT.n:null}
+  if(k==='shop')return TT.s;
+  if(k==='aeroway')return/^(aerodrome|terminal)$/.test(v)?TT.a:null;
+  if(k==='man_made')return/^(tower|lighthouse)$/.test(v)?TT.m:null;
+  return null}
+ function prefOf(state){if(!state)return'';var s=norm(state).replace(/\s*(prefecture|metropolis|-ken|-fu|-to|-do)\b/g,'').trim();
+  var r=PREFS.filter(function(p){return norm(p)===s})[0];return r||''}
+ function known(x){return x&&cityPref(x)?x:''}
+ function fromPhoton(f){var p=f.properties||{};if(p.countrycode&&p.countrycode!=='JP')return null;
+  var ty=typeOf(p.osm_key,p.osm_value);if(!ty||!p.name)return null;
+  var loc=(p.locality||'').replace(/\s*\d+$/,'').trim(),city=known(loc)||known(p.district)||known(p.city)||p.city||p.district||loc||'';
+  var pref=cityPref(city)||prefOf(p.state)||'';
+  var street=p.street&&!/^\d+$/.test(p.street)?p.street:'';
+  var parts=[street,p.locality,p.district,p.city&&p.city!==p.district?p.city:''].filter(Boolean);
+  var seen={};parts=parts.filter(function(x){var k=norm(x);if(seen[k])return false;seen[k]=1;return true});
+  var addr=p.name+(parts.length?', '+parts.join(', '):'')+(p.postcode?' '+p.postcode:'');
+  return{n:p.name,type:ty,city:city,pref:pref,addr:addr,loc:0,sub:p.district&&norm(p.district)!==norm(city)?p.district:''}}
+ var memo={},ctl=null;
+ function remote(q){var k=norm(q);if(memo[k])return Promise.resolve(memo[k]);
+  if(ctl)try{ctl.abort()}catch(e){}ctl=typeof AbortController!=='undefined'?new AbortController():null;
+  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=12&lang=en&bbox=122,24,146,46';
+  return fetch(url,ctl?{signal:ctl.signal}:{}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){
+   var seen={},out=[];(j.features||[]).forEach(function(f){var x=fromPhoton(f);if(!x)return;var k2=norm(x.n)+'|'+norm(x.city);if(seen[k2])return;seen[k2]=1;out.push(x)});
+   var qn=k.replace(/[^a-z0-9]/g,'');
+   function rk(x){var n=norm(x.n).replace(/[^a-z0-9]/g,'');return(n===qn?0:n.indexOf(qn)===0?1:n.indexOf(qn)>0?2:3)}
+   var idx=out.map(function(x,i){return[x,i]});idx.sort(function(a,b){return rk(a[0])-rk(b[0])||a[0].n.length-b[0].n.length||a[1]-b[1]});out=idx.map(function(z){return z[0]});
+   memo[k]=out;return out})}
+ return{localMatch:localMatch,remote:remote,fromPhoton:fromPhoton,typeOf:typeOf}
+})();
+function labelInput(prefix){var r=null;document.querySelectorAll('#dlg label').forEach(function(l){if(!r&&l.firstChild&&l.firstChild.textContent.indexOf(prefix)===0)r=l.querySelector('input,select')});return r}
+function setField(prefix,val){var i=labelInput(prefix);if(!i)return;
+ if(i.tagName==='SELECT'){if(Array.prototype.some.call(i.options,function(o){return o.value===val}))i.value=val}else i.value=val;
+ i.dispatchEvent(new Event('change',{bubbles:true}))}
+function pickPlace(x){
+ setField('Nom',x.n);if(x.city)setField('Ville ou zone',x.city);if(x.pref)setField('Préfecture',x.pref);
+ if(x.addr)setField('Adresse',x.addr);
+ if(x.type){var hit=Array.prototype.filter.call(document.querySelectorAll('#dlg .chs .ch'),function(b){return b.textContent.trim()===x.type})[0];if(hit&&!hit.classList.contains('on'))hit.click()}
+ if(x.city)setField('Ville ou zone',x.city)}
+function attachPlaceSug(){
+ var inp=labelInput('Nom');if(!inp||inp.dataset.ps)return;inp.dataset.ps='1';
+ var box=el('div','sugs');inp.closest('label').after(box);var tm=0,seq=0;
+ function draw(list,credit){box.replaceChildren();list.slice(0,8).forEach(function(x){
+  var lab=x.n+' · '+(x.sub?x.sub+', ':'')+(x.city||'—')+(x.type?' · '+x.type:'');var c=el('button','sug',lab);c.type='button';
+  c.onclick=function(){pickPlace(x);box.replaceChildren()};box.append(c)});
+  if(credit&&list.some(function(x){return!x.loc})){box.append(el('small',null,'© contributeurs OpenStreetMap','display:block;color:var(--muted);font-size:.7rem;margin-top:4px'))}}
+ inp.addEventListener('input',function(){var q=inp.value.trim();clearTimeout(tm);var my=++seq;
+  if(q.length<2){box.replaceChildren();return}
+  var loc=PS.localMatch(q);draw(loc,false);
+  if(q.length<3)return;
+  tm=setTimeout(function(){PS.remote(q).then(function(rs){if(my!==seq)return;
+    var seen={};loc.forEach(function(x){seen[norm(x.n)]=1});
+    var rest=rs.filter(function(x){return!seen[norm(x.n)]});draw(loc.concat(rest),true)},function(){})},380)})}
+var _of28=openForm;
+openForm=function(title,fields,onSave,ok){_of28(title,fields,onSave,ok);
+ var ks=fields.map(function(f){return f.k});if(ks.indexOf('n')>=0&&ks.indexOf('type')>=0&&ks.indexOf('addr')>=0)attachPlaceSug()};
+
+
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
 var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
 (function(){
