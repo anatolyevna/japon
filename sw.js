@@ -1,11 +1,11 @@
 /* Service worker : toute l'app fonctionne hors ligne. Les données passent par Supabase (non interceptées). */
-var CACHE='japon-v4';
+var CACHE='japon-v5';
 var SHELL=['./','./index.html','./manifest.webmanifest','./icon-v2-180.png','./icon-v2-192.png','./icon-v2-512.png'];
 var LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';
 var FONTS='https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap';
 function warm(c){
   /* mise en cache préventive de la bibliothèque et des polices (meilleur effort) */
-  var jobs=[c.add(new Request(LIB,{mode:'no-cors'})).catch(function(){})];
+  var jobs=[c.add(new Request(LIB,{mode:'no-cors'})).catch(function(){}),c.add('./dict.json').catch(function(){})];
   jobs.push(fetch(FONTS).then(function(res){if(!res.ok)return;var cp=res.clone();return c.put(FONTS,cp).then(function(){return res.text()}).then(function(css){
     var urls=(css.match(/url\((https:[^)]+)\)/g)||[]).map(function(x){return x.slice(4,-1)});
     return Promise.all(urls.map(function(u){return fetch(u).then(function(r2){if(r2.ok)return c.put(u,r2)}).catch(function(){})}))})}).catch(function(){}));

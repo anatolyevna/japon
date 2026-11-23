@@ -3962,6 +3962,236 @@ S.forEach(function(x){POI.push(x)});P.forEach(function(x){PK.push(x)});
 PK.forEach(function(x){if(x[0]==='Parc du château d’Osaka'){x[1]=34.6845;x[2]=135.5312}});
 })();
 
+/* ---------- Dictionnaire japonais complet (JMdict, mots courants) ---------- */
+(function(){
+var DICT=null,LOADING=null,FAILED=false,IDX=null;
+var HK='ぁぃぅぇぉっゃゅょゎ';
+/* ---- kana <-> romaji ---- */
+var R2K={a:'あ',i:'い',u:'う',e:'え',o:'お',ka:'か',ki:'き',ku:'く',ke:'け',ko:'こ',sa:'さ',shi:'し',si:'し',su:'す',se:'せ',so:'そ',ta:'た',chi:'ち',ti:'ち',tsu:'つ',tu:'つ',te:'て',to:'と',na:'な',ni:'に',nu:'ぬ',ne:'ね',no:'の',ha:'は',hi:'ひ',fu:'ふ',hu:'ふ',he:'へ',ho:'ほ',ma:'ま',mi:'み',mu:'む',me:'め',mo:'も',ya:'や',yu:'ゆ',yo:'よ',ra:'ら',ri:'り',ru:'る',re:'れ',ro:'ろ',wa:'わ',wo:'を',
+ga:'が',gi:'ぎ',gu:'ぐ',ge:'げ',go:'ご',za:'ざ',ji:'じ',zi:'じ',zu:'ず',ze:'ぜ',zo:'ぞ',da:'だ',di:'ぢ',du:'づ',de:'で',do:'ど',ba:'ば',bi:'び',bu:'ぶ',be:'べ',bo:'ぼ',pa:'ぱ',pi:'ぴ',pu:'ぷ',pe:'ぺ',po:'ぽ',
+kya:'きゃ',kyu:'きゅ',kyo:'きょ',sha:'しゃ',shu:'しゅ',sho:'しょ',sya:'しゃ',syu:'しゅ',syo:'しょ',cha:'ちゃ',chu:'ちゅ',cho:'ちょ',tya:'ちゃ',tyu:'ちゅ',tyo:'ちょ',cya:'ちゃ',cyu:'ちゅ',cyo:'ちょ',nya:'にゃ',nyu:'にゅ',nyo:'にょ',hya:'ひゃ',hyu:'ひゅ',hyo:'ひょ',mya:'みゃ',myu:'みゅ',myo:'みょ',rya:'りゃ',ryu:'りゅ',ryo:'りょ',gya:'ぎゃ',gyu:'ぎゅ',gyo:'ぎょ',ja:'じゃ',ju:'じゅ',jo:'じょ',jya:'じゃ',jyu:'じゅ',jyo:'じょ',zya:'じゃ',zyu:'じゅ',zyo:'じょ',bya:'びゃ',byu:'びゅ',byo:'びょ',pya:'ぴゃ',pyu:'ぴゅ',pyo:'ぴょ',
+fa:'ふぁ',fi:'ふぃ',fe:'ふぇ',fo:'ふぉ',je:'じぇ',che:'ちぇ',she:'しぇ',tsa:'つぁ',thi:'てぃ',dhi:'でぃ',wi:'うぃ',we:'うぇ',va:'ゔぁ',vu:'ゔ'};
+var K2R={};Object.keys(R2K).forEach(function(r){if(!K2R[R2K[r]]||r.length<K2R[R2K[r]].length||(r.length===K2R[R2K[r]].length&&/^(shi|chi|tsu|fu|ji)$/.test(r)))K2R[R2K[r]]=r});
+['shi','chi','tsu','fu','ji'].forEach(function(r){K2R[R2K[r]]=r});
+K2R['ぢ']='ji';K2R['づ']='zu';K2R['を']='o';K2R['ゐ']='i';K2R['ゑ']='e';K2R['ゔ']='vu';
+function hira(s){return String(s||'').replace(/[ァ-ヶ]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-96)})}
+function romajiToKana(s){
+ s=String(s||'').toLowerCase().replace(/ā/g,'aa').replace(/ī/g,'ii').replace(/ū/g,'uu').replace(/ē/g,'ee').replace(/ō/g,'ou').replace(/[\s'’\-.]/g,function(c){return c==="'"||c==='’'?"'":''});
+ var out='',i=0,rest='';
+ while(i<s.length){
+  var c=s[i],n=s[i+1];
+  if(c==="'"){out+='ん';i++;continue}
+  if(c==='n'&&(n==='n')&&(s[i+2]==null||!/[aiueoy]/.test(s[i+2]))){out+='ん';i+=2;continue}
+  if(c==='n'&&n!=null&&!/[aiueoy]/.test(n)&&n!=="'"){out+='ん';i++;continue}
+  if(c==='t'&&n==='c'&&s[i+2]==='h'){out+='っ';i++;continue}
+  if(n!=null&&c===n&&/[kstpcgzdbjfhmrwy]/.test(c)&&c!=='n'){out+='っ';i++;continue}
+  var t3=s.substr(i,3),t2=s.substr(i,2),t1=c;
+  if(R2K[t3]){out+=R2K[t3];i+=3;continue}
+  if(R2K[t2]){out+=R2K[t2];i+=2;continue}
+  if(R2K[t1]){out+=R2K[t1];i++;continue}
+  if(c==='n'&&i===s.length-1){out+='ん';i++;continue}
+  rest=s.slice(i);break}
+ return{kana:out,rest:rest}}
+function kanaToRomaji(h,verb){
+ h=hira(h);var out='',i=0;
+ while(i<h.length){
+  var c=h[i],n=h[i+1];
+  if(c==='っ'){var nx=K2R[h.substr(i+1,2)]||K2R[h[i+1]];if(nx){out+=nx[0]==='c'?'t':nx[0]}i++;continue}
+  if(c==='ー'){var l=out[out.length-1];if(l&&/[aiueo]/.test(l))out+=l;i++;continue}
+  if(n&&HK.indexOf(n)>=0&&n!=='っ'&&K2R[c+n]){out+=K2R[c+n];i+=2;continue}
+  if(c==='ん'){out+=(n&&/[あいうえおやゆよ]/.test(n))?"n'":'n';i++;continue}
+  out+=K2R[c]!=null?K2R[c]:(/[a-z0-9]/i.test(c)?c:'');i++}
+ return out}
+function collapse(r){return r.replace(/n'/g,'n').replace(/ou/g,'o').replace(/oo/g,'o').replace(/uu/g,'u').replace(/aa/g,'a').replace(/ii/g,'i').replace(/ee/g,'e')}
+function macron(r,pos){
+ var verbEnd=pos&&/(^|,)(v1|v5|vk|vz)/.test(pos);
+ var end='';if(verbEnd&&/ou$/.test(r)){end='ou';r=r.slice(0,-2)}
+ r=r.replace(/ou/g,'ō').replace(/oo/g,'ō').replace(/uu/g,'ū').replace(/aa/g,'ā').replace(/ii/g,'ī').replace(/ee/g,'ē');return r+end}
+function fold(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/œ/g,'oe').replace(/’/g,"'")}
+var RK=/[一-鿿㐀-䶿々〆ヵヶ]/;
+/* ---- étiquettes ---- */
+var POS={n:'nom','n-adv':'nom adverbial','n-t':'nom temporel','n-suf':'suffixe','n-pref':'préfixe',pn:'pronom','adj-i':'adjectif en い','adj-ix':'adjectif en い','adj-na':'adjectif en な','adj-no':'adjectif en の','adj-f':'adjectif','adj-pn':'adjectif prénominal','adj-t':'adjectif',adv:'adverbe','adv-to':'adverbe',conj:'conjonction',int:'interjection',prt:'particule',ctr:'compteur',exp:'expression',num:'nombre',pref:'préfixe',suf:'suffixe','aux-v':'auxiliaire','aux-adj':'auxiliaire',aux:'auxiliaire',cop:'copule',v1:'verbe ichidan','v1-s':'verbe ichidan',vk:'verbe irrégulier (来る)',vs:'verbe en する','vs-i':'verbe en する','vs-s':'verbe en する','vs-c':'verbe en する',vz:'verbe ichidan',vi:'intransitif',vt:'transitif',unc:''};
+function posLabels(p){
+ var out=[],seen={};(p||'').split(',').forEach(function(c){if(!c)return;var l=POS[c];if(c.indexOf('v5')===0)l='verbe godan';if(l==null||l===''||seen[l])return;seen[l]=1;out.push(l)});
+ return out.slice(0,3)}
+/* ---- chargement ---- */
+function load(){
+ if(DICT)return Promise.resolve(DICT);
+ if(LOADING)return LOADING;
+ if(location.protocol==='file:'){FAILED=true;return Promise.resolve(null)}
+ LOADING=fetch('dict.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){DICT=d;buildIndex();return d}).catch(function(){FAILED=true;LOADING=null;return null});
+ return LOADING}
+function buildIndex(){
+ var E=DICT.e,n=E.length;
+ IDX={n:n,h:new Array(n),rk:new Array(n),kf:new Array(n),byK:Object.create(null),byH:Object.create(null),gf:new Array(n),ge:new Array(n)};
+ for(var i=0;i<n;i++){var e=E[i],h=hira(e[1]);
+  IDX.h[i]=h;IDX.rk[i]=collapse(kanaToRomaji(h));
+  var kf=[];if(e[0])kf.push(e[0]);if(e[5])e[5].split('・').forEach(function(x){if(x)kf.push(x)});IDX.kf[i]=kf;
+  kf.forEach(function(k){(IDX.byK[k]=IDX.byK[k]||[]).push(i)});
+  (IDX.byH[h]=IDX.byH[h]||[]).push(i);
+  if(e[6])e[6].split('・').forEach(function(x){var hx=hira(x);if(hx&&hx!==h)(IDX.byH[hx]=IDX.byH[hx]||[]).push(i)});
+  IDX.gf[i]=fold(e[2]);IDX.ge[i]=fold(e[3])}}
+/* ---- conjugaisons : on remonte à la forme du dictionnaire ---- */
+var DR=[];
+(function(){
+ function add(suf,rep,pos,lab){DR.push([suf,rep,pos,lab])}
+ var G={'う':['い','わ','え','お','って','った','v5u'],'く':['き','か','け','こ','いて','いた','v5k'],'ぐ':['ぎ','が','げ','ご','いで','いだ','v5g'],'す':['し','さ','せ','そ','して','した','v5s'],'つ':['ち','た','て','と','って','った','v5t'],'ぬ':['に','な','ね','の','んで','んだ','v5n'],'ぶ':['び','ば','べ','ぼ','んで','んだ','v5b'],'む':['み','ま','め','も','んで','んだ','v5m'],'る':['り','ら','れ','ろ','って','った','v5r']};
+ Object.keys(G).forEach(function(E){var g=G[E],p=g[6];
+  [['ます','forme polie'],['ました','forme polie, passé'],['ません','forme polie, négative'],['ませんでした','forme polie, négative, passé'],['ましょう','invitation polie'],['たい','souhait (vouloir)'],['たくない','souhait, négatif'],['たかった','souhait, passé']].forEach(function(x){add(g[0]+x[0],E,p,x[1])});
+  [['ない','forme négative'],['なかった','négative, passé'],['なくて','négative, forme en て'],['れる','passif / potentiel'],['せる','causatif'],['ず','négative (littéraire)']].forEach(function(x){add(g[1]+x[0],E,p,x[1])});
+  add(g[2]+'る',E,p,'potentiel');add(g[2]+'ば',E,p,'conditionnel (ば)');add(g[3]+'う',E,p,'volitif (allons…)');
+  add(g[4],E,p,'forme en て');add(g[5],E,p,'forme passée');
+  [['いる','en train de (ている)'],['いた','était en train de'],['います','en train de (poli)'],['いました','était en train de (poli)'],['いない','n’est pas en train de'],['ください','s’il vous plaît (て + ください)'],['から','après avoir (てから)']].forEach(function(x){add(g[4]+x[0],E,p,x[1])});
+  add(g[5]+'ら',E,p,'conditionnel (たら)')});
+ /* 行く : いって / いった */
+ add('って','く','v5k-s','forme en て');add('った','く','v5k-s','forme passée');
+ var V=[['ます','forme polie'],['ました','forme polie, passé'],['ません','forme polie, négative'],['ませんでした','forme polie, négative, passé'],['ましょう','invitation polie'],['たい','souhait (vouloir)'],['たくない','souhait, négatif'],['たかった','souhait, passé'],['ない','forme négative'],['なかった','négative, passé'],['なくて','négative, forme en て'],['た','forme passée'],['て','forme en て'],['ている','en train de (ている)'],['ていた','était en train de'],['ています','en train de (poli)'],['ていました','était en train de (poli)'],['てください','s’il vous plaît (て + ください)'],['られる','passif / potentiel'],['させる','causatif'],['れば','conditionnel (ば)'],['よう','volitif (allons…)'],['ろ','impératif'],['たら','conditionnel (たら)']];
+ V.forEach(function(x){add(x[0],'る','v1',x[1])});
+ var S=[['します','forme polie'],['しました','forme polie, passé'],['しません','forme polie, négative'],['しませんでした','forme polie, négative, passé'],['しましょう','invitation polie'],['したい','souhait (vouloir)'],['しない','forme négative'],['しなかった','négative, passé'],['して','forme en て'],['した','forme passée'],['している','en train de (ている)'],['しています','en train de (poli)'],['していた','était en train de'],['すれば','conditionnel (ば)'],['しよう','volitif (allons…)'],['される','passif'],['させる','causatif'],['できる','potentiel'],['しろ','impératif'],['したら','conditionnel (たら)'],['してください','s’il vous plaît (て + ください)']];
+ S.forEach(function(x){add(x[0],'する','vs',x[1])});
+ [['きます','forme polie'],['きました','forme polie, passé'],['きません','forme polie, négative'],['きて','forme en て'],['きた','forme passée'],['きたい','souhait (vouloir)'],['こない','forme négative'],['こなかった','négative, passé'],['こられる','potentiel / passif'],['くれば','conditionnel (ば)'],['こよう','volitif (allons…)'],['きている','en train de (ている)']].forEach(function(x){add(x[0],'くる','vk',x[1])});
+ [['来ます','forme polie'],['来ました','forme polie, passé'],['来ません','forme polie, négative'],['来て','forme en て'],['来た','forme passée'],['来たい','souhait (vouloir)'],['来ない','forme négative'],['来なかった','négative, passé'],['来られる','potentiel / passif'],['来れば','conditionnel (ば)']].forEach(function(x){add(x[0],'来る','vk',x[1])});
+ [['くない','forme négative'],['くなかった','négative, passé'],['かった','forme passée'],['くて','forme en て'],['ければ','conditionnel (ば)'],['く','forme adverbiale'],['くなる','devenir…'],['すぎる','trop…']].forEach(function(x){add(x[0],'い','adj-i',x[1])});
+ [['よくない','forme négative'],['よくなかった','négative, passé'],['よかった','forme passée'],['よくて','forme en て'],['よければ','conditionnel (ば)'],['よく','forme adverbiale']].forEach(function(x){add(x[0],'いい','adj-i',x[1])});
+ [['です','forme polie (です)'],['でした','forme polie, passé'],['だ','forme simple (だ)'],['だった','forme simple, passé'],['ではない','forme négative'],['じゃない','forme négative'],['ではありません','forme polie, négative'],['じゃありません','forme polie, négative'],['でしょう','forme polie (probablement)'],['だろう','forme simple (probablement)']].forEach(function(x){add(x[0],'','',x[1])});
+})();
+function posOk(e,req){
+ if(!req)return true;var p=(e[4]||'').split(',');
+ if(req==='vs')return p.some(function(c){return c.indexOf('vs')===0});
+ if(req==='adj-i')return p.some(function(c){return c==='adj-i'||c==='adj-ix'});
+ if(req==='v1')return p.some(function(c){return c==='v1'||c==='v1-s'});
+ if(req==='v5k-s')return p.indexOf('v5k-s')>=0;
+ if(req==='vk')return p.indexOf('vk')>=0;
+ if(req.indexOf('v5')===0)return p.some(function(c){return c.indexOf(req)===0||(req==='v5r'&&c==='v5aru')});
+ return p.some(function(c){return c.indexOf(req)===0})}
+function deinflect(q){
+ var out=[],seen={};
+ DR.forEach(function(r){
+  if(q.length<r[0].length||(q.length===r[0].length&&r[1]===''))return;
+  if(q.slice(q.length-r[0].length)!==r[0])return;
+  var stem=q.slice(0,q.length-r[0].length);if(!stem&&r[1]==='')return;
+  var bases=[stem+r[1]];
+  if(r[2]==='vs'&&r[1]==='する')bases.push(stem);
+  bases.forEach(function(b,bi){if(!b)return;
+   [IDX.byK[b],IDX.byH[hira(b)]].forEach(function(arr){(arr||[]).forEach(function(i){
+    var need=bi===1?'vs':r[2];
+    if(!posOk(DICT.e[i],need))return;
+    if(r[1]===''&&!/(^|,)(n|adj-na|n-t|n-adv|adv|pn|adj-no|vs)/.test(DICT.e[i][4]||''))return;
+    if(seen[i])return;seen[i]=1;out.push({i:i,lab:r[3]})})})})});
+ return out}
+/* ---- recherche ---- */
+function itemsOf(s){return s.replace(/\([^)]*\)/g,'').split(/[;,]/).map(function(x){return x.trim()})}
+function glossTier(g,q,isEn){
+ var its=itemsOf(g),best=9,esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp('(^|[\\s\'-])'+esc);
+ for(var j=0;j<its.length;j++){var a=its[j].replace(/\s+/g,' ').trim(),pen=j===0?0:0.2;if(isEn)a=a.replace(/^(to|a|an|the)\s+/,'');
+  if(a===q){best=Math.min(best,pen);continue}
+  if(a.indexOf(q)===0){best=Math.min(best,1+pen);continue}
+  if(re.test(a)){best=Math.min(best,2+pen);continue}
+  if(a.indexOf(q)>=0)best=Math.min(best,4+pen)}
+ return best}
+function search(q){
+ var t=q.trim();if(!t)return{hits:[],seg:null};
+ var hits=[],seen={};
+ function put(i,tier,note){if(seen[i]!=null){if(tier<seen[i].tier){seen[i].tier=tier;if(note)seen[i].note=note}return}var h={i:i,tier:tier,note:note||''};seen[i]=h;hits.push(h)}
+ var hasK=RK.test(t),isKana=/^[ぁ-ゖァ-ヺー・\s]+$/.test(t),isLat=/^[a-zA-ZāīūēōÀ-ÿŒœ'’\-\s.?!]+$/.test(t);
+ var n=IDX.n,E=DICT.e;
+ if(hasK){
+  var qk=t.replace(/\s+/g,'');
+  var ex=IDX.byK[qk];if(ex)ex.forEach(function(i){put(i,0)});
+  deinflect(qk).forEach(function(d){put(d.i,0.5,d.lab)});
+  for(var i=0;i<n;i++){var kf=IDX.kf[i];for(var j=0;j<kf.length;j++){var k=kf[j];if(k===qk)continue;var p=k.indexOf(qk);if(p===0){put(i,1);break}if(p>0&&qk.length>=2){put(i,2.5);break}}}
+ }else if(isKana){
+  var qh=hira(t.replace(/[\s・]+/g,''));
+  (IDX.byH[qh]||[]).forEach(function(i){put(i,0)});
+  deinflect(qh).forEach(function(d){put(d.i,0.5,d.lab)});
+  for(var i2=0;i2<n;i2++){var h=IDX.h[i2];if(h===qh)continue;var p2=h.indexOf(qh);if(p2===0)put(i2,1);else if(p2>0&&qh.length>=2)put(i2,3)}
+ }else if(isLat){
+  var rk=romajiToKana(t),qr=null;
+  if(rk.kana){var full=kanaToRomaji(rk.kana)+rk.rest;qr=collapse(full);
+   var qh2=rk.kana;
+   if(!rk.rest){(IDX.byH[qh2]||[]).forEach(function(i){put(i,0)});deinflect(qh2).forEach(function(d){put(d.i,0.5,d.lab)})}}
+  var qf=fold(t).replace(/\s+/g,' ').trim(),rawq=t.toLowerCase().replace(/\s+/g,' ').trim(),accent=/[À-ÿŒœ]/.test(t.toLowerCase())&&fold(t)!==t.toLowerCase();
+  for(var i3=0;i3<n;i3++){
+   if(qr&&qr.length>=1){var r=IDX.rk[i3];if(r===qr)put(i3,0.2);else if(r.indexOf(qr)===0&&qr.length>=2)put(i3,1.5);else if(qr.length>=4&&r.indexOf(qr)>0)put(i3,4.5)}
+   if(qf.length>=2){
+    var gt=9;
+    if(IDX.gf[i3]&&IDX.gf[i3].indexOf(qf)>=0)gt=glossTier(IDX.gf[i3],qf,false);
+    if(IDX.ge[i3]&&IDX.ge[i3].indexOf(qf)>=0){var te=glossTier(IDX.ge[i3],qf,true)+.1;if(te<gt)gt=te}
+    if(gt<9){if(accent&&gt<=2.2){var raw=((E[i3][2]||'')+' '+(E[i3][3]||'')).toLowerCase();if(raw.indexOf(rawq)<0)gt+=0.6}put(i3,gt+0.1)}
+    else if(qf.indexOf(' ')>0){var tk=qf.split(' ').filter(Boolean);if(tk.length>1){var all=IDX.gf[i3]+' '+IDX.ge[i3];if(tk.every(function(x){return all.indexOf(x)>=0}))put(i3,6)}}}}
+ }
+ hits.forEach(function(h){h.sc=h.tier+Math.min(h.i,10000)/10000*0.4});
+ hits.sort(function(a,b){return a.sc-b.sc||a.i-b.i});
+ var seg=null;
+ if((hasK||isKana)&&t.replace(/\s/g,'').length>=2&&!hits.some(function(h){return h.tier<=0.5}))seg=segment(t.replace(/\s+/g,''));
+ return{hits:hits,seg:seg}}
+function segment(s){
+ var out=[],i=0,maxL=8;
+ function pick(arr,sub){var l=arr.slice().sort(function(x,y){return((IDX.kf[x][0]===sub||IDX.h[x]===hira(sub))?0:1)-((IDX.kf[y][0]===sub||IDX.h[y]===hira(sub))?0:1)||x-y});return l.slice(0,sub.length===1?3:1)}
+ while(i<s.length){var found=null;
+  for(var L=Math.min(maxL,s.length-i);L>=1;L--){var sub=s.substr(i,L),arr=IDX.byK[sub];
+   if(!arr&&L>=2&&!RK.test(sub))arr=IDX.byH[hira(sub)];
+   if(arr&&arr.length){found={is:pick(arr,sub),len:L,sub:sub};break}}
+  if(found){out.push(found);i+=found.len}else{out.push({is:[],len:1,sub:s[i]});i++}}
+ return out.length>1||(out[0]&&out[0].is.length)?out:null}
+/* ---- affichage ---- */
+function wOf(i){var e=DICT.e[i],h=e[1],fr=e[2],en=e[3],ro=macron(kanaToRomaji(hira(h)),e[4]);
+ var kj=e[0],uk=e[7]&&kj;
+ return{k:uk?'':kj,h:h,ro:ro,fr:fr||en,rare:uk?kj:'',u:0,_en:fr?en:'',_noFr:!fr,_pos:e[4],_alt:[e[5],e[6]].filter(Boolean).join(' · ')}}
+function dcard(i,note){
+ var w=wOf(i);
+ var e=sty(el('div','entry'),'#CEC3BB'),k=key(w),on=!!favs[k];
+ var f=el('button','fav');f.type='button';f.setAttribute('aria-pressed',on?'true':'false');f.setAttribute('aria-label',on?'Retirer des favoris':'Ajouter aux favoris');
+ f.innerHTML=ico('star','currentColor',24,null,null,on?'currentColor':'none');f.onclick=function(){if(favs[k])delete favs[k];else favs[k]={k:w.k,h:w.h,ro:w.ro,fr:w.fr,rare:w.rare};renderCarnet()};e.append(f);
+ function row(l,t){var r=sty(el('div','sr'),SC[l]);r.append(el('span','bd',l),el('span',null,t));r.lastChild.lang='ja';e.append(r)}
+ if(w.k&&!w.rare){row('漢字',w.k);row(script(w.h),w.h)}else{row(script(w.h),w.h);if(w.rare)row('漢字 (rare)',w.rare)}
+ e.append(el('p','ro',w.ro,'margin-top:10px'));
+ var m=el('p',null,'','margin-top:2px;font-weight:500');
+ if(w._noFr){var b=el('span','bd','EN');b.style.marginRight='8px';m.append(b,document.createTextNode(w.fr))}else m.textContent=w.fr;
+ e.append(m);
+ if(w._en){var m2=el('p','ro','','font-size:.88rem;margin-top:6px'),b2=el('span','bd','EN');b2.style.marginRight='8px';m2.append(b2,document.createTextNode(w._en));e.append(m2)}
+ var pl=posLabels(w._pos);if(pl.length){e.append(el('span','tag',pl.join(' · ')))}
+ if(w._alt)e.append(el('p','ro','Autres écritures : '+w._alt,'font-size:.84rem;margin-top:8px'));
+ if(note)e.append(el('p','ro',note,'font-size:.84rem;margin-top:8px;font-style:italic'));
+ if(!inVocab(w)){var bt=el('button','mini','Ajouter à mon vocabulaire');bt.type='button';bt.onclick=function(){words.push({k:w.k,h:w.h,ro:w.ro,fr:w.fr,rare:w.rare,u:1});renderCarnet()};e.append(el('br'),bt)}
+ return e}
+var _rc=renderCarnet;
+renderCarnet=function(){
+ if(cv!=='dico'){_rc();return}
+ var b=$('#cview');b.replaceChildren();if(cv==='favs')cv='vocab';
+ document.querySelectorAll('#cseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===cv)});
+ var s=el('input');s.type='search';s.placeholder='neko, chat, 猫, tabemashita';s.value=q;s.style.marginTop='18px';s.autocomplete='off';s.autocapitalize='off';s.setAttribute('autocorrect','off');s.spellcheck=false;s.setAttribute('aria-label','Rechercher un mot');
+ var out=el('div');var shown=30,timer=null,last='';
+ function curated(){var n=fold(q.trim());if(!n)return[];
+  var nk=hira(q.trim());
+  var r=allWords().filter(function(w){return[w.k,w.h,w.ro,w.fr,w.rare].some(function(x){var f=fold(x);return f.indexOf(n)>=0||hira(String(x||'')).indexOf(nk)>=0})});
+  r.sort(function(a,b){return(a.h||'').length-(b.h||'').length});return r.slice(0,8)}
+ function paint(){
+  out.replaceChildren();var t=q.trim();if(!t)return;
+  var cur=curated(),res=null;
+  if(DICT)res=search(t);
+  var seenKey={};cur.forEach(function(w){seenKey[(w.k||w.rare||'')+'|'+w.h]=1});
+  if(!DICT){cur.forEach(function(w){out.append(card(w))});
+   if(FAILED&&!cur.length)out.append(emptyBox('Dictionnaire indisponible pour l’instant.'));
+   else if(!FAILED)out.append(el('p','note','…','text-align:center;margin-top:18px'));
+   return}
+  var list=res.hits.filter(function(h){var e=DICT.e[h.i];return!seenKey[(e[0]||'')+'|'+e[1]]});
+  var dn=function(h){out.append(dcard(h.i,h.note?(t+' : '+h.note+' → '+(DICT.e[h.i][0]||DICT.e[h.i][1])):''))};
+  var tops=list.filter(function(h){return h.tier<1}).slice(0,8),tset={};tops.forEach(function(h){tset[h.i]=1});
+  tops.forEach(dn);cur.forEach(function(w){out.append(card(w))});
+  list=list.filter(function(h){return!tset[h.i]});
+  list.slice(0,shown).forEach(dn);
+  if(list.length>shown){var mb=el('button','mini','Voir plus de résultats');mb.type='button';mb.style.margin='14px auto';mb.style.display='block';mb.onclick=function(){shown+=30;paint()};out.append(mb)}
+  if(res.seg){out.append(el('p','lgh','Dans ce mot','margin-top:20px'));
+   res.seg.forEach(function(g){if(g.is.length)g.is.forEach(function(ix){out.append(dcard(ix,''))});else out.append(el('p','ro','« '+g.sub+' » : pas trouvé','margin:6px 0'))})}
+  if(!tops.length&&!list.length&&!cur.length&&!res.seg)out.append(emptyBox('Aucun résultat.'))}
+ function run(){q=s.value;shown=30;clearTimeout(timer);timer=setTimeout(paint,60)}
+ s.addEventListener('input',run);b.append(s,out);
+ paint();
+ if(!DICT)load().then(function(){if(document.body.contains(s))paint()})};
+window.__dict={load:function(){return load()},search:function(t){return DICT?search(t):null},ready:function(){return!!DICT},entry:function(i){return DICT&&DICT.e[i]},wOf:wOf,romajiToKana:romajiToKana,kanaToRomaji:kanaToRomaji,deinflect:function(q){return DICT?deinflect(q):null}};
+})();
+
 
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
 var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
