@@ -3614,7 +3614,7 @@ X.forEach(function(e){
 if(!REFC.some(function(r){return r[0]==='Yamadera'})){
  REFC.push(['Yamadera',4,38.3096,140.4347,'Yamagata']);var k0=norm('Yamadera');GAZP[k0+'|Yamagata']=[38.3096,140.4347];if(!GAZ[k0])GAZ[k0]=[38.3096,140.4347];
  if(!CITIES.some(function(x){return norm(x[0])===k0}))CITIES.push(['Yamadera','Yamagata'])}
-var WISH=[['Tokyo','Tokyo'],['Yokohama','Kanagawa'],['Kamakura','Kanagawa'],['Hakone','Kanagawa','o'],['Kyoto','Kyoto'],['Nara','Nara'],['Osaka','Osaka'],['Himeji','Hyogo'],['Hiroshima','Hiroshima'],['Izumo','Shimane'],['Kanazawa','Ishikawa'],['Takayama','Gifu'],['Matsumoto','Nagano'],['Nagano','Nagano'],['Nikko','Tochigi'],['Matsushima','Miyagi'],['Yamadera','Yamagata'],['Hakodate','Hokkaido'],['Noboribetsu','Hokkaido','o'],['Sapporo','Hokkaido'],['Otaru','Hokkaido']];
+var WISH=[['Tokyo','Tokyo'],['Yokohama','Kanagawa'],['Kamakura','Kanagawa'],['Hakone','Kanagawa','o'],['Kawaguchiko','Yamanashi'],['Kyoto','Kyoto'],['Nara','Nara'],['Osaka','Osaka'],['Himeji','Hyogo'],['Hiroshima','Hiroshima'],['Izumo','Shimane'],['Kanazawa','Ishikawa'],['Takayama','Gifu'],['Matsumoto','Nagano'],['Nagano','Nagano'],['Nikko','Tochigi'],['Matsushima','Miyagi'],['Yamadera','Yamagata'],['Hakodate','Hokkaido'],['Noboribetsu','Hokkaido','o'],['Sapporo','Hokkaido'],['Otaru','Hokkaido']];
 var WLS={};
 WISH.forEach(function(w){for(var i=0;i<REFC.length;i++){var r=REFC[i];if(r[0]===w[0]&&r[4]===w[1]&&(r[5]||'')===(w[2]||'')){WLS[i]=w;break}}});
 window.WLS=WLS;
@@ -3639,7 +3639,7 @@ window.__wlPost=function(svg,dyn,k){
 /* liste des préfectures : sakura + villes souhaitées */
 window.wishTag=function(btn,pref){var c=window.wishCities(pref);if(!c.length)return;
  var f=btn.querySelector('.t'),go=btn.querySelector('.go');if(!f)return;
- var ic=document.createElement('span');ic.className='wlflw';ic.innerHTML='<svg width="13" height="13" viewBox="-1.1 -1.1 2.2 2.2">'+flower('#FBDCE6','#E0709A',.09,'#BFE3D0')+'</svg>';btn.insertBefore(ic,f);
+ var ic=document.createElement('span');ic.className='wlflw';var pt='';for(var q=0;q<5;q++)pt+='<path d="M0 0C-.52 -.22 -.6 -.72 -.22 -1L0 -.86L.22 -1C.6 -.72 .52 -.22 0 0Z" transform="rotate('+q*72+')" fill="#D8628D" fill-opacity=".6"/>';ic.innerHTML='<svg width="14" height="14" viewBox="-1.1 -1.1 2.2 2.2">'+pt+'</svg>';btn.insertBefore(ic,f);
  var s=document.createElement('span');s.className='wltag';s.textContent=c.join(' · ');
  var before=go,prev=go?go.previousElementSibling:null;if(prev&&prev!==f)before=prev;btn.insertBefore(s,before||null)};
 })();
