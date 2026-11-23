@@ -3756,7 +3756,7 @@ function via(L,from,to,path){
 function sig(r){return r.legs.map(function(l){return l.n}).join('>')}
 function km(a,b){var x=GAZ[norm(a)],y=GAZ[norm(b)];if(!x||!y)return null;var R=6371,r=Math.PI/180,dl=(y[0]-x[0])*r,dn=(y[1]-x[1])*r,h=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(x[0]*r)*Math.cos(y[0]*r)*Math.sin(dn/2)*Math.sin(dn/2);return Math.round(2*R*Math.asin(Math.sqrt(h)))}
 function proposals(a,b,m){
- var A=resolve(a),B=resolve(b);if(!A.length||!B.length)return[];
+ var A=resolve(a),B=resolve(b);if(!A.length||!B.length)return untimed(a,b).sort(function(x,y){return(y.legs[0].m===m)-(x.legs[0].m===m)}).slice(0,5);
  var all=function(){return true},res=[],seen={};
  function put(r,tag){if(!r)return;var s=sig(r);if(seen[s])return;seen[s]=1;r.tag=tag;res.push(r)}
  var first=route(A,B,all,1);
@@ -3777,11 +3777,28 @@ function proposals(a,b,m){
   r.tag=t.join(' · ')});
  /* les trajets qui utilisent le moyen choisi passent en premier */
  if(m!=null&&MC[m]!=null){var sc=function(r){return r.legs.every(function(l){return l.m===m||l.xfer})?0:(r.legs.some(function(l){return l.m===m&&!l.xfer})?1:2)};res.sort(function(x,y){return sc(x)-sc(y)||x.min-y.min})}
- return res.slice(0,4)}
+ res=res.slice(0,4);
+ /* arrêts sans temps enregistré : on propose quand même la ligne qui les dessert, sans inventer de durée */
+ var un=untimed(a,b);
+ un=un.filter(function(u){return!res.some(function(r){return r.legs.some(function(l){return l.n===u.legs[0].n&&l.m===u.legs[0].m})})});
+ if(un.length){var pri=m!=null&&MC[m]!=null&&!res.some(function(r){return r.legs.some(function(l){return l.m===m&&!l.xfer})});
+  var first=un.filter(function(u){return u.legs[0].m===m}),rest=un.filter(function(u){return u.legs[0].m!==m});
+  res=pri?first.concat(res,rest):res.concat(first,rest)}
+ return res.slice(0,5)}
+function untimed(a,b){
+ var na=norm(a),nb=norm(b),out=[];
+ [[SHINK,1],[TRAIN,0],[BUS,3],[METRO,2]].forEach(function(p){p[0].forEach(function(l){
+  if(p[1]===2&&!l.noest)return;
+  var st=p[1]===2?(l.full||[]):(l.s||[]),ia=-1,ib=-1;st.forEach(function(x,i){if(norm(x)===na)ia=i;if(norm(x)===nb)ib=i});
+  if(ia<0||ib<0||ia===ib)return;
+  var from=st[ia],to=st[ib],lg={m:p[1],n:l.n,xfer:0,from:from,to:to,min:0,via:null};
+  if(p[1]!==2&&Math.abs(ia-ib)>=2){var lo=Math.min(ia,ib),hi=Math.max(ia,ib),mid=st.slice(lo+1,hi);if(ib<ia)mid.reverse();lg.via={names:mid}}
+  out.push({legs:[lg],min:0,ch:0,tag:'Durée non renseignée'})})});
+ return out}
 window.__rpPropose=proposals;
 
 /* ---------- affichage ---------- */
-function tm(min){return'≈ '+fmtMin(min)}
+function tm(min){return min>0?'≈ '+fmtMin(min):'durée non renseignée'}
 function timeline(legs){
  var w=el('div','rpt');
  function stn(name,cls,sub){var s=el('div','rps'+(cls?' '+cls:''));s.append(el('i'),el('span',null,name));if(sub)s.append(el('small',null,sub));w.append(s)}
@@ -3790,15 +3807,15 @@ function timeline(legs){
   var M=MODES[lg.m]||MODES[0],b=el('div','rpl');b.style.setProperty('--c',M[1]);
   var h=el('div','rph');h.innerHTML='<span class="ei">'+ico(M[2],'currentColor',16)+'</span>';
   var nm=lg.m===1?'Shinkansen '+lg.n:(lg.xfer?'Train JR':(lg.m===3?'Bus '+lg.n:(lg.m===2?'Métro '+lg.n:lg.n)));
-  h.append(el('b',null,nm),el('span',null,tm(lg.min)));b.append(h);
+  h.append(el('b',null,nm));if(lg.min>0)h.append(el('span',null,tm(lg.min)));b.append(h);
   if(lg.via){var v=lg.via.names?(lg.via.names.length<=3?'via '+lg.via.names.join(', '):lg.via.names.length+' arrêts'):(lg.via.k>1?lg.via.k+' stations':'');if(v)b.append(el('small',null,v))}
   w.append(b)});
  stn(legs[legs.length-1].to,'e');
  return w}
 function summary(r){
- var h=el('div','rpsum');h.append(el('b',null,tm(r.min)));
+ var h=el('div','rpsum');h.append(el('b',null,r.min>0?tm(r.min):'Durée non renseignée'));
  h.append(el('span',null,r.ch?r.ch+(r.ch>1?' changements':' changement'):'Direct'));
- if(r.tag)h.append(el('em',null,r.tag));return h}
+ if(r.tag&&r.min>0)h.append(el('em',null,r.tag));return h}
 function card(r,on){
  var c=el('button','rpo'+(on?' on':''));c.type='button';c.append(summary(r),timeline(r.legs));return c}
 window.__rpTimeline=timeline;
@@ -3840,9 +3857,10 @@ addTrip=function(pre){_at(pre);mount(null)};
 editTrip=function(it){_et(it);mount(it)};
 var _st=saveTrip;
 saveTrip=function(it,MN,v){var e=_st(it,MN,v);if(e)return e;
- var st=CUR,r=st&&st.list[st.sel];
- if(r&&!r.direct&&norm(st.a)===norm(v.a)&&norm(st.b)===norm(v.b))it.legs=r.legs.map(function(l){return{m:l.m,n:l.n,xfer:l.xfer?1:0,from:l.from,to:l.to,min:l.min,via:l.via||null}});
-  var dom=r.legs.filter(function(l){return!l.xfer}).sort(function(x,y){return y.min-x.min})[0];if(dom)it.m=dom.m;
+ var st=CUR,r=st&&st.list&&st.list[st.sel];
+ if(r&&!r.direct&&r.legs&&norm(st.a)===norm(v.a)&&norm(st.b)===norm(v.b)){
+  it.legs=r.legs.map(function(l){return{m:l.m,n:l.n,xfer:l.xfer?1:0,from:l.from,to:l.to,min:l.min,via:l.via||null}});
+  var dom=r.legs.filter(function(l){return!l.xfer}).sort(function(x,y){return y.min-x.min})[0];if(dom)it.m=dom.m}
  else delete it.legs;
  return null};
 
