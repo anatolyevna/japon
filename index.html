@@ -3247,11 +3247,12 @@ function DECO(){
   if(z>=9){PKE.forEach(function(l){var p=jgXY(l[1],l[0]);if(!vis(p[0],p[1],mg))return;var uk=JG.u/(111.32*Math.cos(l[0]*Math.PI/180));under+='<ellipse class="pke" cx="'+p[0]+'" cy="'+p[1]+'" rx="'+Math.max(l[2]*uk,2/k)+'" ry="'+Math.max(l[3]*uk,2/k)+'"/>'})}
   /* faux réseau de métro (contexte) à fort zoom */
   if(z>=10){netLines().forEach(function(l){if(l.p.length<2)return;under+='<polyline class="nl" points="'+l.p.map(function(q){return q[0].toFixed(2)+','+q[1].toFixed(2)}).join(' ')+'" stroke="'+l.c+'" stroke-width="'+px(1.5)+'"/>'})}
-  PK.forEach(function(l){if(z<(l[3]<=2?2.4:l[3]===3?5:l[3]===4?9:16))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
+  var RZ=roadsOn(z);
+  PK.forEach(function(l){if(l[3]===6?!RZ:z<(l[3]<=2?2.4:l[3]===3?5:l[3]===4?9:16))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
    var ps=(l[3]<=3?1.15:1)/k;
    under+='<g transform="translate('+p[0]+' '+p[1]+') scale('+ps+')" class="pkg"><path class="pt" d="M0 5.5V0.5"/><path class="pc" d="M-4.6 1.4C-6.6 -0.6-5.4 -3.4-3.2 -3.4C-3.2 -5.8-0.6 -7-0.0 -7C1.4 -7 3.2 -5.8 3.4 -3.4C5.6 -3.4 6.8 -0.6 4.6 1.4Z"/></g>'});
   /* sites */
-  POI.forEach(function(l){if(z<(l[4]<=4?9:16))return;var p=jgXY(l[3],l[2]);if(!vis(p[0],p[1],mg))return;under+=glyph11(l[1],p[0],p[1],9/k)});
+  POI.forEach(function(l){if(l[4]===6?!RZ:z<(l[4]<=4?9:16))return;var p=jgXY(l[3],l[2]);if(!vis(p[0],p[1],mg))return;under+=glyph11(l[1],p[0],p[1],9/k)});
   /* montagnes : Fuji illustré, cônes volcaniques (fumée), sommets alpins enneigés, collines */
   function mtGlyph(kind,fj){
    if(fj)return '<path class="m1" d="M-12.5 5.8Q-5 4-2.2 -8L2.2 -8Q5 4 12.5 5.8Z"/><path class="m2" d="M2.2 -8Q5 4 12.5 5.8L4 5.8Q2.2 -1 1 -7.5Z"/><path class="ms" d="M-2.2 -8L2.2 -8L4.2 -2.2L3 -3.4L1.8 -1.5L.4 -3.3L-1 -1.4L-2.5 -3.2L-3.4 -2.4L-4.2 -2.2Z"/><path class="mk" d="M-2.2 -8Q0 -7.2 2.2 -8Q0 -8.8-2.2 -8Z"/>';
@@ -3289,7 +3290,7 @@ function DECO(){
   /* ----- regroupement des destinations ----- */
   /* un repère posé sur le pictogramme d'un site : décalé pour laisser le pictogramme visible */
   pins.forEach(function(p){if(p.x0===undefined){p.x0=p.x;p.y0=p.y}p.x=p.x0;p.y=p.y0;
-   for(var i=0;i<POI.length;i++){var o=POI[i];if(z<(o[4]<=4?9:16))continue;var q=jgXY(o[3],o[2]);if(Math.hypot((p.x0-q[0])*k,(p.y0-q[1])*k)<12){p.x=p.x0+px(13);p.y=p.y0-px(13);break}}});
+   for(var i=0;i<POI.length;i++){var o=POI[i];if(o[4]===6?!RZ:z<(o[4]<=4?9:16))continue;var q=jgXY(o[3],o[2]);if(Math.hypot((p.x0-q[0])*k,(p.y0-q[1])*k)<12){p.x=p.x0+px(13);p.y=p.y0-px(13);break}}});
   var sp=pins.filter(function(p){return vis(p.x,p.y,mg)}).sort(function(a,b){return(b.n+b.w)-(a.n+a.w)}),cl=[];
   sp.forEach(function(p){var hit=null;for(var i=0;i<cl.length;i++){var c=cl[i];if(Math.hypot((c.x-p.x)*k,(c.y-p.y)*k)<18){hit=c;break}}
    if(hit){hit.m.push(p);var n=hit.m.length;hit.x=(hit.x*(n-1)+p.x)/n;hit.y=(hit.y*(n-1)+p.y)/n}else cl.push({x:p.x,y:p.y,m:[p]})});
@@ -3343,11 +3344,13 @@ function DECO(){
     else if(claim(p[0],p[1]+px(kd?17:15),lw,12,'middle')){tx=p[0];ty=p[1]+px(kd?17:15);an=' text-anchor="middle"'}else if(window.WLS&&WLS[ri]){var wc=[[1,-9],[1,15],[-1,-9],[-1,15],[0,-19],[0,28],[1,-20],[-1,-20],[1,26],[-1,26]],wk=0;for(var wi=0;wi<wc.length&&!wk;wi++){var wq=wc[wi],wx=p[0]+wq[0]*px(off),wy=p[1]+px(wq[1]),wa=wq[0]<0?'end':wq[0]>0?'start':'middle';if(claim(wx,wy,lw,12,wa)){tx=wx;ty=wy;an=wq[0]<0?' text-anchor="end"':wq[0]===0?' text-anchor="middle"':'';wk=1}}if(!wk){tx=p[0]+px(off);ty=p[1]+px(3.5);an='';used.push([tx,ty-px(9),tx+px(lw),ty+px(4)])}}else{if(kd)used.length=un;return}}
    rl+='<g class="rcity" data-i="'+ri+'">'+dot+'<text class="rc2'+(kd?' r'+kd:'')+'" x="'+tx+'" y="'+ty+'"'+an+' style="font-size:'+px(9.8)+'px;stroke-width:'+px(3)+'px">'+lab+'</text></g>'});
   function lbl(arr,idx,minz,cls,fn){arr.forEach(function(l){if(z<fn(l))return;var p=jgXY(l[idx[0]],l[idx[1]]);if(!vis(p[0],p[1],mg))return;var nm=l[0];
-    if(claim(p[0],p[1]+px(15),nm.length*5.4+8,11,'middle'))rl+='<text class="'+cls+'" x="'+p[0]+'" y="'+(p[1]+px(17))+'" text-anchor="middle" style="font-size:'+px(9.4)+'px;stroke-width:'+px(3)+'px">'+nm+'</text>'})}
+    var tw6=nm.length*5.4+8,L6=(cls==='pkl'?l[3]:l[4])===6;
+    if(claim(p[0],p[1]+px(15),tw6,11,'middle'))rl+='<text class="'+cls+'" x="'+p[0]+'" y="'+(p[1]+px(17))+'" text-anchor="middle" style="font-size:'+px(9.4)+'px;stroke-width:'+px(3)+'px">'+nm+'</text>';
+    else if(L6){var a6=[[0,-10,'middle'],[10,3.5,'start'],[-10,3.5,'end'],[0,26,'middle'],[0,-19,'middle']];for(var i6=0;i6<a6.length;i6++){var q6=a6[i6];if(claim(p[0]+px(q6[0]),p[1]+px(q6[1]),tw6,11,q6[2])){rl+='<text class="'+cls+'" x="'+(p[0]+px(q6[0]))+'" y="'+(p[1]+px(q6[1]))+'" text-anchor="'+q6[2]+'" style="font-size:'+px(9.4)+'px;stroke-width:'+px(3)+'px">'+nm+'</text>';break}}}})}
   lbl(MT,[2,1],0,'ml',function(l){return l[3]<=1?1.6:l[3]===2?3:l[3]===3?6:11});
   lbl(LK,[2,1],0,'ll',function(l){return l[6]<=1?1.6:l[6]===2?3.2:l[6]===3?7:11});
-  lbl(PK,[2,1],0,'pkl',function(l){return l[3]<=2?3:l[3]===3?6:l[3]===4?11:18});
-  lbl(POI.map(function(l){return[l[0],0,l[3],l[2],l[4]]}),[2,3],0,'ml',function(l){return l[4]<=4?11:18});
+  lbl(PK,[2,1],0,'pkl',function(l){return l[3]===6?(RZ?0:1e9):l[3]<=2?3:l[3]===3?6:l[3]===4?11:18});
+  lbl(POI.map(function(l){return[l[0],0,l[3],l[2],l[4]]}),[2,3],0,'ml',function(l){return l[4]===6?(RZ?0:1e9):l[4]<=4?11:18});
   SEA.forEach(function(l){if(z<(l[3]<=1?1:l[3]===2?2.2:4.5))return;var p=jgXY(l[2],l[1]);if(!vis(p[0],p[1],mg))return;
    if(claim(p[0],p[1],l[0].length*(l[3]<=1?7.4:5.6)+10,12,'middle'))rl+='<text class="sl'+(l[3]<=1?' big':'')+'" x="'+p[0]+'" y="'+p[1]+'" text-anchor="middle" style="font-size:'+px(l[3]<=1?10:9.6)+'px">'+l[0]+'</text>'});
   /* gares sur l'itinéraire : noms à fort zoom */
@@ -3847,6 +3850,93 @@ showDetail=function(kind,id){_sd(kind,id);if(kind!=='trip')return;
  var it=trips.filter(function(x){return x.id===id})[0];if(!it||!it.legs||!it.legs.length)return;
  var d=document.getElementById('dlg'),ac=d.querySelector('.actions');if(!ac)return;
  var b=el('div','rpd');b.append(timeline(it.legs));ac.before(b)};
+})();
+
+/* ---------- Repères connus sur toute la carte (visibles au zoom d'une préfecture) ---------- */
+(function(){
+var _g=glyph11;
+var SH={
+ temple:'<rect x="-.04" y="-1" width=".08" height=".25" stroke="none"/><path d="M-.26 -.55L.26 -.55L.14 -.76L-.14 -.76Z" stroke="none"/><path d="M-.4 -.1L.4 -.1L.24 -.34L-.24 -.34Z" stroke="none"/><path d="M-.56 .38L.56 .38L.34 .12L-.34 .12Z" stroke="none"/><rect x="-.11" y="-.55" width=".22" height="1.3" stroke="none"/><rect x="-.5" y=".72" width="1" height=".1" stroke="none"/>',
+ castle:'<path d="M-.72 .8L.72 .8L.6 .34L-.6 .34Z" stroke="none"/><rect x="-.4" y=".04" width=".8" height=".3" stroke="none"/><path d="M-.62 .06L.62 .06L.4 -.2L-.4 -.2Z" stroke="none"/><rect x="-.2" y="-.42" width=".4" height=".22" stroke="none"/><path d="M-.38 -.4L.38 -.4L0 -.82Z" stroke="none"/>',
+ bridge:'<path d="M-.9 .45Q0 -.85 .9 .45" fill="none" stroke-width=".16"/><path d="M-.9 .52H.9" fill="none" stroke-width=".09"/><path d="M-.5 .1V.52M0 -.12V.52M.5 .1V.52" fill="none" stroke-width=".05"/>',
+ house:'<path d="M-.75 .7L0 -.85L.75 .7Z" stroke="none"/><rect x="-.16" y=".3" width=".32" height=".4" fill="#FCF4EB" stroke="none"/>'};
+glyph11=function(kind,x,y,s){
+ if(!SH[kind])return _g(kind,x,y,s);
+ return '<g transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+') scale('+s.toFixed(2)+')" fill="#8A7B74" stroke="#8A7B74" stroke-width=".1" stroke-linejoin="round" opacity=".42">'+SH[kind]+'</g>'};
+
+/* [nom, pictogramme, lat, lon, 6 = zoom préfecture, préfecture, ville] */
+var S=[
+ ['Tour de l’horloge','tower',43.0625,141.3537,6,'Hokkaido','Sapporo'],
+ ['Goryokaku','castle',41.7969,140.7569,6,'Hokkaido','Hakodate'],
+ ['Hokkaido Jingu','torii',43.0538,141.3085,6,'Hokkaido','Sapporo'],
+ ['Zuigan-ji','temple',38.3706,141.0617,6,'Miyagi','Matsushima'],
+ ['Château de Sendai','castle',38.2516,140.8564,6,'Miyagi','Sendai'],
+ ['Château de Hirosaki','castle',40.6077,140.4641,6,'Aomori','Hirosaki'],
+ ['Chuson-ji','temple',38.9984,141.1025,6,'Iwate','Hiraizumi'],
+ ['Risshaku-ji','temple',38.3125,140.4333,6,'Yamagata','Yamadera'],
+ ['Château de Tsuruga','castle',37.4877,139.9298,6,'Fukushima','Aizuwakamatsu'],
+ ['Haguro-san','temple',38.7078,139.9769,6,'Yamagata','Tsuruoka'],
+ ['Toshogu','torii',36.7581,139.5988,6,'Tochigi','Nikko'],
+ ['Kotoku-in','temple',35.3167,139.5359,6,'Kanagawa','Kamakura'],
+ ['Tsurugaoka','torii',35.3260,139.5564,6,'Kanagawa','Kamakura'],
+ ['Landmark Tower','tower',35.4548,139.6318,6,'Kanagawa','Yokohama'],
+ ['Hakone Jinja','torii',35.2043,139.0254,6,'Kanagawa','Hakone'],
+ ['Enoshima','tower',35.2999,139.4799,6,'Kanagawa','Fujisawa'],
+ ['Naritasan','temple',35.7867,140.3185,6,'Chiba','Narita'],
+ ['Kawagoe','tower',35.9257,139.4835,6,'Saitama','Kawagoe'],
+ ['Yakuo-in','temple',35.6256,139.2432,6,'Tokyo','Hachioji'],
+ ['Château de Matsumoto','castle',36.2386,137.9690,6,'Nagano','Matsumoto'],
+ ['Zenko-ji','temple',36.6614,138.1879,6,'Nagano','Nagano'],
+ ['Château de Kanazawa','castle',36.5649,136.6594,6,'Ishikawa','Kanazawa'],
+ ['Shirakawa-go','house',36.2575,136.9060,6,'Gifu','Shirakawa'],
+ ['Château d’Inuyama','castle',35.3883,136.9394,6,'Aichi','Inuyama'],
+ ['Château de Nagoya','castle',35.1856,136.8991,6,'Aichi','Nagoya'],
+ ['Atsuta Jingu','torii',35.1278,136.9083,6,'Aichi','Nagoya'],
+ ['Ise Jingu','torii',34.4552,136.7258,6,'Mie','Ise'],
+ ['Chureito','temple',35.5012,138.8010,6,'Yamanashi','Fujiyoshida'],
+ ['Eihei-ji','temple',36.0562,136.3425,6,'Fukui','Fukui'],
+ ['Kyoto Tower','tower',34.9876,135.7592,6,'Kyoto','Kyoto'],
+ ['Ginkaku-ji','temple',35.0270,135.7982,6,'Kyoto','Kyoto'],
+ ['Château de Nijo','castle',35.0142,135.7481,6,'Kyoto','Kyoto'],
+ ['Togetsukyo','bridge',35.0094,135.6779,6,'Kyoto','Kyoto'],
+ ['Heian Jingu','torii',35.0159,135.7825,6,'Kyoto','Kyoto'],
+ ['Sanjusangendo','temple',34.9879,135.7720,6,'Kyoto','Kyoto'],
+ ['Byodo-in','temple',34.8893,135.8076,6,'Kyoto','Uji'],
+ ['Kasuga Taisha','torii',34.6811,135.8487,6,'Nara','Nara'],
+ ['Horyu-ji','temple',34.6142,135.7344,6,'Nara','Ikaruga'],
+ ['Château d’Osaka','castle',34.6873,135.5261,6,'Osaka','Osaka'],
+ ['Tsutenkaku','tower',34.6525,135.5063,6,'Osaka','Osaka'],
+ ['Danjo Garan','temple',34.2135,135.5845,6,'Wakayama','Koya'],
+ ['Nachi Taisha','torii',33.6706,135.8917,6,'Wakayama','Nachikatsuura'],
+ ['Château d’Hikone','castle',35.2765,136.2515,6,'Shiga','Hikone'],
+ ['Château de Wakayama','castle',34.2299,135.1709,6,'Wakayama','Wakayama'],
+ ['Port Tower','tower',34.6823,135.1868,6,'Hyogo','Kobe'],
+ ['Château de Matsue','castle',35.4752,133.0508,6,'Shimane','Matsue'],
+ ['Izumo Taisha','torii',35.4019,132.6856,6,'Shimane','Izumo'],
+ ['Château de Hiroshima','castle',34.4025,132.4595,6,'Hiroshima','Hiroshima'],
+ ['Pont Kintai','bridge',34.1689,132.1788,6,'Yamaguchi','Iwakuni'],
+ ['Konpira-san','torii',34.1861,133.8210,6,'Kagawa','Kotohira'],
+ ['Château de Matsuyama','castle',33.8456,132.7656,6,'Ehime','Matsuyama'],
+ ['Château de Kochi','castle',33.5610,133.5314,6,'Kochi','Kochi'],
+ ['Fukuoka Tower','tower',33.5933,130.3515,6,'Fukuoka','Fukuoka'],
+ ['Dazaifu Tenmangu','torii',33.5213,130.5349,6,'Fukuoka','Dazaifu'],
+ ['Château de Kumamoto','castle',32.8060,130.7058,6,'Kumamoto','Kumamoto'],
+ ['Château de Kokura','castle',33.8841,130.8735,6,'Fukuoka','Kitakyushu'],
+ ['Udo Jingu','torii',31.6571,131.4676,6,'Miyazaki','Nichinan'],
+ ['Château de Shuri','castle',26.2172,127.7195,6,'Okinawa','Naha']];
+/* parcs et jardins : [nom, lat, lon, 6, préfecture, ville] */
+var P=[
+ ['Kairakuen',36.3722,140.4476,6,'Ibaraki','Mito'],
+ ['Hitachi Seaside',36.4008,140.5962,6,'Ibaraki','Hitachinaka'],
+ ['Ashikaga Flower Park',36.3181,139.5231,6,'Tochigi','Ashikaga'],
+ ['Korakuen',34.6669,133.9361,6,'Okayama','Okayama'],
+ ['Ritsurin',34.3300,134.0450,6,'Kagawa','Takamatsu'],
+ ['Parc de la Paix (Nagasaki)',32.7729,129.8644,6,'Nagasaki','Nagasaki'],
+ ['Sengan-en',31.6188,130.5764,6,'Kagoshima','Kagoshima']];
+window.SITES6={S:S,P:P};
+S.forEach(function(x){POI.push(x)});P.forEach(function(x){PK.push(x)});
+/* le parc du château d'Osaka entoure le château : l'arbre est décalé pour ne pas le recouvrir */
+PK.forEach(function(x){if(x[0]==='Parc du château d’Osaka'){x[1]=34.6845;x[2]=135.5312}});
 })();
 
 
