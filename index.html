@@ -2014,11 +2014,16 @@ function showDetail(kind,id){
  var a=el('div','actions');
  var ed=el('button','btn','Modifier');ed.type='button';ed.onclick=function(){d.close();if(kind==='place')editPlace(it);else editTrip(it)};
  var gt=el('button','btn ghost',kind==='trip'?'Voir dans Transports':'Voir dans Destinations');gt.type='button';gt.onclick=function(){d.close();goRef(kind,it)};
+ var gm=null;
+ if(kind==='place'){gm=el('button','btn ghost','Voir sur la carte');gm.type='button';gm.onclick=function(){d.close();seeOnMap(it)};if(TAB==='destinations')gt=null;if(TAB==='carte')gm=null}
  var cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};
  var del=el('button','btn ghost','Supprimer');del.type='button';var armed=false;
  del.onclick=function(){if(!armed){armed=true;del.textContent='Confirmer la suppression';del.style.background='var(--accent)';del.style.color='#fff';return}list.splice(list.indexOf(it),1);d.close();refresh()};
- a.append(ed,gt,del,cl);d.append(a);d.showModal();
+ a.append(ed);if(gt)a.append(gt);if(gm)a.append(gm);a.append(del,cl);d.append(a);d.showModal();
 }
+function seeOnMap(it){showTab('carte');
+ var go=function(n){var m=null;document.querySelectorAll('*').forEach(function(e){if(!m&&e._jm)m=e._jm});var f=typeof pf==='function'?pf(it.pref):null;if(m&&f&&f.b&&document.querySelector('.jm')&&document.querySelector('.jm').getBoundingClientRect().width>0){m.zoomTo(f.b[0],f.b[1],f.b[2],f.b[3])}else if(n<8)setTimeout(function(){go(n+1)},100)};
+ setTimeout(function(){go(0)},60)}
 function editPlace(it){
  openForm('Modifier le lieu',[
   {k:'city',label:'Ville ou zone',val:it.city,sug:citySug},
