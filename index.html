@@ -4525,6 +4525,19 @@ openForm=function(title,fields,onSave,ok){_of28(title,fields,onSave,ok);
  var ks=fields.map(function(f){return f.k});if(ks.indexOf('n')>=0&&ks.indexOf('type')>=0&&ks.indexOf('addr')>=0)attachPlaceSug()};
 
 
+/* ---------- v29 : supprimer une destination (ville) ---------- */
+var _rd29=renderDest;
+renderDest=function(){_rd29();if(DV.t!=='city')return;var box=$('#dest');if(!box)return;
+ var city=DV.city,pref=DV.pref,n=norm(city),own=function(){return places.filter(function(p){return norm(p.city)===n})};
+ var named=own().filter(function(p){return!p.cityOnly}).length;
+ var del=el('button','btn ghost','Supprimer cette destination');del.type='button';del.style.marginTop='10px';del.dataset.delcity='1';var armed=false;
+ del.onclick=function(){
+  if(!armed){armed=true;del.textContent='Confirmer la suppression'+(named?' (+ '+named+(named>1?' lieux':' lieu')+')':'');del.style.background='var(--accent)';del.style.color='#fff';return}
+  for(var i=places.length-1;i>=0;i--)if(norm(places[i].city)===n)places.splice(i,1);
+  DV={t:'pref',r:prefRegion(pref),p:pref};refresh()};
+ box.append(del)};
+
+
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
 var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
 (function(){
