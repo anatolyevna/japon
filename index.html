@@ -2035,12 +2035,17 @@ function showDetail(kind,id){
  var ed=el('button','btn','Modifier');ed.type='button';ed.onclick=function(){d.close();if(kind==='place')editPlace(it);else editTrip(it)};
  var gt=el('button','btn ghost',kind==='trip'?'Voir dans Transports':'Voir dans Destinations');gt.type='button';gt.onclick=function(){d.close();goRef(kind,it)};
  var gm=null;
- if(kind==='place'){gm=el('button','btn ghost','Voir sur la carte');gm.type='button';gm.onclick=function(){d.close();seeOnMap(it)};if(TAB==='destinations')gt=null;if(TAB==='carte')gm=null}
+ gm=el('button','btn ghost','Voir sur la carte');gm.type='button';gm.onclick=function(){d.close();if(kind==='place')seeOnMap(it);else seeTripOnMap(it)};if(TAB===(kind==='trip'?'transports':'destinations'))gt=null;if(TAB==='carte')gm=null
  var cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};
  var del=el('button','btn ghost','Supprimer');del.type='button';var armed=false;
  del.onclick=function(){if(!armed){armed=true;del.textContent='Confirmer la suppression';del.style.background='var(--accent)';del.style.color='#fff';return}list.splice(list.indexOf(it),1);d.close();refresh()};
  a.append(ed);if(gt)a.append(gt);if(gm)a.append(gm);a.append(del,cl);d.append(a);d.showModal();
 }
+function seeTripOnMap(it){showTab('carte');
+ var go=function(n){var m=null;document.querySelectorAll('*').forEach(function(e){if(!m&&e._jm)m=e._jm});var jm=document.querySelector('.jm');
+  if(m&&jm&&jm.getBoundingClientRect().width>0){var e=(m.trips().ok||[]).filter(function(x){return x.t&&x.t.id===it.id})[0],xs=[],ys=[];if(e&&e.segs)e.segs.forEach(function(g){g.pts.forEach(function(p){xs.push(p.x);ys.push(p.y)})});else if(e){xs.push(e.a.x,e.b.x);ys.push(e.a.y,e.b.y)}else[it.a,it.b].forEach(function(c){var p=c&&gxy(c);if(p){xs.push(p[0]);ys.push(p[1])}});if(!xs.length)return;
+   var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs),y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys),px=Math.max((x1-x0)*.3,12),py=Math.max((y1-y0)*.3,12);m.zoomTo(x0-px,y0-py,x1+px,y1+py)}else if(n<8)setTimeout(function(){go(n+1)},100)};
+ setTimeout(function(){go(0)},60)}
 function seeOnMap(it){showTab('carte');
  var go=function(n){var m=null;document.querySelectorAll('*').forEach(function(e){if(!m&&e._jm)m=e._jm});var f=typeof pf==='function'?pf(it.pref):null;if(m&&f&&f.b&&document.querySelector('.jm')&&document.querySelector('.jm').getBoundingClientRect().width>0){m.zoomTo(f.b[0],f.b[1],f.b[2],f.b[3])}else if(n<8)setTimeout(function(){go(n+1)},100)};
  setTimeout(function(){go(0)},60)}
