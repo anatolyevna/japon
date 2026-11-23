@@ -624,7 +624,7 @@ input,select,textarea{font-size:16px!important}
 .shw .sub .fr{color:#5A4A44;font-weight:500}
 .shw .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:16px;width:44px;height:44px;border-radius:50%;border:1.5px solid #E4D9D0;background:#FFF;color:#5A4A44;display:grid;place-items:center;cursor:pointer}
 
-.lb{fill:var(--sea);pointer-events:none}
+svg path.lb{fill:var(--sea);pointer-events:none}
 
 .entry.tap{cursor:pointer;-webkit-tap-highlight-color:transparent}
 
@@ -758,7 +758,8 @@ function dur(t){if(!t.dep||!t.arr)return'';var a=t.dep.split(':'),b=t.arr.split(
 function match(list,v,fn){var n=fold(v);if(!n)return[];var a=[],b=[];list.forEach(function(x){var f=fold(fn(x));if(f.indexOf(n)===0)a.push(x);else if(f.indexOf(n)>0)b.push(x)});return a.concat(b)}
 function cityList(){var a=CITIES.map(function(c){return{n:c[0],p:c[1]}});function has(n){return a.some(function(x){return norm(x.n)===norm(n)})}
  PREFS.forEach(function(p){if(!has(p))a.push({n:p,p:p})});places.forEach(function(p){if(!has(p.city))a.push({n:p.city,p:p.pref})});return a}
-function citySug(v){return match(cityList(),v,function(x){return x.n}).map(function(x){return{label:x.n+' · '+x.p,fill:{city:x.n,pref:x.p}}})}
+var SITETYPE={'Miyajima':'Temple ou sanctuaire','Koyasan':'Temple ou sanctuaire','Matsushima':'Nature et paysage'};window.SITETYPE=SITETYPE;
+function citySug(v){return match(cityList(),v,function(x){return x.n}).map(function(x){var f={city:x.n,pref:x.p};if(SITETYPE[x.n])f.type=SITETYPE[x.n];return{label:x.n+' · '+x.p,fill:f}})}
 function tripSug(v){var seen={},all=[];cityList().forEach(function(x){all.push(x.n)});STATIONS.forEach(function(x){all.push(x)});places.forEach(function(p){if(p.n)all.push(p.n)});
  var u=all.filter(function(x){var k=norm(x);if(seen[k])return false;seen[k]=1;return true});return match(u,v,function(x){return x}).map(function(x){return{label:x,fill:x}})}
 
@@ -772,13 +773,13 @@ function openForm(title,fields,onSave,ok){
   if(f.type==='chips'){
    var h=el('div','lb',f.label),box=el('div','chs'),st={value:f.val||f.opts[0][0]};I[f.k]=st;
    var paint=function(){box.replaceChildren();f.opts.forEach(function(o){var b=sty(el('button','ch'+(o[0]===st.value?' on':'')),o[1]);b.type='button';b.innerHTML='<span class="ei">'+ico(o[2],'currentColor',18)+'</span>';b.append(document.createTextNode(o[0]));b.onclick=function(){st.value=o[0];paint()};box.append(b)})};
-   paint();h.append(box);host.append(h);return;
+   st.repaint=paint;paint();h.append(box);host.append(h);return;
   }
   var lab=el('label',null,f.label),inp;
   if(f.type==='select'){inp=el('select');f.opts.forEach(function(o){var v=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;var op=el('option',null,t);op.value=v;inp.append(op)})}
   else{inp=el('input');inp.type=f.type||'text';if(f.ph)inp.placeholder=f.ph;inp.autocomplete='off';if(f.type==='number'){inp.min='0';inp.inputMode=f.dec?'decimal':'numeric';if(f.dec)inp.step='any'}}
   if(f.val!=null)inp.value=f.val;I[f.k]=inp;lab.append(inp);host.append(lab);if(f.k==='price'){var cvt=el('small','eur');lab.append(cvt);var upc=function(){cvt.textContent=inp.value?'≈ '+eurS(+inp.value)+' (1 € = '+RATE.toLocaleString('fr-FR',{maximumFractionDigits:2})+' ¥)':''};inp.addEventListener('input',upc);upc()}
-  if(f.sug){var sb=el('div','sugs');host.append(sb);inp.addEventListener('input',function(){sb.replaceChildren();f.sug(inp.value).slice(0,6).forEach(function(s){var c=el('button','sug',s.label);c.type='button';c.onclick=function(){if(typeof s.fill==='string')inp.value=s.fill;else Object.keys(s.fill).forEach(function(k){if(I[k])I[k].value=s.fill[k]});sb.replaceChildren()};sb.append(c)})})}
+  if(f.sug){var sb=el('div','sugs');host.append(sb);inp.addEventListener('input',function(){sb.replaceChildren();f.sug(inp.value).slice(0,6).forEach(function(s){var c=el('button','sug',s.label);c.type='button';c.onclick=function(){if(typeof s.fill==='string')inp.value=s.fill;else Object.keys(s.fill).forEach(function(k){if(I[k]){I[k].value=s.fill[k];if(I[k].repaint)I[k].repaint()}});sb.replaceChildren()};sb.append(c)})})}
  });
  var err=el('p','note');err.style.color='var(--accent)';err.setAttribute('role','alert');d.append(err);
  var a=el('div','actions'),c=el('button','btn ghost','Annuler');c.type='button';c.onclick=function(){d.close()};
@@ -3143,7 +3144,7 @@ function jgMap(o){
   if(fb){foc=fit(fb,1.25)}}
  var has={};cityGroups().forEach(function(g){if(g.items.length)has[g.pref]=1});
 
- function tapType(r){return r[5]==='o'?'Onsen':(r[5]==='a'?'Aéroport':undefined)}
+ function tapType(r){return r[5]==='o'?'Onsen':(r[5]==='a'?'Aéroport':(window.SITETYPE&&window.SITETYPE[r[0]]))}
 function DECO(){
   function P(lat,lon){return jgXY(lon,lat)}
   var d='';
