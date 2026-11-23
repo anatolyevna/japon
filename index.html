@@ -634,6 +634,26 @@ svg path.lb{fill:var(--sea);pointer-events:none}
 .wlflw{display:inline-flex;margin-right:-3px}
 .wltag{white-space:nowrap;font-size:.82rem;color:#BC3A5C}
 
+.rp{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.rpo{all:unset;text-align:left;box-sizing:border-box;display:block;width:100%;padding:12px 14px;border-radius:16px;background:var(--card);border:1.5px solid var(--line);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rpo.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.rpsum{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:8px}
+.rpsum b{font-size:1.05rem;color:var(--ink)}
+.rpsum span{font-size:.82rem;color:var(--muted)}
+.rpsum em{font-style:normal;font-size:.72rem;font-weight:700;color:var(--accent);margin-left:auto}
+.rpt{position:relative;display:flex;flex-direction:column}
+.rps{position:relative;display:flex;align-items:center;gap:10px;min-height:24px;font-size:.88rem;color:var(--ink);font-weight:700}
+.rps i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--card);border:2.5px solid var(--ink);box-sizing:border-box;z-index:1;margin-left:1px}
+.rps.c i{border-color:var(--accent)}
+.rps small{font-size:.7rem;font-weight:600;color:var(--accent);margin-left:auto}
+.rpl{position:relative;margin-left:6px;padding:6px 0 6px 20px;border-left:4px solid var(--c);min-height:34px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1px}
+.rph{display:flex;align-items:center;gap:6px;font-size:.84rem;color:var(--ink)}
+.rph b{font-weight:700}
+.rph span:last-child{color:var(--muted);margin-left:2px}
+.rph .ei{display:inline-flex;color:var(--ink)}
+.rpl small{font-size:.74rem;color:var(--muted)}
+.rpd{margin-top:14px}
+
 </style>
 </head>
 <body>
@@ -779,7 +799,7 @@ function openForm(title,fields,onSave,ok){
   if(f.type==='select'){inp=el('select');f.opts.forEach(function(o){var v=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;var op=el('option',null,t);op.value=v;inp.append(op)})}
   else{inp=el('input');inp.type=f.type||'text';if(f.ph)inp.placeholder=f.ph;inp.autocomplete='off';if(f.type==='number'){inp.min='0';inp.inputMode=f.dec?'decimal':'numeric';if(f.dec)inp.step='any'}}
   if(f.val!=null)inp.value=f.val;I[f.k]=inp;lab.append(inp);host.append(lab);if(f.k==='price'){var cvt=el('small','eur');lab.append(cvt);var upc=function(){cvt.textContent=inp.value?'≈ '+eurS(+inp.value)+' (1 € = '+RATE.toLocaleString('fr-FR',{maximumFractionDigits:2})+' ¥)':''};inp.addEventListener('input',upc);upc()}
-  if(f.sug){var sb=el('div','sugs');host.append(sb);inp.addEventListener('input',function(){sb.replaceChildren();f.sug(inp.value).slice(0,6).forEach(function(s){var c=el('button','sug',s.label);c.type='button';c.onclick=function(){if(typeof s.fill==='string')inp.value=s.fill;else Object.keys(s.fill).forEach(function(k){if(I[k]){I[k].value=s.fill[k];if(I[k].repaint)I[k].repaint()}});sb.replaceChildren()};sb.append(c)})})}
+  if(f.sug){var sb=el('div','sugs');host.append(sb);inp.addEventListener('input',function(){sb.replaceChildren();f.sug(inp.value).slice(0,6).forEach(function(s){var c=el('button','sug',s.label);c.type='button';c.onclick=function(){if(typeof s.fill==='string')inp.value=s.fill;else Object.keys(s.fill).forEach(function(k){if(I[k]){I[k].value=s.fill[k];if(I[k].repaint)I[k].repaint()}});sb.replaceChildren();inp.dispatchEvent(new Event('change',{bubbles:true}))};sb.append(c)})})}
  });
  var err=el('p','note');err.style.color='var(--accent)';err.setAttribute('role','alert');d.append(err);
  var a=el('div','actions'),c=el('button','btn ghost','Annuler');c.type='button';c.onclick=function(){d.close()};
@@ -2163,6 +2183,8 @@ var BUS=[
 {n:'Nagoya–Takayama',e:'Nagoya ↔ Takayama',s:['Nagoya','Takayama'],d:'≈ 2 h 45 à 3 h'},
 {n:'Osaka–Kanazawa',e:'Osaka ↔ Kanazawa',s:['Osaka','Kanazawa'],d:'≈ 5 h (bus rapide)'},
 {n:'Osaka–Hiroshima',e:'Osaka ↔ Okayama ↔ Hiroshima',s:['Osaka','Okayama','Hiroshima'],d:'Osaka ↔ Hiroshima ≈ 5 à 5 h 30'},
+{n:'Hiroshima–Izumo',e:'Hiroshima ↔ Izumo (bus express autoroutier)',s:['Hiroshima','Izumo-shi'],d:'Hiroshima ↔ Izumo ≈ 3 h'},
+{n:'Hiroshima–Matsue',e:'Hiroshima ↔ Matsue (bus express autoroutier)',s:['Hiroshima','Matsue'],d:'Hiroshima ↔ Matsue ≈ 3 h'},
 {n:'Tokyo–Sendai',e:'Tokyo ↔ Sendai',s:['Tokyo','Sendai'],d:'≈ 5 h 30 à 6 h'},
 {n:'Narita',e:'Tokyo ↔ Aéroport de Narita (bus limousine)',s:['Tokyo','Narita'],d:'≈ 1 h à 1 h 30'},
 {n:'Haneda',e:'Shinjuku ↔ Aéroport de Haneda (bus limousine)',s:['Shinjuku','Haneda Airport'],d:'≈ 35 à 60 min'},
@@ -2475,7 +2497,7 @@ var TX={
  'Koyasan':{tm:{'Osaka':0,'Koyasan':120},pr:1430},
  'Miyajima':{tm:{'Hiroshima':0,'Miyajima':35},pr:620},
  'Takamatsu':{tm:{'Okayama':0,'Takamatsu':55},pr:1660},
- 'Yakumo':{tm:{'Okayama':0,'Izumo-shi':190}},
+ 'Yakumo':{tm:{'Okayama':0,'Matsue':155,'Izumo-shi':190}},
  'Matsushima':{tm:{'Sendai':0,'Matsushima':25},pr:440},
  'Hakodate–Sapporo':{tm:{'Hakodate':0,'Sapporo':230},pr:9770},
  'Sapporo–Asahikawa':{tm:{'Sapporo':0,'Asahikawa':85},pr:5440},
@@ -2490,6 +2512,8 @@ var BX={
  'Nagoya–Takayama':{tm:{'Nagoya':0,'Takayama':165},pr:3500},
  'Osaka–Kanazawa':{tm:{'Osaka':0,'Kanazawa':300},pr:4500},
  'Osaka–Hiroshima':{tm:{'Osaka':0,'Hiroshima':315},pr:4500},
+ 'Hiroshima–Izumo':{tm:{'Hiroshima':0,'Izumo-shi':187}},
+ 'Hiroshima–Matsue':{tm:{'Hiroshima':0,'Matsue':178}},
  'Tokyo–Sendai':{tm:{'Tokyo':0,'Sendai':350},pr:4500},
  'Narita':{tm:{'Tokyo':0,'Narita':75},pr:1300},
  'Haneda':{tm:{'Shinjuku':0,'Haneda Airport':50},pr:1400},
@@ -3658,6 +3682,171 @@ window.wishTag=function(btn,pref){var c=window.wishCities(pref);if(!c.length)ret
  var ic=document.createElement('span');ic.className='wlflw';var pt='';for(var q=0;q<5;q++)pt+='<path d="M0 0C-.52 -.22 -.6 -.72 -.22 -1L0 -.86L.22 -1C.6 -.72 .52 -.22 0 0Z" transform="rotate('+q*72+')" fill="#D8628D" fill-opacity=".6"/>';ic.innerHTML='<svg width="14" height="14" viewBox="-1.1 -1.1 2.2 2.2">'+pt+'</svg>';btn.insertBefore(ic,f);
  var s=document.createElement('span');s.className='wltag';s.textContent=c.join(' · ');
  var before=go,prev=go?go.previousElementSibling:null;if(prev&&prev!==f)before=prev;btn.insertBefore(s,before||null)};
+})();
+
+/* ---------- Itinéraires proposés avant la création d'un trajet ---------- */
+(function(){
+var XFER=[['Shin-Osaka','Osaka',5],['Shin-Yokohama','Yokohama',12]];
+var FARE={'Sanyo|Hiroshima|Okayama':5610};
+var MC={0:'Train',1:'Shinkansen',2:'Métro',3:'Bus'};
+var G=null;
+function lineList(){
+ var L=[];
+ function add(arr,mode){arr.forEach(function(l){
+  var tm=l.tm,stops=l.s||[],e=[];
+  if(mode===2){if(l.noest||!l.full)return;var f=l.full;for(var i=0;i+1<f.length;i++)e.push([f[i],f[i+1],l.ps||1.8]);if(l.loop)e.push([f[f.length-1],f[0],l.ps||1.8])}
+  else{if(!tm)return;var ks=Object.keys(tm).sort(function(a,b){return tm[a]-tm[b]});for(var j=0;j+1<ks.length;j++)e.push([ks[j],ks[j+1],tm[ks[j+1]]-tm[ks[j]]])}
+  if(e.length)L.push({n:l.n,mode:mode,l:l,e:e,full:mode===2?l.full:stops})})}
+ add(SHINK,1);add(TRAIN,0);add(BUS,3);add(METRO,2);
+ XFER.forEach(function(x){L.push({n:'JR '+x[0]+' ↔ '+x[1],mode:0,xfer:1,e:[[x[0],x[1],x[2]]],full:[x[0],x[1]],l:{}})});
+ return L}
+function graph(){
+ if(G)return G;var L=lineList(),adj={},names={};
+ L.forEach(function(l,li){l.e.forEach(function(x){var a=norm(x[0]),b=norm(x[1]);names[a]=x[0];names[b]=x[1];
+  (adj[a]=adj[a]||[]).push({to:b,li:li,w:x[2]});(adj[b]=adj[b]||[]).push({to:a,li:li,w:x[2]})})});
+ G={L:L,adj:adj,names:names};return G}
+function resolve(v){
+ var g=graph(),n=norm(v||'');if(!n)return[];
+ if(g.adj[n])return[n];
+ var out=Object.keys(g.adj).filter(function(k){return n.length>=3&&(k.indexOf(n+'-')===0||k.indexOf(n+' ')===0)});
+ if(out.length)return out;
+ var p=places.filter(function(x){return x.n&&norm(x.n)===n})[0];
+ if(p&&norm(p.city)!==n)return resolve(p.city);
+ return[]}
+function pen(a,b){if(a.mode===2&&b.mode===2)return 4;if(a.mode===3||b.mode===3)return 15;return 10}
+function route(A,B,allow,tpen){
+ var g=graph(),dist={},prev={},pq=[],done={};
+ function push(k,d,p){if(dist[k]==null||d<dist[k]-1e-9){dist[k]=d;prev[k]=p;pq.push([d,k])}}
+ var tgt={};B.forEach(function(b){tgt[b]=1});
+ A.forEach(function(a){(g.adj[a]||[]).forEach(function(ed){if(allow(g.L[ed.li])){var k=a+'|'+ed.li;push(k,0,null)}})});
+ var best=null;
+ while(pq.length){pq.sort(function(x,y){return x[0]-y[0]});var c=pq.shift(),k=c[1],d=c[0];if(done[k])continue;done[k]=1;
+  var p=k.lastIndexOf('|'),s=k.slice(0,p),li=+k.slice(p+1);
+  if(tgt[s]){best=k;break}
+  (g.adj[s]||[]).forEach(function(ed){var L2=g.L[ed.li];if(!allow(L2))return;
+   push(ed.to+'|'+ed.li,d+(ed.li===li?ed.w:ed.w+pen(g.L[li],L2)*(tpen||1)),k)})}
+ if(!best)return null;
+ var seq=[],q=best;while(q){seq.unshift(q);q=prev[q]}
+ var legs=[];
+ for(var i=0;i<seq.length;i++){var pp=seq[i].lastIndexOf('|'),node=seq[i].slice(0,pp),li=+seq[i].slice(pp+1);
+  if(i===0){var nx=seq[1]?seq[1].slice(0,seq[1].lastIndexOf('|')):null;legs.push({li:li,path:[node]});continue}
+  var last=legs[legs.length-1];
+  if(last.li===li)last.path.push(node);else legs.push({li:li,path:[last.path[last.path.length-1],node],ch:1})}
+ return finish(legs,tpen||1)}
+function finish(legs,tpen){
+ var g=graph(),out=[],tot=0,ch=0;
+ /* reconstruit chaque tronçon : minutes cumulées par arête */
+ legs.forEach(function(lg,i){var L=g.L[lg.li],mins=0,p=lg.path;
+  for(var j=0;j+1<p.length;j++){var ed=(g.adj[p[j]]||[]).filter(function(x){return x.li===lg.li&&x.to===p[j+1]})[0];mins+=ed?ed.w:0}
+  var from=g.names[p[0]],to=g.names[p[p.length-1]];
+  out.push({li:lg.li,m:L.mode,n:L.n,xfer:L.xfer?1:0,from:from,to:to,min:Math.round(mins),via:via(L,from,to,p)});tot+=mins;if(i)ch++;if(i)tot+=pen(g.L[legs[i-1].li],L)});
+ return{legs:out,min:Math.round(tot),ch:ch}}
+function via(L,from,to,path){
+ if(L.mode===2)return{k:Math.max(0,path.length-1)};
+ var s=L.full||[],a=-1,b=-1;s.forEach(function(x,i){if(norm(x)===norm(from))a=i;if(norm(x)===norm(to))b=i});
+ if(a<0||b<0||Math.abs(a-b)<2)return null;var lo=Math.min(a,b),hi=Math.max(a,b),m=s.slice(lo+1,hi);if(b<a)m.reverse();return{names:m}}
+function sig(r){return r.legs.map(function(l){return l.n}).join('>')}
+function km(a,b){var x=GAZ[norm(a)],y=GAZ[norm(b)];if(!x||!y)return null;var R=6371,r=Math.PI/180,dl=(y[0]-x[0])*r,dn=(y[1]-x[1])*r,h=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(x[0]*r)*Math.cos(y[0]*r)*Math.sin(dn/2)*Math.sin(dn/2);return Math.round(2*R*Math.asin(Math.sqrt(h)))}
+function proposals(a,b,m){
+ var A=resolve(a),B=resolve(b);if(!A.length||!B.length)return[];
+ var all=function(){return true},res=[],seen={};
+ function put(r,tag){if(!r)return;var s=sig(r);if(seen[s])return;seen[s]=1;r.tag=tag;res.push(r)}
+ var first=route(A,B,all,1);
+ if(m!=null&&MC[m]!=null){var only=route(A,B,function(L){return L.mode===m||L.xfer},1);if(only)put(only,'')}
+ put(first,'');
+ if(first){first.legs.slice().sort(function(x,y){return y.min-x.min}).slice(0,2).forEach(function(lg){
+  var r=route(A,B,function(L){return L.n!==lg.n},1);put(r,'')})}
+ var fewer=route(A,B,all,8);put(fewer,'');
+ /* variantes sans un moyen de transport : on voit les autres façons d'y aller */
+ [3,1,0].forEach(function(mm){if(res.some(function(r){return r.legs.some(function(l){return l.m===mm&&!l.xfer})})){put(route(A,B,function(L){return L.mode!==mm||L.xfer},1),'')}});
+ res.sort(function(x,y){return x.min-y.min});
+ if(res.length){var bm=res[0].min;res=res.filter(function(r){return r.min<=Math.max(bm*1.6,bm+60)})}
+ var minMin=res.length?res[0].min:0,minCh=Math.min.apply(0,res.map(function(r){return r.ch}));
+ res.forEach(function(r){var t=[];
+  if(r.min===minMin)t.push('Le plus rapide');
+  if(r.ch===minCh&&res.some(function(o){return o.ch>r.ch}))t.push('Moins de changements');
+  if(m!=null&&MC[m]!=null&&r.legs.every(function(l){return l.m===m||l.xfer})&&res.some(function(o){return o.legs.some(function(l){return l.m!==m&&!l.xfer})}))t.push('Seulement en '+MC[m].toLowerCase());
+  r.tag=t.join(' · ')});
+ /* les trajets qui utilisent le moyen choisi passent en premier */
+ if(m!=null&&MC[m]!=null){var sc=function(r){return r.legs.every(function(l){return l.m===m||l.xfer})?0:(r.legs.some(function(l){return l.m===m&&!l.xfer})?1:2)};res.sort(function(x,y){return sc(x)-sc(y)||x.min-y.min})}
+ return res.slice(0,4)}
+window.__rpPropose=proposals;
+
+/* ---------- affichage ---------- */
+function tm(min){return'≈ '+fmtMin(min)}
+function timeline(legs){
+ var w=el('div','rpt');
+ function stn(name,cls,sub){var s=el('div','rps'+(cls?' '+cls:''));s.append(el('i'),el('span',null,name));if(sub)s.append(el('small',null,sub));w.append(s)}
+ legs.forEach(function(lg,i){
+  if(i===0)stn(lg.from,'e');else stn(lg.from,'c','Changement');
+  var M=MODES[lg.m]||MODES[0],b=el('div','rpl');b.style.setProperty('--c',M[1]);
+  var h=el('div','rph');h.innerHTML='<span class="ei">'+ico(M[2],'currentColor',16)+'</span>';
+  var nm=lg.m===1?'Shinkansen '+lg.n:(lg.xfer?'Train JR':(lg.m===3?'Bus '+lg.n:(lg.m===2?'Métro '+lg.n:lg.n)));
+  h.append(el('b',null,nm),el('span',null,tm(lg.min)));b.append(h);
+  if(lg.via){var v=lg.via.names?(lg.via.names.length<=3?'via '+lg.via.names.join(', '):lg.via.names.length+' arrêts'):(lg.via.k>1?lg.via.k+' stations':'');if(v)b.append(el('small',null,v))}
+  w.append(b)});
+ stn(legs[legs.length-1].to,'e');
+ return w}
+function summary(r){
+ var h=el('div','rpsum');h.append(el('b',null,tm(r.min)));
+ h.append(el('span',null,r.ch?r.ch+(r.ch>1?' changements':' changement'):'Direct'));
+ if(r.tag)h.append(el('em',null,r.tag));return h}
+function card(r,on){
+ var c=el('button','rpo'+(on?' on':''));c.type='button';c.append(summary(r),timeline(r.legs));return c}
+window.__rpTimeline=timeline;
+
+/* ---------- panneau dans le formulaire de trajet ---------- */
+var CUR=null;
+function labelOf(d,txt){var r=null;d.querySelectorAll('label').forEach(function(l){if(!r&&l.firstChild&&String(l.firstChild.textContent).indexOf(txt)===0)r=l});return r}
+function mount(stored){
+ var d=document.getElementById('dlg');if(!d||!d.open)return;
+ var la=labelOf(d,'Départ'),lb=labelOf(d,'Arrivée'),ld=labelOf(d,'Date de départ'),lm=labelOf(d,'Moyen');
+ if(!la||!lb||!ld||!lm)return;
+ var ia=la.querySelector('input'),ib=lb.querySelector('input'),sm=lm.querySelector('select');
+ var box=el('div','rp');ld.before(box);
+ var st={a:'',b:'',m:null,list:[],sel:-1};CUR=st;
+ var MN=MODES.map(function(x){return x[0]});
+ function upd(){
+  var a=ia.value.trim(),b=ib.value.trim(),m=MN.indexOf(sm.value);
+  st.a=a;st.b=b;st.m=m;box.replaceChildren();st.list=[];st.sel=-1;
+  if(!a||!b||norm(a)===norm(b))return;
+  var list=[];
+  if(m===0||m===1||m===2||m===3)list=proposals(a,b,m);
+  else{var k=km(a,b);if(k!=null){list=[{direct:1,m:m,km:k,legs:[{m:m,n:MODES[m][0],from:a,to:b,min:0,via:null,km:k}],min:0,ch:0}]}}
+  if(stored&&stored.legs&&norm(stored.a)===norm(a)&&norm(stored.b)===norm(b)){
+   var ss=stored.legs.map(function(l){return l.n}).join('>'),ix=list.map(function(r){return r.legs.map(function(l){return l.n}).join('>')}).indexOf(ss);
+   if(ix<0){list.unshift({legs:stored.legs,min:stored.legs.reduce(function(s,l){return s+l.min},0),ch:stored.legs.length-1,tag:'Choisi'});ix=0}st.sel=ix}
+  st.list=list;if(!list.length)return;if(st.sel<0)st.sel=0;
+  paint()}
+ function paint(){
+  box.replaceChildren();
+  st.list.forEach(function(r,i){
+   if(r.direct){var c=el('button','rpo'+(i===st.sel?' on':''));c.type='button';var h=el('div','rpsum');h.append(el('b',null,'≈ '+r.km+' km'),el('span',null,'à vol d’oiseau'));c.append(h);c.onclick=function(){st.sel=i;paint()};box.append(c);return}
+   var c2=card(r,i===st.sel);c2.onclick=function(){st.sel=i;paint()};box.append(c2)})}
+ var t=null;function later(){clearTimeout(t);t=setTimeout(upd,120)}
+ [ia,ib].forEach(function(x){x.addEventListener('input',later);x.addEventListener('change',later)});
+ sm.addEventListener('change',later);
+ upd()}
+var _at=addTrip,_et=editTrip;
+addTrip=function(pre){_at(pre);mount(null)};
+editTrip=function(it){_et(it);mount(it)};
+var _st=saveTrip;
+saveTrip=function(it,MN,v){var e=_st(it,MN,v);if(e)return e;
+ var st=CUR,r=st&&st.list[st.sel];
+ if(r&&!r.direct&&norm(st.a)===norm(v.a)&&norm(st.b)===norm(v.b))it.legs=r.legs.map(function(l){return{m:l.m,n:l.n,xfer:l.xfer?1:0,from:l.from,to:l.to,min:l.min,via:l.via||null}});
+  var dom=r.legs.filter(function(l){return!l.xfer}).sort(function(x,y){return y.min-x.min})[0];if(dom)it.m=dom.m;
+ else delete it.legs;
+ return null};
+
+/* ---------- carte du trajet et fiche ---------- */
+var _tc=tripCard;
+tripCard=function(t){var c=_tc(t);if(t.legs&&t.legs.length){var tot=t.legs.reduce(function(s,l){return s+l.min},0),ch=t.legs.length-1;
+ var p=el('p','meta',t.legs.map(function(l){return l.m===1?'Shinkansen '+l.n:l.n}).join(' → ')+(ch?'  ·  '+ch+(ch>1?' changements':' changement'):'')+(tot?'  ·  '+tm(tot):''));c.append(p)}return c};
+var _sd=showDetail;
+showDetail=function(kind,id){_sd(kind,id);if(kind!=='trip')return;
+ var it=trips.filter(function(x){return x.id===id})[0];if(!it||!it.legs||!it.legs.length)return;
+ var d=document.getElementById('dlg'),ac=d.querySelector('.actions');if(!ac)return;
+ var b=el('div','rpd');b.append(timeline(it.legs));ac.before(b)};
 })();
 
 
