@@ -418,8 +418,11 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .jsv .pf.hot{filter:brightness(.93) saturate(1.15)}
 .jsv .pf:focus-visible{stroke:var(--accent);stroke-width:2px;vector-effect:non-scaling-stroke}
 .jsv .pf.dim{opacity:.32;pointer-events:none}
-.jsv .pb,.jsv .rb,.jsv .cs{fill:none;vector-effect:non-scaling-stroke;pointer-events:none;stroke-linejoin:round;stroke-linecap:round}
-.jsv .pb{stroke:var(--card);stroke-width:.8;opacity:.85}
+.jsv .pb,.jsv .pbh,.jsv .rb,.jsv .cs{fill:none;vector-effect:non-scaling-stroke;pointer-events:none;stroke-linejoin:round;stroke-linecap:round}
+.jsv .pb{stroke:#FFFBF5;stroke-width:1.5;opacity:1}
+.jsv .pbh{stroke:#8F7E72}
+.jsv .pbh1{stroke-width:4.2;opacity:.14}
+.jsv .pbh2{stroke-width:2.9;opacity:.30}
 .jsv .rb{stroke:var(--card);stroke-width:2.4}
 .jsv .cs{stroke:color-mix(in srgb,var(--ink) 60%,transparent);stroke-width:.8;opacity:.5}
 .jsv .inf{fill:none;stroke:color-mix(in srgb,var(--ink) 30%,transparent);stroke-dasharray:4 4;stroke-width:1;vector-effect:non-scaling-stroke;pointer-events:none}
@@ -589,9 +592,9 @@ input,select,textarea{font-size:16px!important}
 .jsv .mt.mf{filter:none}
 
 .jsv .rd,.jsv .rdc{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.jsv .rdc{stroke:#FFFBF5;opacity:.7}
-.jsv .rd{stroke:#E2B57A}
-.jsv .rd2{stroke:#E8C9A0}
+.jsv .rdc{display:none}
+.jsv .rd{stroke:#FBE9E0}
+.jsv .rd2{stroke:#FBE9E0}
 .jsv .rcity{cursor:pointer}
 .jsv .rcity,.rcity *{pointer-events:none!important}
 .jsv .rh{fill:transparent;stroke:none}
@@ -3149,7 +3152,7 @@ function DECO(){
  s+='<g class="lbg" pointer-events="none">'+Object.keys(JGD.pd).map(function(p){return'<path class="lb" d="'+JGD.pd[p]+'" fill-rule="evenodd"/>'}).join('')+'</g>';
  Object.keys(JGD.pd).forEach(function(p){var rg=prefRegion(p),dim=reg&&rg!==reg;
   s+='<path class="pf'+(dim?' dim':'')+'" data-p="'+p+'" data-r="'+rg.n+'" d="'+JGD.pd[p]+'" style="--c:'+rg.d+'" fill="'+rg.d+'" fill-rule="evenodd"'+(has[p]?'':' fill-opacity=".82"')+(dim?'':' tabindex="0" role="button" aria-label="'+p+(reg?'':', région '+rg.n)+'"')+'/>'});
- s+='<path class="pb" d="'+JGD.pb+'"/><path class="rb" d="'+JGD.rb+'"/><path class="cs" d="'+JGD.cs+'"/><g class="dyn"></g></svg>';
+ s+='<path class="pbh pbh1" d="'+JGD.pb+'"/><path class="pbh pbh2" d="'+JGD.pb+'"/><path class="pb" d="'+JGD.pb+'"/><path class="rb" d="'+JGD.rb+'"/><path class="cs" d="'+JGD.cs+'"/><g class="dyn"></g></svg>';
  wrap.innerHTML=s;
  var svg=wrap.querySelector('svg'),dyn=wrap.querySelector('.dyn');svg.style.aspectRatio=A;
  var sheet=el('div','jsheet');sheet.hidden=true;wrap.append(sheet);
