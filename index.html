@@ -4003,6 +4003,7 @@ function kanaToRomaji(h,verb){
   out+=K2R[c]!=null?K2R[c]:(/[a-z0-9]/i.test(c)?c:'');i++}
  return out}
 function collapse(r){return r.replace(/n'/g,'n').replace(/ou/g,'o').replace(/oo/g,'o').replace(/uu/g,'u').replace(/aa/g,'a').replace(/ii/g,'i').replace(/ee/g,'e')}
+function loose(r){return collapse(r).replace(/tch/g,'ch').replace(/([kstpgzdbjfhmrwy])\1/g,'$1').replace(/nn/g,'n')}
 function macron(r,pos){
  var verbEnd=pos&&/(^|,)(v1|v5|vk|vz)/.test(pos);
  var end='';if(verbEnd&&/ou$/.test(r)){end='ou';r=r.slice(0,-2)}
@@ -4023,9 +4024,9 @@ function load(){
  return LOADING}
 function buildIndex(){
  var E=DICT.e,n=E.length;
- IDX={n:n,h:new Array(n),rk:new Array(n),kf:new Array(n),byK:Object.create(null),byH:Object.create(null),gf:new Array(n),ge:new Array(n)};
+ IDX={n:n,h:new Array(n),rk:new Array(n),rl:new Array(n),rl2:new Array(n),kf:new Array(n),byK:Object.create(null),byH:Object.create(null),gf:new Array(n),ge:new Array(n)};
  for(var i=0;i<n;i++){var e=E[i],h=hira(e[1]);
-  IDX.h[i]=h;IDX.rk[i]=collapse(kanaToRomaji(h));
+  IDX.h[i]=h;var rr=kanaToRomaji(h);IDX.rk[i]=collapse(rr);IDX.rl[i]=loose(rr);IDX.rl2[i]=/ha$/.test(rr)?loose(rr.replace(/ha$/,'wa')):(/he$/.test(rr)?loose(rr.replace(/he$/,'e')):null);
   var kf=[];if(e[0])kf.push(e[0]);if(e[5])e[5].split('・').forEach(function(x){if(x)kf.push(x)});IDX.kf[i]=kf;
   kf.forEach(function(k){(IDX.byK[k]=IDX.byK[k]||[]).push(i)});
   (IDX.byH[h]=IDX.byH[h]||[]).push(i);
@@ -4077,7 +4078,10 @@ function deinflect(q){
     var need=bi===1?'vs':r[2];
     if(!posOk(DICT.e[i],need))return;
     if(r[1]===''&&!/(^|,)(n|adj-na|n-t|n-adv|adv|pn|adj-no|vs)/.test(DICT.e[i][4]||''))return;
-    if(seen[i])return;seen[i]=1;out.push({i:i,lab:r[3]})})})})});
+    if(seen[i])return;seen[i]=1;
+    var h=IDX.h[i],rd=null,rep=bi===1?'':hira(r[1]);
+    if(!RK.test(q))rd=hira(q);else if(rep===''||h.slice(h.length-rep.length)===rep)rd=h.slice(0,h.length-rep.length)+hira(r[0]);
+    out.push({i:i,lab:r[3],rd:rd})})})})});
  return out}
 /* ---- recherche ---- */
 function itemsOf(s){return s.replace(/\([^)]*\)/g,'').split(/[;,]/).map(function(x){return x.trim()})}
@@ -4089,30 +4093,34 @@ function glossTier(g,q,isEn){
   if(re.test(a)){best=Math.min(best,2+pen);continue}
   if(a.indexOf(q)>=0)best=Math.min(best,4+pen)}
  return best}
+function ed1(a,b){if(a===b)return true;var la=a.length,lb=b.length;if(Math.abs(la-lb)>1)return false;var i=0;while(i<la&&i<lb&&a[i]===b[i])i++;if(la===lb)return a.slice(i+1)===b.slice(i+1);if(la>lb)return a.slice(i+1)===b.slice(i);return b.slice(i+1)===a.slice(i)}
 function search(q){
  var t=q.trim();if(!t)return{hits:[],seg:null};
  var hits=[],seen={};
- function put(i,tier,note){if(seen[i]!=null){if(tier<seen[i].tier){seen[i].tier=tier;if(note)seen[i].note=note}return}var h={i:i,tier:tier,note:note||''};seen[i]=h;hits.push(h)}
+ function put(i,tier,note,rd){if(seen[i]!=null){if(tier<seen[i].tier){seen[i].tier=tier;if(note){seen[i].note=note;seen[i].rd=rd||null}}return}var h={i:i,tier:tier,note:note||'',rd:rd||null};seen[i]=h;hits.push(h)}
  var hasK=RK.test(t),isKana=/^[ぁ-ゖァ-ヺー・\s]+$/.test(t),isLat=/^[a-zA-ZāīūēōÀ-ÿŒœ'’\-\s.?!]+$/.test(t);
  var n=IDX.n,E=DICT.e;
  if(hasK){
   var qk=t.replace(/\s+/g,'');
   var ex=IDX.byK[qk];if(ex)ex.forEach(function(i){put(i,0)});
-  deinflect(qk).forEach(function(d){put(d.i,0.5,d.lab)});
+  deinflect(qk).forEach(function(d){put(d.i,0.5,d.lab,d.rd)});
   for(var i=0;i<n;i++){var kf=IDX.kf[i];for(var j=0;j<kf.length;j++){var k=kf[j];if(k===qk)continue;var p=k.indexOf(qk);if(p===0){put(i,1);break}if(p>0&&qk.length>=2){put(i,2.5);break}}}
  }else if(isKana){
   var qh=hira(t.replace(/[\s・]+/g,''));
   (IDX.byH[qh]||[]).forEach(function(i){put(i,0)});
-  deinflect(qh).forEach(function(d){put(d.i,0.5,d.lab)});
-  for(var i2=0;i2<n;i2++){var h=IDX.h[i2];if(h===qh)continue;var p2=h.indexOf(qh);if(p2===0)put(i2,1);else if(p2>0&&qh.length>=2)put(i2,3)}
+  deinflect(qh).forEach(function(d){put(d.i,0.5,d.lab,d.rd)});
+  var qlk=loose(kanaToRomaji(qh));
+  for(var i2=0;i2<n;i2++){var h=IDX.h[i2];if(h===qh)continue;var p2=h.indexOf(qh);if(p2===0)put(i2,1);else if(p2>0&&qh.length>=2)put(i2,3);else if(qlk.length>=3&&(IDX.rl[i2]===qlk||IDX.rl2[i2]===qlk))put(i2,0.6)}
  }else if(isLat){
   var rk=romajiToKana(t),qr=null;
-  if(rk.kana){var full=kanaToRomaji(rk.kana)+rk.rest;qr=collapse(full);
+  var ql=null;
+  if(rk.kana){var full=kanaToRomaji(rk.kana)+rk.rest;qr=collapse(full);ql=loose(full);
    var qh2=rk.kana;
-   if(!rk.rest){(IDX.byH[qh2]||[]).forEach(function(i){put(i,0)});deinflect(qh2).forEach(function(d){put(d.i,0.5,d.lab)})}}
+   if(!rk.rest){(IDX.byH[qh2]||[]).forEach(function(i){put(i,0)});deinflect(qh2).forEach(function(d){put(d.i,0.5,d.lab,d.rd)})}}
   var qf=fold(t).replace(/\s+/g,' ').trim(),rawq=t.toLowerCase().replace(/\s+/g,' ').trim(),accent=/[À-ÿŒœ]/.test(t.toLowerCase())&&fold(t)!==t.toLowerCase();
   for(var i3=0;i3<n;i3++){
-   if(qr&&qr.length>=1){var r=IDX.rk[i3];if(r===qr)put(i3,0.2);else if(r.indexOf(qr)===0&&qr.length>=2)put(i3,1.5);else if(qr.length>=4&&r.indexOf(qr)>0)put(i3,4.5)}
+   if(qr&&qr.length>=1){var r=IDX.rk[i3];if(r===qr)put(i3,0.2);else if(r.indexOf(qr)===0&&qr.length>=2)put(i3,1.5);else if(qr.length>=4&&r.indexOf(qr)>0)put(i3,4.5);
+    else{var rl=IDX.rl[i3],r2=IDX.rl2[i3];if(rl===ql||r2===ql)put(i3,0.35,'orthographe approchée');else if(qr.length>=2&&(rl.indexOf(ql)===0||(r2&&r2.indexOf(ql)===0)))put(i3,1.7)}}
    if(qf.length>=2){
     var gt=9;
     if(IDX.gf[i3]&&IDX.gf[i3].indexOf(qf)>=0)gt=glossTier(IDX.gf[i3],qf,false);
@@ -4120,6 +4128,8 @@ function search(q){
     if(gt<9){if(accent&&gt<=2.2){var raw=((E[i3][2]||'')+' '+(E[i3][3]||'')).toLowerCase();if(raw.indexOf(rawq)<0)gt+=0.6}put(i3,gt+0.1)}
     else if(qf.indexOf(' ')>0){var tk=qf.split(' ').filter(Boolean);if(tk.length>1){var all=IDX.gf[i3]+' '+IDX.ge[i3];if(tk.every(function(x){return all.indexOf(x)>=0}))put(i3,6)}}}}
  }
+ if(isLat&&!hits.length&&ql&&ql.length>=4){
+  for(var i4=0;i4<n;i4++){var a=IDX.rl[i4];if(Math.abs(a.length-ql.length)<=1&&ed1(a,ql))put(i4,3.5,'orthographe approchée')}}
  hits.forEach(function(h){h.sc=h.tier+Math.min(h.i,10000)/10000*0.4});
  hits.sort(function(a,b){return a.sc-b.sc||a.i-b.i});
  var seg=null;
@@ -4176,7 +4186,10 @@ renderCarnet=function(){
    else if(!FAILED)out.append(el('p','note','…','text-align:center;margin-top:18px'));
    return}
   var list=res.hits.filter(function(h){var e=DICT.e[h.i];return!seenKey[(e[0]||'')+'|'+e[1]]});
-  var dn=function(h){out.append(dcard(h.i,h.note?(t+' : '+h.note+' → '+(DICT.e[h.i][0]||DICT.e[h.i][1])):''))};
+  var dn=function(h){var nt='';if(h.note){var base=DICT.e[h.i][0]||DICT.e[h.i][1],lat=/^[\x00-\x7F\u00C0-\u017F’\s]+$/.test(t),form=lat?(h.rd||t):t;
+   if(h.note==='orthographe approchée')nt=t+' : '+h.note+' ('+macron(kanaToRomaji(hira(DICT.e[h.i][1])),DICT.e[h.i][4])+') → '+base;
+   else nt=form+(h.rd?' ('+macron(kanaToRomaji(h.rd),'')+')':'')+' : '+h.note+' → '+base}
+   out.append(dcard(h.i,nt))};
   var tops=list.filter(function(h){return h.tier<1}).slice(0,8),tset={};tops.forEach(function(h){tset[h.i]=1});
   tops.forEach(dn);cur.forEach(function(w){out.append(card(w))});
   list=list.filter(function(h){return!tset[h.i]});
