@@ -688,6 +688,7 @@ svg path.lb{fill:var(--sea);pointer-events:none}
 .jrsum .jres{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-weight:700}
 .jrsum .jw{margin-top:6px;color:var(--accent);font-size:.84rem}
 .jrsel{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.ohsrc{display:block;margin:6px 0 0;color:var(--muted);font-size:.78rem;overflow-wrap:anywhere}
 
 </style>
 </head>
@@ -4257,9 +4258,13 @@ function applyHours(t,v){
 var _of25=openForm;
 openForm=function(title,fields,onSave,ok){
  var has=fields.some(function(f){return f.k==='closed'}),it=PF_IT;
- if(has){var os=onSave;onSave=function(v){
-  var n=places.length,e=os(v);if(e)return e;
-  var t=it&&it.id?it:(places.length>n?places[places.length-1]:null);if(t)applyHours(t,v);return null}}
+ if(has){var os=onSave,armed='';onSave=function(v){
+  var cl=String(v.closed||'').split(',').filter(function(x){return x!==''}).map(Number),al=v.date?hrsAlert({closed:cl,oh:v.oh,ch:v.ch},v.date,v.time):null;
+  if(al){var sig=al+'|'+v.date+'|'+v.time+'|'+v.oh+'|'+v.ch+'|'+v.closed;if(armed!==sig){armed=sig;return'⚠ '+al+'. Appuie encore sur Enregistrer pour confirmer.'}}
+  var o=$('#dlg')._osm,n=places.length,e=os(v);if(e)return e;
+  var t=it&&it.id?it:(places.length>n?places[places.length-1]:null);
+  if(t){applyHours(t,v);if(o&&o.raw&&(v.oh||'')===o.oh&&(v.ch||'')===o.ch&&(v.closed||'')===o.closed||o&&o.raw&&!o.oh&&!v.oh&&!v.ch&&!v.closed){t.ohr=o.raw;if(o.check)t.ohchk=o.check;else delete t.ohchk}else{delete t.ohr;delete t.ohchk}}return null}}
+ var dl=$('#dlg');if(dl)dl._osm=null;
  _of25(title,fields,onSave,ok);
  if(has)buildDayChips()};
 function buildDayChips(){
@@ -4280,6 +4285,7 @@ function hrsAlert(it,dk,tm){
  return null}
 function hrsText(it){var a=[];
  if(it.closed&&it.closed.length)a.push('Fermé : '+DAYS3.filter(function(d){return it.closed.indexOf(d[1])>=0}).map(function(d){return DAYN[d[1]]}).join(', '));
+ if(it.ohr)a.push('Horaires OpenStreetMap'+(it.ohchk?' (vérifiés le '+it.ohchk+')':'')+' : '+it.ohr);
  if(it.oh&&it.ch)a.push('Ouvert de '+it.oh+' à '+it.ch);else if(it.oh)a.push('Ouvre à '+it.oh);else if(it.ch)a.push('Ferme à '+it.ch);
  return a}
 var _eo25=eventsOn;
@@ -4454,8 +4460,8 @@ var PS=(function(){
  var TT={t:'Temple ou sanctuaire',m:'Musée ou monument',n:'Nature et paysage',o:'Onsen',h:'Hébergement',r:'Restaurant',c:'Café',s:'Shopping',v:'Village traditionnel',a:'Aéroport'};
  var KM={temple:TT.t,torii:TT.t,castle:TT.m,tower:TT.m,bridge:TT.m,house:TT.v};
  function local(){var o=[],L=window.SITES6;if(!L)return o;
-  L.S.forEach(function(x){o.push({n:x[0],type:KM[x[1]]||'Autre',city:x[6],pref:x[5],loc:1})});
-  L.P.forEach(function(x){o.push({n:x[0],type:TT.n,city:x[5],pref:x[4],loc:1})});return o}
+  L.S.forEach(function(x){o.push({n:x[0],type:KM[x[1]]||'Autre',city:x[6],pref:x[5],loc:1,ll:[x[2],x[3]]})});
+  L.P.forEach(function(x){o.push({n:x[0],type:TT.n,city:x[5],pref:x[4],loc:1,ll:[x[1],x[2]]})});return o}
  function toks(q){return norm(q).split(/[^a-z0-9\u3040-\u30ff\u4e00-\u9fff]+/).filter(Boolean)}
  function localMatch(q){var t=toks(q);if(!t.length)return[];
   var r=local().filter(function(x){var h=norm(x.n+' '+x.city);return t.every(function(w){return h.indexOf(w)>=0})});
@@ -4484,18 +4490,54 @@ var PS=(function(){
   var parts=[street,p.locality,p.district,p.city&&p.city!==p.district?p.city:''].filter(Boolean);
   var seen={};parts=parts.filter(function(x){var k=norm(x);if(seen[k])return false;seen[k]=1;return true});
   var addr=p.name+(parts.length?', '+parts.join(', '):'')+(p.postcode?' '+p.postcode:'');
-  return{n:p.name,type:ty,city:city,pref:pref,addr:addr,loc:0,sub:p.district&&norm(p.district)!==norm(city)?p.district:''}}
+  var g=f.geometry&&f.geometry.coordinates;return{n:p.name,type:ty,city:city,pref:pref,addr:addr,loc:0,oid:(p.osm_type||'')+(p.osm_id||''),ll:g?[g[1],g[0]]:null,alt:[],sub:p.district&&norm(p.district)!==norm(city)?p.district:''}}
  var memo={},ctl=null;
  function remote(q){var k=norm(q);if(memo[k])return Promise.resolve(memo[k]);
   if(ctl)try{ctl.abort()}catch(e){}ctl=typeof AbortController!=='undefined'?new AbortController():null;
   var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=12&lang=en&bbox=122,24,146,46';
   return fetch(url,ctl?{signal:ctl.signal}:{}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){
-   var seen={},out=[];(j.features||[]).forEach(function(f){var x=fromPhoton(f);if(!x)return;var k2=norm(x.n)+'|'+norm(x.city);if(seen[k2])return;seen[k2]=1;out.push(x)});
+   var seen={},out=[];(j.features||[]).forEach(function(f){var x=fromPhoton(f);if(!x)return;var k2=norm(x.n)+'|'+norm(x.city);if(seen[k2]){if(x.oid&&seen[k2].alt.length<4)seen[k2].alt.push(x.oid);return}seen[k2]=x;out.push(x)});
    var qn=k.replace(/[^a-z0-9]/g,'');
    function rk(x){var n=norm(x.n).replace(/[^a-z0-9]/g,'');return(n===qn?0:n.indexOf(qn)===0?1:n.indexOf(qn)>0?2:3)}
    var idx=out.map(function(x,i){return[x,i]});idx.sort(function(a,b){return rk(a[0])-rk(b[0])||a[0].n.length-b[0].n.length||a[1]-b[1]});out=idx.map(function(z){return z[0]});
    memo[k]=out;return out})}
- return{localMatch:localMatch,remote:remote,fromPhoton:fromPhoton,typeOf:typeOf}
+
+ var RK=[1,2,3,4,5,6,0],DN={Mo:1,Tu:2,We:3,Th:4,Fr:5,Sa:6,Su:0};
+ function hm(t){var a=t.split(':'),h=+a[0],m=+a[1];if(h===24&&m===0)return'00:00';if(h>23||m>59)return null;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')}
+ function parseOH(raw){raw=String(raw||'').trim();if(!raw)return null;if(/^24\/7$/.test(raw))return{always:true};
+  var res={},complex=false,sawDays=false,ALLD=[0,1,2,3,4,5,6];
+  raw.split(';').forEach(function(rule){rule=rule.trim();if(!rule||complex)return;
+   if(/^(PH|SH)\b.*\boff$/i.test(rule))return;
+   if(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|week|sunrise|sunset|dusk|dawn|\[|\+|\bPH\b|\bSH\b|"|\|\|)/.test(rule)){complex=true;return}
+   var m=/^((?:(?:Mo|Tu|We|Th|Fr|Sa|Su)(?:-(?:Mo|Tu|We|Th|Fr|Sa|Su))?)(?:\s*,\s*(?:Mo|Tu|We|Th|Fr|Sa|Su)(?:-(?:Mo|Tu|We|Th|Fr|Sa|Su))?)*)?\s*(off|closed|\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2}(?:\s*,\s*\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2})*)$/i.exec(rule);
+   if(!m){complex=true;return}
+   var days=[];if(m[1]){sawDays=true;m[1].split(',').forEach(function(seg){seg=seg.trim();var r=seg.split('-');if(r.length===1)days.push(DN[r[0]]);else{var a=RK.indexOf(DN[r[0]]),b=RK.indexOf(DN[r[1]]);if(b<a){complex=true;return}for(var i=a;i<=b;i++)days.push(RK[i])}})}else days=ALLD.slice();
+   var val;if(/^(off|closed)$/i.test(m[2]))val='off';else{var iv=m[2].split(',');if(iv.length>1){complex=true;return}var q=iv[0].split('-'),o=hm(q[0].trim()),c=hm(q[1].trim());if(!o||!c){complex=true;return}val=[o,c]}
+   days.forEach(function(d){res[d]=val})});
+  if(complex)return{complex:true};
+  var iv=null,off=[];
+  for(var d=0;d<7;d++){var v=res[d];if(v==null){if(sawDays)off.push(d);continue}if(v==='off'){off.push(d);continue}
+   if(iv&&(iv[0]!==v[0]||iv[1]!==v[1]))return{complex:true};iv=v}
+  if(!iv)return{complex:true};
+  return{oh:iv[0],ch:iv[1],closed:off.sort(function(a,b){return a-b})}}
+ var TY={node:'N',way:'W',relation:'R'},dmemo={};
+ function lookup(ids){ids=ids.filter(Boolean);if(!ids.length)return Promise.resolve(null);var k=ids.join(',');if(dmemo[k])return dmemo[k];
+  dmemo[k]=fetch('https://nominatim.openstreetmap.org/lookup?osm_ids='+encodeURIComponent(k)+'&format=json&extratags=1').then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){
+   var by={};j.forEach(function(o){by[(TY[o.osm_type]||'')+o.osm_id]=o.extratags||{}});
+   var out={hours:null,url:'',check:''};
+   ids.forEach(function(id){var t=by[id];if(!t)return;
+    if(!out.hours&&t.opening_hours){out.hours=t.opening_hours;out.check=t['check_date:opening_hours']||t.check_date||''}
+    var w=t.website||t['contact:website'];if(!out.url&&w){w=String(w).split(';')[0].trim();if(/^https?:\/\//i.test(w))out.url=w}});
+   return out},function(){delete dmemo[k];return null});
+  return dmemo[k]}
+ function near(a,b){return a&&b&&Math.abs(a[0]-b[0])<.02&&Math.abs(a[1]-b[1])<.02}
+ /* lieu connu de l'app (sans identifiant OSM) : on retrouve l'objet OSM voisin portant le même type */
+ function resolveLocal(x){var q=x.city+' '+x.n.replace(/^(Château|Parc)\s+(de |d’|du |des )?/i,'');
+  return fetch('https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=8&lang=en&lat='+x.ll[0]+'&lon='+x.ll[1]).then(function(r){return r.json()}).then(function(j){
+   var ids=[];(j.features||[]).forEach(function(f){var g=f.geometry.coordinates,y=fromPhoton(f);if(y&&y.type===x.type&&near([g[1],g[0]],x.ll))ids.push(y.oid)});return ids.slice(0,5)},function(){return[]})}
+ function details(x){var idsP=x.loc?(x.ll?resolveLocal(x):Promise.resolve([])):Promise.resolve([x.oid].concat(x.alt||[]));
+  return idsP.then(function(ids){return lookup(ids)})}
+ return{localMatch:localMatch,remote:remote,fromPhoton:fromPhoton,typeOf:typeOf,parseOH:parseOH,details:details}
 })();
 function labelInput(prefix){var r=null;document.querySelectorAll('#dlg label').forEach(function(l){if(!r&&l.firstChild&&l.firstChild.textContent.indexOf(prefix)===0)r=l.querySelector('input,select')});return r}
 function setField(prefix,val){var i=labelInput(prefix);if(!i)return;
@@ -4505,7 +4547,21 @@ function pickPlace(x){
  setField('Nom',x.n);if(x.city)setField('Ville ou zone',x.city);if(x.pref)setField('Préfecture',x.pref);
  if(x.addr)setField('Adresse',x.addr);
  if(x.type){var hit=Array.prototype.filter.call(document.querySelectorAll('#dlg .chs .ch'),function(b){return b.textContent.trim()===x.type})[0];if(hit&&!hit.classList.contains('on'))hit.click()}
- if(x.city)setField('Ville ou zone',x.city)}
+ if(x.city)setField('Ville ou zone',x.city);
+ osmHours(x)}
+function osmHours(x){var d=$('#dlg'),prev=d._osm;
+ if(prev){var cur=curHours();if(cur.oh===prev.oh&&cur.ch===prev.ch&&cur.closed===prev.closed){setHours('','',[]);}var s0=d.querySelector('.ohsrc');if(s0)s0.remove();d._osm=null}
+ var tk=d._pick=(d._pick||0)+1;
+ PS.details(x).then(function(info){if(!info||d._pick!==tk||!d.open)return;
+  if(info.url){var u=labelInput('Lien');if(u&&!u.value)setField('Lien',info.url)}
+  if(!info.hours)return;var pr=PS.parseOH(info.hours),o={raw:info.hours,check:info.check,oh:'',ch:'',closed:''};
+  var cur=curHours();var empty=!cur.oh&&!cur.ch&&!cur.closed;
+  if(pr&&!pr.complex&&!pr.always&&empty){o.oh=pr.oh;o.ch=pr.ch;o.closed=pr.closed.join(',');setHours(pr.oh,pr.ch,pr.closed)}
+  d._osm=o;var det=d.querySelector('details');if(det)det.open=true;
+  var lab=labelInput('Ferme à');if(lab){var src=el('small','ohsrc','Horaires OpenStreetMap : '+info.hours+(info.check?' · vérifié le '+info.check:''));lab.closest('label').after(src)}})}
+function curHours(){var a=labelInput('Ouvre à'),b=labelInput('Ferme à'),c=labelInput('Jours de fermeture');return{oh:a?a.value:'',ch:b?b.value:'',closed:c?c.value:''}}
+function setHours(oh,ch,closed){setField('Ouvre à',oh);setField('Ferme à',ch);
+ var want=closed.map(Number);document.querySelectorAll('#dlg .dch').forEach(function(b,i){var d=DAYS3[i][1],on=b.classList.contains('on'),w=want.indexOf(d)>=0;if(on!==w)b.click()})}
 function attachPlaceSug(){
  var inp=labelInput('Nom');if(!inp||inp.dataset.ps)return;inp.dataset.ps='1';
  var box=el('div','sugs');inp.closest('label').after(box);var tm=0,seq=0;
