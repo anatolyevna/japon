@@ -767,9 +767,17 @@ nav{z-index:5}
 }
 #destinations .list>.row{min-height:44px;padding-top:7px;padding-bottom:7px}
 
-/* bouton + : un vrai bouton (anneau clair + liseré rouge + ombre) */
-.fab{border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--accent),0 8px 18px color-mix(in srgb,var(--accent) 38%,transparent),0 2px 4px rgba(75,50,45,.18)}
-.fab:active{transform:scale(.96)}
+/* v38 : régions de la carte sur 2 lignes de 4 */
+#carte .chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+#carte button.chip{min-height:38px;padding:0 4px;font-size:.76rem;justify-content:center;gap:4px;min-width:0}
+/* bouton + : plus parfaitement centré (barres dessinées) et relief de vrai bouton */
+.fab{font-size:0;line-height:0;padding:0;border:0;overflow:visible}
+.fab.on{display:grid;place-items:center}
+.fab::before,.fab::after{content:"";position:absolute;left:50%;top:50%;background:#fff;border-radius:2px;transform:translate(-50%,-50%);box-shadow:0 1px 1px rgba(90,30,25,.25)}
+.fab::before{width:24px;height:3.5px}
+.fab::after{width:3.5px;height:24px}
+.fab{background-color:var(--accent);background-image:radial-gradient(circle at 32% 26%,color-mix(in srgb,var(--accent) 55%,#fff) 0%,var(--accent) 48%,color-mix(in srgb,var(--accent) 82%,#000) 100%);box-shadow:inset 0 2px 3px rgba(255,255,255,.55),inset 0 -5px 8px rgba(90,30,25,.28),0 8px 16px color-mix(in srgb,var(--accent) 45%,transparent),0 2px 3px rgba(60,30,25,.3)}
+.fab:active{transform:scale(.95)}
 
 </style>
 </head>
@@ -3192,13 +3200,13 @@ var JG={"w":516.5,"h":585.2,"u":30.0,"lo":128.2,"m0":51.495058,"ox":-11.95,"oy":
    ===================================================================== */
 var NS='http://www.w3.org/2000/svg';
 var JGD=null,JGRT=null;
-var ROTA=-17;
+var ROTA=-9;
 /* place prise en bas par la barre d'onglets (îlot flottant compris) */
 function navReserve(){var n=document.querySelector('nav');return n&&window.innerWidth<900?Math.max(0,Math.round(window.innerHeight-n.getBoundingClientRect().top)):0}
 JGD=(function(){
  var Q=JG.q,pts=JG.A.map(function(a){var o=[],x=a[0],y=a[1];o.push([x/Q,y/Q]);for(var i=2;i<a.length;i+=2){x+=a[i];y+=a[i+1];o.push([x/Q,y/Q])}return o});
  function arc(i){return i>=0?pts[i]:pts[~i].slice().reverse()}
- /* orientation : le Japon est redressé de 17° (sens antihoraire) ; coordonnées recalées sur l'origine */
+ /* orientation : le Japon est redressé de 9° (sens antihoraire) : Kyushu en bas à gauche, Hokkaido en haut à droite ; coordonnées recalées sur l'origine */
  var RT=null;
  if(window.ROTA){var ra=window.ROTA*Math.PI/180,rc=Math.cos(ra),rs=Math.sin(ra),rcx=JG.w/2,rcy=JG.h/2,rx0=1e9,ry0=1e9,rx1=-1e9,ry1=-1e9;
   pts.forEach(function(a){a.forEach(function(p){var dx=p[0]-rcx,dy=p[1]-rcy,X=dx*rc-dy*rs,Y=dx*rs+dy*rc;p[0]=X;p[1]=Y;if(X<rx0)rx0=X;if(X>rx1)rx1=X;if(Y<ry0)ry0=Y;if(Y>ry1)ry1=Y})});
@@ -3298,7 +3306,7 @@ var FOCUS={Tokyo:[139.60,35.61,139.86,35.78]};
 function jgMap(o){
  o=o||{};var reg=o.reg||null,W=JG.w,H=JG.h,PAD=8,A0=(W+2*PAD)/(H+2*PAD),A=reg?1.25:A0;
  /* carte principale : plus haute, jusqu'au bas de l'écran (le Japon reste calé sur la largeur, la mer s'étend en haut et en bas) */
- if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34-72;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>0)A=cw/ch}
+ if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34-96;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>0)A=cw/ch}
  var wrap=el('div','jm'+(reg?' reg':''));
  function fit(b,k){var w=(b[2]-b[0])*k,h=(b[3]-b[1])*k;if(w/h<A)w=h*A;else h=w/A;var cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;return{x:cx-w/2,y:cy-h/2,w:w,h:h}}
  var base;
@@ -4777,10 +4785,10 @@ function tiles(){
   var ei=bub.querySelector('.ei');if(ei){var ic=document.createElement('span');ic.className='wti';ic.innerHTML=ei.innerHTML;t.append(ic)}
   var nm=document.createElement('b');nm.textContent=bub.querySelector('b').textContent;t.append(nm);
   var pl=document.createElement('span');pl.className='wtp';pl.textContent='+';t.append(pl);t.setAttribute('aria-label',add.getAttribute('aria-label')||nm.textContent);
-  t.onclick=function(){add.click()};g.append(t)});
+  t.onclick=function(){add.click()};if(empt.length%2&&i===empt.length-1)t.classList.add('wide');g.append(t)});
  empt[0].before(g);empt.forEach(function(e){e.style.display='none'});
  var nav=document.querySelector('nav'),top=g.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-navReserve()-top-76,rows=Math.ceil(empt.length/2);
- g.style.height=Math.max(rows*52+(rows-1)*10,avail)+'px'}
+ g.style.height=Math.max(rows*78+(rows-1)*10,avail)+'px'}
 /* pas de clavier à l'ouverture d'un formulaire : le champ n'est pas pris en focus automatiquement */
 if(window.HTMLDialogElement){var sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){this.setAttribute('autofocus','');this.tabIndex=-1;sm.call(this);setTimeout(dcol,30);setTimeout(dcol,250);var a=document.activeElement;if(a&&this.contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){a.blur();try{this.focus({preventScroll:true})}catch(e){}}}}
 /* bouton + : posé à égale distance de la dernière ligne et de la barre d'onglets */
