@@ -127,6 +127,17 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
  .app{margin-left:210px;max-width:none;padding:0 48px 60px}.app>*{max-width:700px}
  .fab{bottom:28px;right:40px}
 }
+/* iPad (≥ 900 px) : le contenu occupe toute la largeur à droite du menu ; Transports : plan fixe à gauche, liste qui défile à droite */
+.tcr{display:contents}
+@media (min-width:900px){
+ .app>*{max-width:none}
+ .app:has(#transports.on #tview.tcols){height:100vh;height:100dvh;display:flex;flex-direction:column;padding-bottom:0;overflow:hidden}
+ .app:has(#transports.on #tview.tcols)>#transports.on{flex:1 1 0;min-height:0;display:flex;flex-direction:column}
+ #tview.tcols{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(0,60%) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:24px;align-items:start;padding-bottom:18px}
+ #tview.tcols>.mmap{margin-top:12px}
+ #tview.tcols>.tcr{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 2px 96px 0}
+ #tview.tcols>.tcr>:first-child{margin-top:12px}
+}
 
 /* ===== v6 : titres Zen Kaku nets, teintes plus claires, contours plus visibles ===== */
 :root{--mix:12%;--mix2:24%;--ol:54%;--hf:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif}
@@ -2578,7 +2589,8 @@ var FOCUS={Tokyo:[139.60,35.61,139.86,35.78]};
 function jgMap(o){
  o=o||{};var reg=o.reg||null,W=JG.w,H=JG.h,PAD=8,A0=(W+2*PAD)/(H+2*PAD),A=reg?1.25:A0;
  /* carte principale : plus haute, jusqu'au bas de l'écran (le Japon reste calé sur la largeur, la mer s'étend en haut et en bas) */
- if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34-96;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>0)A=cw/ch}
+ if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=window.innerWidth>=900?((ap&&ap.clientWidth)||984)-96:Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34-96;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>0)A=cw/ch}
+ if(reg&&window.innerWidth>=900){var ap2=document.querySelector('.app'),cw2=((ap2&&ap2.clientWidth)||984)-96;A=Math.max(1.25,cw2/Math.max(380,window.innerHeight-274))}   /* iPad : carte de région large mais pas plus haute que l'écran */
  var wrap=el('div','jm'+(reg?' reg':''));
  function fit(b,k){var w=(b[2]-b[0])*k,h=(b[3]-b[1])*k;if(w/h<A)w=h*A;else h=w/A;var cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;return{x:cx-w/2,y:cy-h/2,w:w,h:h}}
  var base;
@@ -4089,6 +4101,18 @@ window.addEventListener('resize',sched);document.addEventListener('click',functi
 /* v39 : pas de zoom de page par pincement hors cartes (Safari iOS) */
 document.addEventListener('gesturestart',function(e){var t=e.target;if(!(t&&t.closest&&t.closest('.jm')))e.preventDefault()},{passive:false});
 
+/* Transports : plan et liste dans deux colonnes (mise en page appliquée par le CSS seulement sur iPad) ; le plan garde ses proportions et occupe toute la hauteur disponible */
+(function(){
+ function fitT(){var v=document.getElementById('tview');if(!v||!v.classList.contains('tcols'))return;var m=v.querySelector(':scope>.mmap'),s=m&&m.querySelector('svg.mm');
+  if(!m||!s||!s.viewBox||!s.viewBox.baseVal||!s.viewBox.baseVal.height)return;
+  var ar=s.viewBox.baseVal.width/s.viewBox.baseVal.height,w=Math.min(700,v.clientWidth-330-24,(v.clientHeight-12-18-2)*ar);if(w<200)return;
+  v.style.gridTemplateColumns=Math.floor(w)+'px minmax(0,1fr)'}
+ var _r=renderTrans;renderTrans=function(){_r();var v=document.getElementById('tview');if(!v)return;v.classList.remove('tcols');v.style.gridTemplateColumns='';
+  var m=v.querySelector(':scope>.mmap');if(TV==='trajets'||!m)return;
+  var r=document.createElement('div');r.className='tcr';[].slice.call(v.children).forEach(function(c){if(c!==m)r.appendChild(c)});v.appendChild(r);v.classList.add('tcols');fitT()};
+ window.addEventListener('resize',fitT);
+ if(window.ResizeObserver){var v0=document.getElementById('tview');if(v0)new ResizeObserver(fitT).observe(v0)}
+})();
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
 var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
 (function(){
