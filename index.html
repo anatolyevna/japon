@@ -767,6 +767,10 @@ nav{z-index:5}
 }
 #destinations .list>.row{min-height:44px;padding-top:7px;padding-bottom:7px}
 
+/* bouton + : un vrai bouton (anneau clair + liseré rouge + ombre) */
+.fab{border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--accent),0 8px 18px color-mix(in srgb,var(--accent) 38%,transparent),0 2px 4px rgba(75,50,45,.18)}
+.fab:active{transform:scale(.96)}
+
 </style>
 </head>
 <body>
@@ -3294,13 +3298,13 @@ var FOCUS={Tokyo:[139.60,35.61,139.86,35.78]};
 function jgMap(o){
  o=o||{};var reg=o.reg||null,W=JG.w,H=JG.h,PAD=8,A0=(W+2*PAD)/(H+2*PAD),A=reg?1.25:A0;
  /* carte principale : plus haute, jusqu'au bas de l'écran (le Japon reste calé sur la largeur, la mer s'étend en haut et en bas) */
- if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>cw/A0)A=cw/ch}
+ if(!reg&&!o.focus&&!o.mini){var hd=document.querySelector('header'),nv=document.querySelector('nav'),ap=document.querySelector('.app'),cw=Math.min(((ap&&ap.clientWidth)||390)-40,700),ch=window.innerHeight-navReserve()-(hd?hd.offsetHeight:120)-34-72;ch=Math.min(ch,cw*1.9);if(cw>0&&ch>0)A=cw/ch}
  var wrap=el('div','jm'+(reg?' reg':''));
  function fit(b,k){var w=(b[2]-b[0])*k,h=(b[3]-b[1])*k;if(w/h<A)w=h*A;else h=w/A;var cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;return{x:cx-w/2,y:cy-h/2,w:w,h:h}}
  var base;
  if(reg){var u=[1e9,1e9,-1e9,-1e9];reg.l.forEach(function(p){var i=pf(p);if(!i)return;var b=i.b;u=[Math.min(u[0],b[0]),Math.min(u[1],b[1]),Math.max(u[2],b[2]),Math.max(u[3],b[3])]});base=fit(u,1.16)}
- else{var bw0=W+2*PAD,bh0=H+2*PAD,hh0=bw0/A;base=hh0>bh0+.5?{x:-PAD,y:-PAD-(hh0-bh0)*((!o.focus&&!o.mini)?1:.5),w:bw0,h:hh0}:{x:-PAD,y:-PAD,w:bw0,h:bh0}}
- var NW=W+2*PAD;                                  /* largeur de référence : z=1 = Japon entier */
+ else{var bw0=W+2*PAD,bh0=H+2*PAD,hh0=bw0/A;base=hh0>bh0+.5?{x:-PAD,y:-PAD-(hh0-bh0)*((!o.focus&&!o.mini)?1:.5),w:bw0,h:hh0}:(hh0<bh0-.5?{x:-PAD-(bh0*A-bw0),y:-PAD,w:bh0*A,h:bh0}:{x:-PAD,y:-PAD,w:bw0,h:bh0})}
+ var NW=Math.max(W+2*PAD,(!reg&&!o.focus&&!o.mini)?base.w:0);                                  /* largeur de référence : z=1 = Japon entier */
  var vb={x:base.x,y:base.y,w:base.w,h:base.h};
  var PERS=!reg&&!o.focus&&!o.mini;if(PERS&&window.__jvb&&window.__jvb.w<=base.w*1.001)vb={x:window.__jvb.x,y:window.__jvb.y,w:window.__jvb.w,h:window.__jvb.h};
  var foc=null;
@@ -3329,10 +3333,10 @@ function DECO(){
  function SC(){return(svg.clientWidth||358)/vb.w}
  function Z(){return NW/vb.w}
  function clamp(){var bx=-PAD,by=-PAD,bw=W+2*PAD,bh=H+2*PAD;
-  if(vb.w>=bw)vb.x=bx+(bw-vb.w)/2;else vb.x=Math.max(bx,Math.min(bx+bw-vb.w,vb.x));
+  if(vb.w>=bw)vb.x=bx+(bw-vb.w)*(PERS?1:.5);else vb.x=Math.max(bx,Math.min(bx+bw-vb.w,vb.x));
   if(vb.h>=bh)vb.y=by+(bh-vb.h)*(PERS?1:.5);else vb.y=Math.max(by,Math.min(by+bh-vb.h,vb.y))}
  function setVB(){if(!sheet.hidden)closeSheet();clamp();if(PERS)window.__jvb={x:vb.x,y:vb.y,w:vb.w,h:vb.h};svg.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.w+' '+vb.h);svg.style.touchAction=vb.w<base.w*0.97?'none':'pan-y';draw()}
- var MINW=NW/110,MAXW=reg?base.w*1.5:NW;
+ var MINW=(W+2*PAD)/110,MAXW=reg?base.w*1.5:Math.max(NW,base.w);
  function zoomAt(f,cx,cy){anim++;var nw=Math.max(MINW,Math.min(MAXW,vb.w/f)),k=nw/vb.w;vb.x=cx-(cx-vb.x)*k;vb.y=cy-(cy-vb.y)*k;vb.w=nw;vb.h=nw/A;setVB()}
  var anim=0;
  function animTo(t,ms){var s0={x:vb.x,y:vb.y,w:vb.w,h:vb.h},t0=null,id=++anim;
@@ -4773,10 +4777,10 @@ function tiles(){
   var ei=bub.querySelector('.ei');if(ei){var ic=document.createElement('span');ic.className='wti';ic.innerHTML=ei.innerHTML;t.append(ic)}
   var nm=document.createElement('b');nm.textContent=bub.querySelector('b').textContent;t.append(nm);
   var pl=document.createElement('span');pl.className='wtp';pl.textContent='+';t.append(pl);t.setAttribute('aria-label',add.getAttribute('aria-label')||nm.textContent);
-  t.onclick=function(){add.click()};if(empt.length%2&&i===empt.length-1)t.classList.add('wide');g.append(t)});
+  t.onclick=function(){add.click()};g.append(t)});
  empt[0].before(g);empt.forEach(function(e){e.style.display='none'});
  var nav=document.querySelector('nav'),top=g.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-navReserve()-top-76,rows=Math.ceil(empt.length/2);
- g.style.height=Math.max(rows*78+(rows-1)*10,avail)+'px'}
+ g.style.height=Math.max(rows*52+(rows-1)*10,avail)+'px'}
 /* pas de clavier à l'ouverture d'un formulaire : le champ n'est pas pris en focus automatiquement */
 if(window.HTMLDialogElement){var sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){this.setAttribute('autofocus','');this.tabIndex=-1;sm.call(this);setTimeout(dcol,30);setTimeout(dcol,250);var a=document.activeElement;if(a&&this.contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){a.blur();try{this.focus({preventScroll:true})}catch(e){}}}}
 /* bouton + : posé à égale distance de la dernière ligne et de la barre d'onglets */
@@ -4790,7 +4794,7 @@ function dcol(){var d=document.getElementById('dlg');if(!d||!d.open)return;var h
 document.addEventListener('click',function(){setTimeout(dcol,30)},true);
 /* Mois : cellules un peu plus hautes pour réduire le vide sous la légende */
 function month(){var cs=document.querySelectorAll('#pview .mc');if(!cs.length||!cs[0].offsetParent)return;var r=document.documentElement;r.style.removeProperty('--mh');
- var lg=document.querySelector('#pview .mlg2'),bot=(lg||cs[cs.length-1]).getBoundingClientRect().bottom,room=window.innerHeight-navReserve()-bot-14,add=Math.max(0,Math.min(28,Math.floor(room/6)));if(add>0)r.style.setProperty('--mh',(60+add)+'px')}
+ var lg=document.querySelector('#pview .mlg2'),bot=(lg||cs[cs.length-1]).getBoundingClientRect().bottom,fb=parseFloat(getComputedStyle(r).getPropertyValue('--fabb'))||(navReserve()+10),room=window.innerHeight-fb-58-8-bot,add=Math.max(-14,Math.min(28,Math.floor(room/6)));if(add!==0)r.style.setProperty('--mh',(60+add)+'px')}
 var raf=0;function sched(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;titles();tiles();fab();blocks();week();month()})}
 if(window.MutationObserver)new MutationObserver(sched).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
