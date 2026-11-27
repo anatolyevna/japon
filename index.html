@@ -28,7 +28,7 @@ h2{font-size:1.6rem;line-height:1.2}h3{font-size:1.05rem}
 p{margin:0}button{font:inherit;color:var(--ink)}
 .app{max-width:760px;margin:0 auto;padding:0 20px 140px}
 .top{display:flex;gap:14px;align-items:center;padding:30px 0 22px}
-.mark{width:16px;height:16px;border-radius:50%;background:var(--accent);flex:none}
+
 .top h1{font-size:1.3rem}.top p{color:var(--muted);font-size:.82rem;margin-top:2px}
 .lead{color:var(--muted);margin-top:8px;max-width:50ch}
 .note{margin-top:14px;font-size:.84rem;color:var(--muted)}
@@ -36,7 +36,7 @@ section{display:none;padding-top:8px}section.on{display:block}
 .list{margin-top:8px}.list>*{margin-top:10px}
 .blk{margin-top:28px}
 /* cartes teintées à plat, contour fin */
-.row,.wk,.mode,.entry,.leg{background:color-mix(in srgb,var(--d,var(--t8)) var(--mix),var(--card));border:1px solid color-mix(in srgb,var(--d,var(--t8)) 38%,var(--card))}
+.row,.mode,.entry,.leg{background:color-mix(in srgb,var(--d,var(--t8)) var(--mix),var(--card));border:1px solid color-mix(in srgb,var(--d,var(--t8)) 38%,var(--card))}
 .row{display:flex;align-items:center;gap:12px;width:100%;min-height:66px;padding:12px 16px;border-radius:20px;text-align:left}
 .row .t{flex:1;min-width:0}.row b{font-weight:500;display:block}.row small{display:block;color:var(--muted);font-size:.8rem}
 .row .go{color:var(--muted);font-size:1.3rem;line-height:1}
@@ -52,11 +52,11 @@ section{display:none;padding-top:8px}section.on{display:block}
 .empty{margin-top:14px;padding:28px 20px;text-align:center;color:var(--muted);border:1.5px dashed color-mix(in srgb,var(--ink) 20%,var(--bg));border-radius:22px;white-space:pre-line}
 .pnav{display:flex;align-items:center;justify-content:space-between;margin-top:20px}
 .pnav button{width:44px;height:44px;border:0;border-radius:50%;background:color-mix(in srgb,var(--ink) 6%,var(--bg));font-size:1.2rem}
-.wk{display:flex;gap:14px;width:100%;padding:12px 14px;border-radius:22px;text-align:left;align-items:center;min-height:80px;min-width:0;overflow:hidden}
-.wk.today{box-shadow:0 0 0 2px var(--accent)}
-.dt{width:58px;flex:none;text-align:center;border-radius:16px;padding:6px 0;background:color-mix(in srgb,var(--d) var(--mix2),var(--card))}
-.dt small{display:block;font-size:.72rem;color:color-mix(in srgb,var(--d) 45%,var(--ink));line-height:1.25}
-.dt strong{display:block;font-family:var(--hf);font-size:1.5rem;line-height:1.2}
+
+
+
+
+
 .pv{flex:1;min-width:0;font-size:.88rem}
 .pv div{display:flex;gap:8px;align-items:center;margin:2px 0;white-space:nowrap;overflow:hidden}
 .pv span{min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -108,9 +108,9 @@ dialog .actions{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
 button.chip{min-height:44px;padding:0 16px;font-size:.88rem}
 /* cadre de la carte */
 .map{position:relative;height:340px;margin-top:16px;border-radius:26px;overflow:hidden;border:1px solid var(--line);background-color:color-mix(in srgb,var(--t4) 26%,var(--card));background-image:linear-gradient(color-mix(in srgb,var(--card) 75%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--card) 75%,transparent) 1px,transparent 1px);background-size:44px 44px}
-.msearch{position:absolute;left:12px;right:12px;top:12px;background:var(--card);border-radius:16px;min-height:46px;display:flex;align-items:center;gap:10px;padding:0 14px;color:var(--muted);font-size:.88rem;box-shadow:0 3px 12px rgba(75,50,45,.1)}
-.mchips{position:absolute;left:12px;right:12px;top:68px;display:flex;gap:6px;overflow:hidden}
-.mph{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;color:color-mix(in srgb,var(--ink) 60%,var(--card));font-size:.84rem;padding:0 50px}
+
+
+
 .zoom{position:absolute;right:12px;bottom:92px;display:grid;gap:6px}
 .zoom span{width:42px;height:42px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:1.3rem;box-shadow:0 3px 10px rgba(75,50,45,.12);color:var(--muted)}
 .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--card);border-radius:24px 24px 0 0;padding:10px 18px 16px;box-shadow:0 -4px 16px rgba(75,50,45,.08)}
@@ -132,9 +132,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 :root{--mix:12%;--mix2:24%;--ol:54%;--hf:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif}
 h1,h2,h3{font-weight:700;letter-spacing:-.015em}
 h2{font-size:1.55rem}
-.row,.wk,.mode,.entry,.leg{border:1px solid color-mix(in srgb,var(--d,var(--t8)) var(--ol),var(--card))}
+.row,.mode,.entry,.leg{border:1px solid color-mix(in srgb,var(--d,var(--t8)) var(--ol),var(--card))}
 .ic{border:1px solid color-mix(in srgb,var(--d) var(--ol),var(--card))}
-.dt,.bd,.tag,.chip,.ev,.rg{border:1px solid color-mix(in srgb,var(--d,var(--t8)) var(--ol),var(--card))}
+.bd,.tag,.chip,.ev,.rg{border:1px solid color-mix(in srgb,var(--d,var(--t8)) var(--ol),var(--card))}
 .chip{border-width:1px}
 .chip.on{background:color-mix(in srgb,var(--d) 42%,var(--card));font-weight:700}
 .seg.wrap{flex-wrap:wrap}
@@ -223,8 +223,8 @@ h2{font-size:1.55rem}
 .wc.empty.today .wd{box-shadow:0 0 0 2px var(--accent)}
 .wf{color:color-mix(in srgb,var(--ink) 25%,var(--card))}
 /* légende du mois, discrète */
-.mlgw{margin-top:14px}
-.mlg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.7rem;color:var(--muted);line-height:1.3}
+
+
 .lgi{display:inline-flex;align-items:center;gap:5px}
 .lgi i{width:8px;height:8px;border-radius:50%;background:var(--d);display:inline-block}
 .lg.small{margin-top:6px;padding:0 4px;border:0;background:none}
@@ -312,7 +312,7 @@ h2{font-size:1.55rem}
 .cont{display:inline-flex;align-items:center;gap:6px;border:0;background:none;font:inherit;font-size:.82rem;color:color-mix(in srgb,var(--d) 45%,var(--ink));padding:2px 0;min-height:30px;text-align:left}
 /* étude compacte */
 .eur{display:block;margin-top:4px;font-size:.8rem;color:var(--muted)}
-.mlgw,.lg.small{display:none}
+.lg.small{display:none}
 /* plans plus petits */
 .mm{max-height:340px}
 .mm .mk{font-size:6.8px;fill:#8A7B74;paint-order:stroke;stroke:#FFFBF5;stroke-width:2.2px;stroke-linejoin:round;font-family:var(--bf);font-style:italic}
@@ -320,27 +320,27 @@ h2{font-size:1.55rem}
 .mm .gl{font-size:8.2px}
 .mmap{margin-top:12px}
 /* puces de lignes sur deux rangées défilantes */
-.chips.lc2{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:12px;padding-bottom:2px;justify-content:start}
-.chips.lc2::-webkit-scrollbar{display:none}
-.chips.lc2 .chip{min-height:34px;font-size:.8rem;padding:0 12px}
+
+
+
 /* fiche de ligne */
 .lcard{margin-top:12px;padding:12px 16px 14px}
-.lch h3{font-size:1.05rem}
-.lch small{display:block;color:var(--muted);margin-top:2px}
+
+
 .lci{margin-top:8px;font-size:.88rem}
 .lci.mu{color:var(--muted);font-size:.78rem}
 .est{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}
 .est select{min-height:40px;width:auto;flex:1 1 120px;font-size:.88rem;padding:0 10px;border-radius:12px}
 .estr{flex:1 1 100%;font-weight:700;font-size:.95rem}
-.stdet{margin-top:10px}
-.stdet summary{min-height:40px;display:flex;align-items:center;font-weight:700;cursor:pointer;font-size:.9rem}
+
+
 .stl .st{min-height:36px}
 .st .stm{margin-left:auto;color:var(--muted);font-size:.76rem;padding-right:6px}
 /* onglets transports : 5 onglets */
 #tseg button{padding:0 4px;font-size:.84rem}
 
-.chip.lcp i{border-radius:2px}
-.chip.lcp.on{background:color-mix(in srgb,var(--d) 40%,var(--card))}
+
+
 .mmap{background:var(--card);border-color:color-mix(in srgb,var(--ink) 12%,var(--bg))}
 
 /* ===== v9 ===== */
@@ -366,15 +366,15 @@ dialog.wide{width:96vw;max-width:96vw;padding:14px}
 .stl .st span{font-size:1rem}
 .lci{margin-top:10px;font-size:.9rem}
 /* carte des préfectures */
-.regcard{margin-top:12px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;padding:14px;border-radius:22px;background:var(--card);border:1px solid var(--line)}
-.rmw{flex:1 1 210px;min-width:0}
-.rmap{width:100%;height:auto;display:block;max-width:330px;margin:0 auto}
-.rmap .rt{cursor:pointer;outline:none}
-.rmap .rt:focus-visible rect{stroke-width:3;stroke:var(--accent)}
-.rmap text{fill:var(--ink);font-family:var(--bf);font-weight:500;pointer-events:none}
-.locw{flex:0 0 92px}
+
+
+
+
+
+
+
 .loc{width:92px;height:auto;display:block}
-.rnote{flex:1 1 100%;color:var(--muted);font-size:.72rem}
+
 /* distinction transport / lieu : quatre variantes */
 html[data-dist] .ic.tr,html[data-dist] .ei.tr,html[data-dist] .ev.tr,html[data-dist] .chip.tr,html[data-dist] .lgi i.tr,html[data-dist] .dots i.tr,html[data-dist] .hr.act.tr,html[data-dist] .cont.tr{background-image:none}
 /* A : hachures très pâles, seulement sur les grandes surfaces */
@@ -429,9 +429,9 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .jsv .rb{stroke:var(--card);stroke-width:1.3;opacity:.9}
 .jsv.rdz .rb{stroke:#FFFBF5;stroke-width:1.5;opacity:1}
 .jsv .cs{stroke:color-mix(in srgb,var(--ink) 60%,transparent);stroke-width:.8;opacity:.5}
-.jsv .inf{fill:none;stroke:color-mix(in srgb,var(--ink) 30%,transparent);stroke-dasharray:4 4;stroke-width:1;vector-effect:non-scaling-stroke;pointer-events:none}
+
 .jsv text{font-family:var(--bf);pointer-events:none}
-.jsv .inl{fill:var(--muted)}
+
 .jsv .pl{font-weight:600;fill:var(--ink);paint-order:stroke;stroke:color-mix(in srgb,var(--card) 80%,transparent);stroke-linejoin:round}
 .jsv .pin,.jsv .trl{cursor:pointer;outline:none}
 .jsv .pin text{pointer-events:none}
@@ -440,7 +440,7 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .zc{position:absolute;left:10px;top:10px;display:grid;gap:6px}
 .zc button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);display:grid;place-items:center;font-size:1.25rem;line-height:1;padding:0;box-shadow:0 2px 8px rgba(75,50,45,.12)}
 .zc button:active{background:var(--line)}
-/*jchip*/.jchipx{position:absolute;right:10px;top:10px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:.82rem;box-shadow:0 2px 8px rgba(75,50,45,.1)}
+/*jchip*/
 .jnote{margin-top:8px;color:var(--muted);font-size:.72rem;line-height:1.4;white-space:pre-line}
 .regcard2{margin-top:4px}
 .jm.reg .zc{left:auto;top:auto;right:10px;bottom:10px}
@@ -478,7 +478,7 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 .jr.wish{border-style:dashed}
 .jgo{margin-top:10px;width:100%}
 .jwarn{color:var(--muted);font-size:.78rem;margin-top:6px}
-.jleg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:.76rem;color:var(--muted)}
+
 .lgi{display:inline-flex;align-items:center;gap:6px}
 .lgi i{display:inline-block;flex:none}
 .lgi.d i{width:10px;height:10px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#B0524C}
@@ -511,7 +511,7 @@ html[data-dist=d] .chip.tr{border:2px dashed var(--d);background-color:color-mix
 /* plus de zoom automatique de l'iPhone dans les formulaires : champs à 16 px minimum */
 input,select,textarea{font-size:16px!important}
 /* carte : légende plus petite */
-.jleg{font-size:.66rem;gap:3px 12px;margin-top:6px}
+
 .lgi{gap:5px}
 .lgi.d i,.lgi.h i{width:8px;height:8px}
 .lgi.n i{width:16px;height:3px}
@@ -582,14 +582,14 @@ input,select,textarea{font-size:16px!important}
 .jsv .mt .msm circle{fill:#FFFBF5;stroke:#C9BDB1;stroke-width:.7;vector-effect:non-scaling-stroke;opacity:.92}
 .jsv .mt.mr{opacity:.88}
 .jsv .mt.mf{filter:drop-shadow(0 .6px .8px rgba(60,40,60,.25))}
-.jsv .mt .fjc{fill:#8DA2C4;stroke:#6B80A5;stroke-width:.9;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.jsv .mt .fjs{fill:#6F86AE;stroke:none}
-.jsv .mt .fjw{fill:#FFFBF5;stroke:#B9C4D8;stroke-width:.7;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.jsv .mt .fjws{fill:#DCE4F1;stroke:none}
-.jsv .mt .fjk{fill:#7184A8;stroke:none}
-.jsv .mt .fjn ellipse{fill:#FFFBF5;opacity:.82}
+
+
+
+
+
+
 .jsv .halo{pointer-events:none}
-.jsv .mt .fjn ellipse{stroke:none}
+
 .jsv .mt .msm circle{stroke:#C9BDB1}
 
 .jsv .mt.mf{filter:none}
@@ -600,7 +600,7 @@ input,select,textarea{font-size:16px!important}
 .jsv .rd2{stroke:#C4B8C8}
 .jsv .rcity{cursor:pointer}
 .jsv .rcity,.rcity *{pointer-events:none!important}
-.jsv .rh{fill:transparent;stroke:none}
+
 
 .jsv .cd.on{fill:#E39A74;opacity:1;stroke:#FFFBF5;stroke-width:1.2;vector-effect:non-scaling-stroke}
 .jsv .cd.ap{fill:#6F95B2;opacity:1;stroke:#FFFBF5;stroke-width:1.2;vector-effect:non-scaling-stroke}
@@ -890,13 +890,11 @@ function hira(s){return s.replace(/[ァ-ヶ]/g,function(c){return String.fromCha
 function fold(s){return hira(norm(s))}
 function sty(e,d){e.style.setProperty('--d',d);return e}
 function dk(c,t){t=t==null?.62:t;var a=[1,3,5].map(function(i){return parseInt(c.substr(i,2),16)}),b=[0x4B,0x3D,0x3A];return '#'+a.map(function(v,i){return('0'+Math.round(v*t+b[i]*(1-t)).toString(16)).slice(-2)}).join('')}
-function money(n){return n?Number(n).toLocaleString('fr-FR')+' ¥':''}
 function typeInfo(l){for(var i=0;i<TYPES.length;i++)if(TYPES[i][0]===l)return TYPES[i];return TYPES[TYPES.length-1]}
 function prefRegion(p){for(var i=0;i<REG.length;i++)if(REG[i].l.indexOf(p)>=0)return REG[i];return REG[0]}
 function cityPref(c){var n=norm(c);for(var i=0;i<CITIES.length;i++)if(norm(CITIES[i][0])===n)return CITIES[i][1];if(PREFS.some(function(p){return norm(p)===n}))return PREFS.filter(function(p){return norm(p)===n})[0];return ''}
 function canon(c){var n=norm(c),i;for(i=0;i<CITIES.length;i++)if(norm(CITIES[i][0])===n)return CITIES[i][0];for(i=0;i<places.length;i++)if(norm(places[i].city)===n)return places[i].city;return c}
 function dn(p){return p.n||p.type}
-function icoBox(k,c){var b=sty(el('span','ic'),c);b.innerHTML=ico(k,'currentColor',22);return b}
 function K(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function PD(s){var a=s.split('-');return new Date(+a[0],a[1]-1,+a[2])}
 function addD(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
@@ -937,76 +935,6 @@ function openForm(title,fields,onSave,ok){
 }
 
 /* ---------- Ajouts ---------- */
-function chooser(dk,hr){
- var d=$('#dlg');if(d.open)d.close();d.replaceChildren();
- d.append(el('h2',null,'Ajouter au planning','font-size:1.3rem'),el('p','lead',F(PD(dk),{weekday:'long',day:'numeric',month:'long'})+(hr?' · '+hr:'')));
- var l=el('div','list');
- function opt(ic,col,t,s,fn){var b=sty(el('button','row'),col);b.type='button';b.append(icoBox(ic,col));var tt=el('span','t');tt.append(el('b',null,t),el('small',null,s));b.append(tt,el('span','go','›'));b.onclick=function(){d.close();fn()};l.append(b)}
- opt('temple','#C4A8C9','Lieu ou activité','Temple, repas, onsen, hébergement…',function(){addPlace({date:dk,time:hr||''})});
- opt('train',MODES[0][1],'Trajet','Train, Shinkansen, métro, avion…',function(){addTrip({date:dk,dep:hr||''})});
- var c=el('button','btn ghost','Annuler');c.type='button';c.style.marginTop='14px';c.onclick=function(){d.close()};d.append(l,c);d.showModal();
-}
-function addPlace(pre){
- pre=pre||{};var hasDate=!!pre.date;
- openForm(pre.city?'Nouveau lieu · '+pre.city:'Ajouter une destination ou un lieu',[
-  {k:'city',label:'Ville ou zone',ph:'Commence à écrire (ex. hiro)…',val:pre.city||'',sug:citySug},
-  {k:'pref',label:'Préfecture',type:'select',opts:[['','Choisir la préfecture']].concat(PREFS),val:pre.pref||(pre.city?cityPref(pre.city):'')},
-  {k:'type',label:'Type de lieu',type:'chips',opts:TYPES,val:'Autre'},
-  {k:'n',label:'Nom du lieu (vide = ajouter seulement la ville)',ph:'Ex. Fushimi Inari',val:''},
-  {k:'price',label:'Budget (¥)',type:'number',ph:'Facultatif'},
-  {k:'date',label:'Date',type:'date',val:pre.date||'',more:!hasDate},
-  {k:'time',label:'Heure',type:'time',val:pre.time||'',more:!hasDate},
-  {k:'note',label:'Notes',more:true}
- ],function(v){
-  if(!v.city)return'Écris la ville ou la zone.';
-  var city=canon(v.city),pf=v.pref||cityPref(city);if(!pf)return'Choisis la préfecture de cette ville.';
-  if(v.time&&!v.date)return'Choisis aussi une date pour ajouter une heure.';
-  var only=!v.n&&v.type==='Autre'&&!v.date;
-  if(only&&places.some(function(p){return norm(p.city)===norm(city)}))return'Cette destination existe déjà.';
-  places.push({id:++uid,city:city,pref:pf,n:v.n,type:v.type,price:+v.price||0,date:v.date,time:v.time,note:v.note,cityOnly:only});
-  if(v.date)S.d=PD(v.date);
-  DV={t:'city',city:city,pref:pf};refresh();return null;
- },'Ajouter');
-}
-function addTrip(pre){
- pre=pre||{};var MN=MODES.map(function(m){return m[0]});
- openForm('Nouveau trajet',[
-  {k:'m',label:'Moyen de transport',type:'select',opts:MN,val:MN[pre.m!=null?pre.m:0]},
-  {k:'a',label:'Départ',ph:'Ville ou gare…',val:pre.a||'',sug:tripSug},
-  {k:'b',label:'Arrivée',ph:'Ville ou gare…',val:pre.b||'',sug:tripSug},
-  {k:'date',label:'Date',type:'date',val:pre.date||''},
-  {k:'dep',label:'Heure de départ',type:'time',val:pre.dep||''},
-  {k:'arr',label:'Heure d’arrivée',type:'time',val:''},
-  {k:'price',label:'Prix (¥)',type:'number',ph:'Facultatif'},
-  {k:'note',label:'Notes',more:true}
- ],function(v){
-  if(!v.a||!v.b)return'Renseigne le départ et l’arrivée.';
-  if(norm(v.a)===norm(v.b))return'Le départ et l’arrivée sont identiques.';
-  if((v.dep||v.arr)&&!v.date)return'Choisis aussi une date pour placer ce trajet dans le planning.';
-  trips.push({id:++uid,m:MN.indexOf(v.m),a:v.a,b:v.b,date:v.date,dep:v.dep,arr:v.arr,price:+v.price||0,note:v.note});
-  if(v.date)S.d=PD(v.date);
-  refresh();return null;
- },'Ajouter');
-}
-function showDetail(kind,id){
- var list=kind==='place'?places:trips,it=list.filter(function(x){return x.id===id})[0];if(!it)return;
- var d=$('#dlg');if(d.open)d.close();d.replaceChildren();
- var col,ic,title,lines=[];
- if(kind==='place'){var ti=typeInfo(it.type);col=ti[1];ic=ti[2];title=dn(it);lines.push(it.type+' · '+it.city+' ('+it.pref+')');
-  if(it.date)lines.push(F(PD(it.date),{weekday:'long',day:'numeric',month:'long'})+(it.time?' à '+it.time:''));if(it.price)lines.push('Budget : '+money(it.price))}
- else{var m=MODES[it.m];col=m[1];ic=m[2];title=it.a+' → '+it.b;lines.push(m[0]);
-  if(it.date)lines.push(F(PD(it.date),{weekday:'long',day:'numeric',month:'long'}));
-  if(it.dep||it.arr)lines.push('Départ '+(it.dep||'?')+' · arrivée '+(it.arr||'?'));
-  var du=dur(it);if(du)lines.push('Durée : '+du+' (d’après tes horaires)');if(it.price)lines.push('Prix : '+money(it.price))}
- if(it.note)lines.push('Notes : '+it.note);
- var h=el('div',null,null,'display:flex;gap:12px;align-items:center');h.append(icoBox(ic,col),el('h2',null,title,'font-size:1.25rem'));d.append(h);
- lines.forEach(function(x){d.append(el('p',null,x,'margin-top:8px'))});
- var a=el('div','actions'),cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};a.append(cl);var gt=el('button','btn ghost',kind==='trip'?'Voir dans Transports':'Voir dans Destinations');gt.type='button';gt.onclick=function(){d.close();goRef(kind,it)};a.append(gt);
- if(it.date){var r=el('button','btn ghost','Retirer du planning');r.type='button';r.onclick=function(){it.date='';if(kind==='place')it.time='';d.close();refresh()};a.append(r)}
- var del=el('button','btn','Supprimer');del.type='button';var armed=false;
- del.onclick=function(){if(!armed){armed=true;del.textContent='Confirmer la suppression';del.style.background='var(--accent)';del.style.color='#fff';return}list.splice(list.indexOf(it),1);d.close();refresh()};
- a.append(del);d.append(a);d.showModal();
-}
 function addWord(){
  function sug(v){return match(allWords(),v,function(w){return[w.ro,w.fr,w.h,w.k].join(' ')}).map(function(w){return{label:(w.k||w.h)+' · '+w.ro+' · '+w.fr,fill:{k:w.k,h:w.h,ro:w.ro,fr:w.fr,th:w.th,q:w.ro}}})}
  openForm('Ajouter un mot',[
@@ -1052,28 +980,14 @@ function routeSVG(i){var m=MODES[i],c=dk(m[1]),s='<svg class="r" viewBox="0 0 26
  else{s+='<path d="M8 32Q130 -8 252 32" fill="none" stroke="'+c+'" stroke-width="3" stroke-dasharray="3 8" stroke-linecap="round"/><rect x="106" y="2" width="48" height="28" rx="9" fill="#FFFBF5"/>'+ico(m[2],c,22,119,5)}
  return s+'</svg>'}
 function modeCard(i,title,meta,tag){var m=MODES[i],c=sty(el(tag||'div','mode'),m[1]);var h=el('div','h');h.append(icoBox(m[2],m[1]),el('b',null,title));c.append(h);var w=el('div');w.innerHTML=routeSVG(i);c.append(w.firstChild);(meta||[]).forEach(function(x){c.append(x)});return c}
-function tripCard(t){var meta=[],l1=[];
- if(t.date)l1.push(F(PD(t.date),{weekday:'short',day:'numeric',month:'short'}));if(t.dep||t.arr)l1.push((t.dep||'?')+' → '+(t.arr||'?'));var du=dur(t);if(du)l1.push(du);
- if(l1.length)meta.push(el('p','meta',l1.join('  ·  ')));if(t.price)meta.push(el('p','meta',money(t.price)));
- var c=modeCard(t.m,t.a+' → '+t.b,meta,'button');c.type='button';c.dataset.tid=t.id;c.onclick=function(){showDetail('trip',t.id)};return c}
 function sortedTrips(){return trips.slice().sort(function(a,b){return((a.date||'9')+(a.dep||''))<((b.date||'9')+(b.dep||''))?-1:1})}
 function emptyBox(t){return el('div','empty',t)}
 
 /* ---------- Carte ---------- */
-function mapFrame(label){
- var fr=el('div','map');fr.setAttribute('role','img');fr.setAttribute('aria-label','Emplacement réservé à la carte du Japon, construite en phase 4');
- var ms=el('div','msearch');ms.setAttribute('aria-hidden','true');ms.innerHTML=ico('search','currentColor',20)+'<span>Recherche sur la carte : phase 4</span>';
- var mc=el('div','mchips');mc.setAttribute('aria-hidden','true');
- [['Restaurants','Restaurant'],['Hébergements','Hébergement'],['Temples','Temple ou sanctuaire'],['Onsen','Onsen']].forEach(function(x){var c=sty(el('span','chip'),typeInfo(x[1])[1]);c.append(el('i'),document.createTextNode(x[0]));mc.append(c)});
- var mp=el('div','mph');mp.innerHTML=label;
- var zm=el('div','zoom');zm.setAttribute('aria-hidden','true');zm.innerHTML='<span>+</span><span>−</span>';
- var np=places.filter(function(p){return!p.cityOnly}).length;
- var sh=el('div','sheet');sh.append(el('i'),el('b',null,'Mes lieux'),el('small',null,'  '+np+(np>1?' lieux':' lieu')+' · '+trips.length+(trips.length>1?' trajets':' trajet')));
- fr.append(ms,mc,mp,zm,sh);return fr}
 function renderMap(){
  var b=$('#tiles');b.replaceChildren();var lead=$('#carte .lead');lead.style.display=MAPSEL?'none':'';
  if(MAPSEL){
-  var NT=NETS[MAPSEL.net],isM=MAPSEL.net==='metro',l=NT.d[MAPSEL.i],mi=NT.mi,st=l.full||l.s||l.h;
+  var NT=NETS[MAPSEL.net],l=NT.d[MAPSEL.i],mi=NT.mi,st=l.full||l.s||l.h;
   b.append(backBtn('Carte',function(){MAPSEL=null;renderMap()}));
   b.append(grp(l.c,NT.lab+' · '+l.n,'h2',6),el('p','sub',l.e));
   b.append(NT.map(MAPSEL.i));
@@ -1104,7 +1018,6 @@ function renderMap(){
 
 /* ---------- Destinations ---------- */
 function cityGroups(){var m={};places.forEach(function(p){var k=norm(p.city);if(!m[k])m[k]={city:p.city,pref:p.pref,items:[]};if(!p.cityOnly)m[k].items.push(p)});return Object.keys(m).map(function(k){return m[k]})}
-function cityRow(g){var r=prefRegion(g.pref),n=g.items.length;return rowBtn(r.d,g.city,g.pref,n?n+(n>1?' lieux':' lieu'):'',function(){DV={t:'city',city:g.city,pref:g.pref};renderDest()})}
 function renderDest(){
  var box=$('#dest');box.replaceChildren();var t=DV.t,r;
  if(t==='mine'||t==='regions'){
@@ -1139,112 +1052,13 @@ function renderDest(){
 }
 
 /* ---------- Planning ---------- */
-function eventsOn(k){var e=[];
- places.forEach(function(p){if(p.date===k&&!p.cityOnly){var ti=typeInfo(p.type);e.push({t:p.time||'',kw:KWP[p.type]||'Lieu',lab:dn(p)+' · '+p.city,col:ti[1],ic:ti[2],kind:'place',id:p.id})}});
- trips.forEach(function(t){if(t.date===k){var m=MODES[t.m];e.push({t:t.dep||'',kw:KWM[m[0]]||m[0],lab:t.a+' → '+t.b,col:m[1],ic:m[2],kind:'trip',id:t.id})}});
- return e.sort(function(a,b){return a.t<b.t?-1:a.t>b.t?1:0})}
-function evBtn(e){var b=sty(el('button','ev'+(e.kind==='trip'?' tr':'')),e.col);b.type='button';b.innerHTML=eiH(e.ic,16);b.append(document.createTextNode((e.t?e.t+' ':'')+e.lab));b.onclick=function(ev){ev.stopPropagation();showDetail(e.kind,e.id)};return b}
-function renderPlan(){
- var b=$('#pview');b.replaceChildren();document.querySelectorAll('#pseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===S.m)});
- var today=K(new Date()),title,step=S.m==='jour'?1:7;
- if(S.m==='jour')title=F(S.d,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
- else if(S.m==='semaine'){var a0=mon(S.d);title=F(a0,{day:'numeric',month:'short'})+' – '+F(addD(a0,6),{day:'numeric',month:'short',year:'numeric'})}
- else title=F(S.d,{month:'long',year:'numeric'});
- var nav=el('div','pnav'),pv=el('button',null,'‹'),nx=el('button',null,'›');pv.type='button';nx.type='button';pv.setAttribute('aria-label','Précédent');nx.setAttribute('aria-label','Suivant');
- function mv(n){if(S.m==='mois')S.d=new Date(S.d.getFullYear(),S.d.getMonth()+n,1);else S.d=addD(S.d,n*step);renderPlan()}
- pv.onclick=function(){mv(-1)};nx.onclick=function(){mv(1)};title=title.charAt(0).toUpperCase()+title.slice(1);nav.append(pv,el('h3',null,title,'text-align:center'),nx);b.append(nav);
- if(S.m==='jour'){
-  var dk=K(S.d),evs=eventsOn(dk);
-  var off=evs.filter(function(e){return!e.t||e.t<'07:00'||e.t>='22:00'});
-  if(off.length){b.append(el('h3',null,'Sans horaire ou hors 7 h – 21 h','margin-top:20px;font-size:.95rem'));var ob=el('div',null,null,'margin-top:8px');off.forEach(function(e){ob.append(evBtn(e))});b.append(ob)}
-  var hs=el('div','hours');
-  HOURS.forEach(function(h){var r=el('div','hr'),tb=el('button','tm',h);tb.type='button';tb.setAttribute('aria-label','Ajouter à '+h);var c=el('div');
-   evs.filter(function(e){return e.t&&e.t.slice(0,2)===h.slice(0,2)}).forEach(function(e){c.append(evBtn(e))});r.append(tb,c);r.onclick=function(){chooser(dk,h)};hs.append(r)});
-  b.append(hs,el('p','note','Appuie sur une heure pour y ajouter un lieu, une activité ou un trajet.'));
- }else if(S.m==='semaine'){
-  var a=mon(S.d),g=el('div','wkv');
-  for(var i=0;i<7;i++){(function(d){var k=K(d),es=eventsOn(k),w=sty(el('button','wc'+(k===today?' today':'')+(es.length?'':' empty')),es.length?es[0].col:'#CEC3BB');w.type='button';
-   w.setAttribute('aria-label',F(d,{weekday:'long',day:'numeric',month:'long'})+(es.length?', '+es.length+(es.length>1?' éléments':' élément'):', libre'));
-   var wd=el('div','wd');wd.append(el('small',null,F(d,{weekday:'short'}).replace('.','')),el('strong',null,String(d.getDate())),el('small',null,F(d,{month:'short'}).replace('.','')));
-   var wb=el('div','wb');
-   if(!es.length)wb.append(el('span','wf','·'));
-   else{es.slice(0,4).forEach(function(e){var it=sty(el('div','wi'),e.col);it.innerHTML=eiH(e.ic,20);it.append(el('small',null,e.kw||''));wb.append(it)});if(es.length>4)wb.append(el('span','wm','+'+(es.length-4)))}
-   w.append(wd,wb);w.onclick=function(){S.d=d;S.m='jour';renderPlan()};g.append(w)})(addD(a,i))}
-  b.append(g);b.append(weekLegend());b.append(el('p','note','Appuie sur un jour pour voir ses heures. Le détail complet est dans la vue Jour.'));
- }else{
-  var hd=el('div','mh');['L','M','M','J','V','S','D'].forEach(function(x){hd.append(el('span',null,x))});
-  var g=el('div','mg'),f0=new Date(S.d.getFullYear(),S.d.getMonth(),1),a2=mon(f0);
-  for(var j=0;j<42;j++){(function(d){var k=K(d),es=eventsOn(k),c=el('button','mc'+(d.getMonth()!==f0.getMonth()?' out':'')+(k===today?' today':''));c.type='button';
-   c.append(document.createTextNode(String(d.getDate())));c.setAttribute('aria-label',F(d,{day:'numeric',month:'long'})+(es.length?', '+es.length+(es.length>1?' éléments':' élément'):''));
-   if(es.length){var ds=el('span','dots');es.slice(0,3).forEach(function(e){var i2=el('i',e.kind==='trip'?'tr':'');i2.style.setProperty('--d',e.col);ds.append(i2)});c.append(ds)}
-   c.onclick=function(){S.d=d;S.m='semaine';renderPlan()};g.append(c)})(addD(a2,j))}
-  b.append(hd,g,monthLegend(f0),el('p','note','Appuie sur une date pour ouvrir sa semaine. Les pastilles reprennent la couleur du type de lieu ou du moyen de transport.'));
- }
-}
 $('#pseg').addEventListener('click',function(e){var t=e.target.closest('button');if(t){S.m=t.dataset.v;renderPlan()}});
 
 /* ---------- Transports ---------- */
-function renderTrans(){
- var b=$('#tview');b.replaceChildren();document.querySelectorAll('#tseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===TV)});
- if(TV==='trajets'){
-  b.append(el('p','lead','Ajoute un trajet avec ses horaires et son prix : il apparaît ensuite dans ton planning, à la bonne date.'));
-  b.append(el('h3',null,'Mes trajets','margin-top:26px'));
-  if(!trips.length)b.append(emptyBox('Aucun trajet pour l’instant.\nChoisis un moyen ci-dessous ou appuie sur +.'));else sortedTrips().forEach(function(t){b.append(tripCard(t))});
-  b.append(el('h3',null,'Créer un trajet','margin-top:30px'));
-  MODES.forEach(function(m,i){var c=modeCard(i,m[0],[el('p','meta','Appuie pour créer un trajet en '+m[0].toLowerCase(),'margin-bottom:8px')],'button');c.type='button';c.onclick=function(){addTrip({m:i})};b.append(c)});
- }else{
-  var isM=TV==='metro',net=isM?METRO:SHINK;
-  b.append(el('p','lead',isM?'Les lignes du métro de Tokyo et la Yamanote. Appuie sur une ligne pour l’ouvrir sur la carte avec ses principales stations.':'Les principaux réseaux Shinkansen. Appuie sur un réseau pour l’ouvrir sur la carte avec ses principales gares.'));
-  var lg=null,l=null;
-  net.forEach(function(ln,i){var g=isM?(i===0?'JR · ligne circulaire':i<10?'Tokyo Metro':'Toei'):'Réseaux';
-   if(g!==lg){lg=g;b.append(grp('#CEC3BB',g,'h3',26));l=el('div','list');b.append(l)}
-   l.append(rowBtn(ln.c,ln.n,ln.e,'',function(){MAPSEL={net:TV,i:i};showTab('carte')},isM?'metro':'shin'))});
-  b.append(el('p','note','Listes de stations rédigées à la main, non exhaustives : à vérifier avant de s’y fier. Kyushu et les mini-Shinkansen ne sont pas inclus.'));
- }
-}
 $('#tseg').addEventListener('click',function(e){var t=e.target.closest('button');if(t){TV=t.dataset.v;renderTrans();updateFab()}});
 
 /* ---------- Carnet de japonais ---------- */
-function key(w){return w.ro+'|'+w.fr}
-function allWords(){var seen={},out=[];words.concat(LEX).forEach(function(w){var k=key(w);if(seen[k])return;seen[k]=1;out.push(w)});return out}
-function inVocab(w){return words.some(function(x){return key(x)===key(w)})}
-function script(h){var hi=/[ぁ-ゖ]/.test(h),ka=/[ァ-ヺ]/.test(h);return hi&&ka?'かな':ka?'カタカナ':'ひらがな'}
 var SC={'漢字':'#C4A8C9','漢字 (rare)':'#C4A8C9','ひらがな':'#E8A094','カタカナ':'#8EC6BD','かな':'#CEC3BB'};
-function card(w){
- var e=sty(el('div','entry'),thc(w.th||THEMES[0])),k=key(w),on=!!favs[k];
- var f=el('button','fav');f.type='button';f.setAttribute('aria-pressed',on?'true':'false');f.setAttribute('aria-label',on?'Retirer des favoris':'Ajouter aux favoris');
- f.innerHTML=ico('star','currentColor',24,null,null,on?'currentColor':'none');f.onclick=function(){if(favs[k])delete favs[k];else favs[k]=w;renderCarnet()};e.append(f);
- function row(l,t){var r=sty(el('div','sr'),SC[l]);r.append(el('span','bd',l),el('span',null,t));r.lastChild.lang='ja';e.append(r)}
- if(w.k&&!w.rare){row('漢字',w.k);row(script(w.h),w.h)}else{row(script(w.h),w.h);if(w.rare)row('漢字 (rare)',w.rare)}
- e.append(el('p','ro',w.ro,'margin-top:10px'),el('p',null,w.fr,'margin-top:2px;font-weight:500'));
- if(w.th){var tg=sty(el('span','tag',w.th),thc(w.th));e.append(tg)}
- if(w.no)e.append(el('p','ro',w.no,'font-size:.88rem;margin-top:8px'));
- if(!w.u&&!inVocab(w)){var b=el('button','mini','Ajouter à mon vocabulaire');b.type='button';b.onclick=function(){words.push({k:w.k,h:w.h,ro:w.ro,fr:w.fr,th:w.th,rare:w.rare,u:1});renderCarnet()};e.append(el('br'),b)}
- return e}
-function renderCarnet(){
- var b=$('#cview');b.replaceChildren();document.querySelectorAll('#cseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===cv)});
- if(cv==='dico'){
-  var s=el('input');s.type='search';s.placeholder='arigato, merci, bonjour, ありがとう';s.value=q;s.style.marginTop='18px';s.autocomplete='off';s.setAttribute('aria-label','Rechercher un mot');var out=el('div');
-  var run=function(){q=s.value;out.replaceChildren();var n=fold(q);
-   if(!n){out.append(el('p','note','Tape en romaji, kana, kanji ou français. Tes propres mots sont inclus dans la recherche.'));return}
-   var all=allWords().filter(function(w){return[w.k,w.h,w.ro,w.fr,w.rare].some(function(x){return fold(x).indexOf(n)>=0})}).slice(0,12);
-   if(!all.length)out.append(emptyBox('Aucun résultat pour l’instant.\nAppuie sur + pour ajouter ce mot.'));all.forEach(function(w){out.append(card(w))});
-   out.append(el('p','note','Mini-dictionnaire d’aperçu (une centaine d’entrées). Le dictionnaire complet arrive à la phase 7.'))};
-  s.addEventListener('input',run);b.append(s,out);run();
- }else if(cv==='phrases'){
-  if(!PT){b.append(el('p','lead','Choisis un thème pour afficher ses phrases.'));var l=el('div','list');THEMES.forEach(function(t){l.append(rowBtn(thc(t),t,'',P[t].length+' phrases',function(){PT=t;renderCarnet();window.scrollTo(0,0)}))});b.append(l)}
-  else{b.append(grp(thc(PT),PT,'h2',6));P[PT].forEach(function(x){b.append(card({k:x[0],h:x[1],ro:x[2],fr:x[3],th:PT,rare:x[4]||''}))})}
- }else if(cv==='vocab'){
-  b.append(el('p','lead','Les mots que tu enregistres, classés par thème et retrouvables dans le dictionnaire.'));
-  if(!words.length)b.append(emptyBox('Ton vocabulaire est vide.\nAppuie sur + pour ajouter un mot, ou sur « Ajouter à mon vocabulaire » depuis une fiche.'));
-  var g={};words.forEach(function(w){var t=w.th||'Sans thème';(g[t]=g[t]||[]).push(w)});
-  Object.keys(g).forEach(function(t){b.append(grp(thc(t),t,'h3',26));g[t].forEach(function(w){b.append(card(w))})});
- }else{
-  b.append(el('p','lead','Les mots et phrases marqués d’une étoile, à portée de main.'));
-  var fl=Object.keys(favs).map(function(k){return favs[k]});
-  if(!fl.length)b.append(emptyBox('Aucun favori pour l’instant.\nAppuie sur l’étoile d’une fiche pour la retrouver ici.'));else fl.forEach(function(w){b.append(w.kj?kcard(w.kj):card(w))});
- }
-}
 $('#cseg').addEventListener('click',function(e){var t=e.target.closest('button');if(t){if(t.dataset.v==='phrases'&&cv==='phrases')PT=null;cv=t.dataset.v;renderCarnet();if(t.dataset.v==='phrases')window.scrollTo(0,0)}});
 
 
@@ -1723,138 +1537,20 @@ function spline(P,closed){var n=P.length,d='M'+P[0][0].toFixed(1)+' '+P[0][1].to
   var c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
   d+='C'+c1[0].toFixed(1)+' '+c1[1].toFixed(1)+','+c2[0].toFixed(1)+' '+c2[1].toFixed(1)+','+p2[0].toFixed(1)+' '+p2[1].toFixed(1)}
  return d+(closed?'Z':'')}
-function metroSVG(sel){
- var s='<svg class="mm" viewBox="0 0 360 412" role="img" aria-label="Schéma simplifié des lignes de métro de Tokyo, positions approximatives">';
- var order=MP.map(function(_,i){return i});if(sel!=null)order=order.filter(function(i){return i!==sel}).concat([sel]);
- if(sel==null||sel===0){s+='<path d="'+spline(MP[0].n.map(pj),true)+'" fill="'+METRO[0].c+'" opacity=".10"/>'}
- order.forEach(function(i){var L=MP[i],c=METRO[i].c,pts=L.n.map(pj),dim=sel!=null&&i!==sel,op=dim?.16:(i===0?.95:.9),w=i===0?9:(sel===i?6.5:4.5);
-  var d=L.smooth?spline(pts,!!L.closed):'M'+pts.map(function(p){return p[0].toFixed(1)+' '+p[1].toFixed(1)}).join('L')+(L.closed?'Z':'');
-  s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"/>';
-  (L.stubs||[]).forEach(function(st){var p=st.at==='start'?pts[0]:pts[pts.length-1],n=Math.sqrt(st.d[0]*st.d[0]+st.d[1]*st.d[1]),q=[p[0]+st.d[0]/n*28,p[1]+st.d[1]/n*28];
-   s+='<path d="M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'L'+q[0].toFixed(1)+' '+q[1].toFixed(1)+'" stroke="'+c+'" stroke-width="'+w+'" stroke-dasharray="1.5 6" stroke-linecap="round" opacity="'+op+'"/>'})});
- var hubNames={};HUBS.forEach(function(h){hubNames[h[0]]=1});
- if(sel!=null){var lst=METRO[sel].s||METRO[sel].h||[];lst.forEach(function(nm){if(GEO[nm]&&!hubNames[nm]&&MP[sel].n.indexOf(nm)>=0){var p=pj(nm),right=p[0]<240;s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="#FFFBF5" stroke="'+METRO[sel].c+'" stroke-width="2"/><text class="sl" x="'+(p[0]+(right?6:-6)).toFixed(1)+'" y="'+(p[1]+3).toFixed(1)+'" text-anchor="'+(right?'start':'end')+'">'+nm+'</text>'}})}
- HUBS.forEach(function(h){var p=pj(h[0]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="2"/><text class="hl" x="'+(p[0]+h[1]).toFixed(1)+'" y="'+(p[1]+h[2]).toFixed(1)+'" text-anchor="'+h[3]+'">'+h[0]+'</text>'});
- var yc=[139,172];if(sel==null||sel===0)s+='<text class="sl" x="'+yc[0]+'" y="'+yc[1]+'" text-anchor="middle" style="fill:#5C7A22">boucle Yamanote</text>';
- s+='<g transform="translate(338,34)"><path d="M0 -11L6 6L0 2L-6 6Z" fill="#4B3D3A" opacity=".55"/><text class="sl" y="20" text-anchor="middle">N</text></g><text class="sl" x="352" y="404" text-anchor="end" style="fill:#5F7FA3">Baie de Tokyo</text></svg>';
- return s}
-function metroMap(sel){var d=el('div','mmap');d.innerHTML=metroSVG(sel);d.append(el('p','note','Schéma simplifié : positions approximatives, hors échelle, principales stations seulement. Les lignes qui continuent hors du cadre finissent en pointillés. À vérifier avant de t’y fier.','margin:8px 8px 6px'));return d}
 
 /* ---------- Carte : plan du métro sur la ligne choisie ---------- */
 
 /* ---------- Transports (remplace l’ancienne version) ---------- */
-function renderTrans(){
- var b=$('#tview');b.replaceChildren();document.querySelectorAll('#tseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===TV)});
- if(TV==='trajets'){
-  b.append(el('p','lead','Ajoute un trajet avec ses horaires et son prix : il apparaît ensuite dans ton planning, à la bonne date.'));
-  b.append(el('h3',null,'Mes trajets','margin-top:26px'));
-  if(!trips.length)b.append(emptyBox('Aucun trajet pour l’instant.\nChoisis un moyen ci-dessous ou appuie sur +.'));else sortedTrips().forEach(function(t){b.append(tripCard(t))});
-  b.append(el('h3',null,'Créer un trajet','margin-top:30px'));
-  MODES.forEach(function(m,i){var c=modeCard(i,m[0],[el('p','meta','Appuie pour créer un trajet en '+m[0].toLowerCase(),'margin-bottom:8px')],'button');c.type='button';c.onclick=function(){addTrip({m:i})};b.append(c)});
- }else{
-  var isM=TV==='metro',net=isM?METRO:SHINK;
-  b.append(el('p','lead',isM?'Les lignes du métro de Tokyo et la Yamanote. Appuie sur une ligne pour l’ouvrir sur la carte avec ses principales stations.':'Les principaux réseaux Shinkansen. Appuie sur un réseau pour l’ouvrir sur la carte avec ses principales gares.'));
-  if(isM)b.append(metroMap(null));
-  var lg=null,l=null;
-  net.forEach(function(ln,i){var g=isM?(i===0?'JR · ligne circulaire':i<10?'Tokyo Metro':'Toei'):'Réseaux';
-   if(g!==lg){lg=g;b.append(grp('#CEC3BB',g,'h3',26));l=el('div','list');b.append(l)}
-   l.append(rowBtn(ln.c,ln.n,ln.e,'',function(){MAPSEL={net:TV,i:i};showTab('carte')},isM?'metro':'shin'))});
-  b.append(el('p','note','Listes de stations rédigées à la main, non exhaustives : à vérifier avant de s’y fier. Kyushu et les mini-Shinkansen ne sont pas inclus.'));
- }
-}
 
 /* ---------- Légende du semainier ---------- */
-function weekLegend(){var d=el('details','lg');d.open=true;d.append(el('summary',null,'Légende des icônes'));
- function block(t,arr){d.append(el('p','lgh',t));var w=el('div','chips2');arr.forEach(function(x){var c=sty(el('span','chip'),x[1]);c.innerHTML='<span class="ei">'+ico(x[2],'currentColor',16)+'</span>';c.append(document.createTextNode(x[0]));w.append(c)});d.append(w)}
- block('Lieux',TYPES);block('Transports',MODES);return d}
 
 /* ---------- Carnet de japonais ---------- */
 function script(h){var hi=/[ぁ-ゖ]/.test(h),ka=/[ァ-ヺ]/.test(h);return hi&&ka?'かな':ka?'カタカナ':'ひらがな'}
-function card(w){
- var e=sty(el('div','entry'),thc(w.th||THEMES[0])),k=key(w),on=!!favs[k];
- var f=el('button','fav');f.type='button';f.setAttribute('aria-pressed',on?'true':'false');f.setAttribute('aria-label',on?'Retirer des favoris':'Ajouter aux favoris');
- f.innerHTML=ico('star','currentColor',24,null,null,on?'currentColor':'none');f.onclick=function(){if(favs[k])delete favs[k];else favs[k]=w;renderCarnet()};e.append(f);
- if(w.reg){var R=REGS[w.reg],rb=sty(el('div','rg'),R.col);rb.innerHTML='<span class="ei">'+ico(R.ic,'currentColor',16)+'</span><b>'+R.n+'</b><span class="gauge">'+[1,2,3].map(function(i){return'<i'+(i<=R.lv?' class="on"':'')+'></i>'}).join('')+'</span>';e.append(rb)}
- function row(l,t){var r=sty(el('div','sr'),SC[l]);r.append(el('span','bd',l),el('span',null,t));r.lastChild.lang='ja';e.append(r)}
- if(w.k&&!w.rare){row('漢字',w.k);row(script(w.h),w.h)}else{row(script(w.h),w.h);if(w.rare)row('漢字 (rare)',w.rare)}
- e.append(el('p','ro',w.ro,'margin-top:10px'),el('p',null,w.fr,'margin-top:2px;font-weight:500'));
- if(w.note)e.append(el('p','note',w.note,'margin-top:6px'));
- if(w.th){var tg=sty(el('span','tag',w.th),thc(w.th));e.append(tg)}
- if(w.no)e.append(el('p','ro',w.no,'font-size:.88rem;margin-top:8px'));
- if(w.vs&&Object.keys(w.vs).length>1){var cm=el('details','cmp');cm.append(el('summary',null,'Comparer les niveaux de langue'));
-  REGO.forEach(function(r){var v=w.vs[r];if(!v)return;var R=REGS[r],c=sty(el('div','cv'),R.col);c.append(el('b',null,R.n));var sp=el('span',null,v.k||v.h);sp.lang='ja';c.append(sp,el('small','ro',v.ro));cm.append(c)});e.append(cm)}
- if(!w.u&&!inVocab(w)){var b=el('button','mini','Ajouter à mon vocabulaire');b.type='button';b.onclick=function(){words.push({k:w.k,h:w.h,ro:w.ro,fr:w.fr,th:w.th,rare:w.rare,reg:w.reg,u:1});renderCarnet()};e.append(el('br'),b)}
- return e}
 function regPicker(){var d=el('div','regp');REGO.forEach(function(r){var R=REGS[r],b=sty(el('button','rp'+(PREG===r?' on':'')),R.col);b.type='button';b.setAttribute('aria-pressed',PREG===r?'true':'false');
  b.innerHTML='<span class="ei">'+ico(R.ic,'currentColor',24)+'</span><b>'+R.n+'</b><small>'+R.who+'</small>';b.onclick=function(){PREG=r;renderCarnet()};d.append(b)});return d}
-function kanaView(b,isK){
- var total=0,done=0,pre=isK?'k':'h';
- KROWS.forEach(function(g){total+=g[1].length;g[1].forEach(function(c){if(kknown[pre+c])done++})});
- b.append(el('p','note','Appris : '+done+' / '+total+'. Appuie sur un signe pour le marquer comme su.','margin-top:16px'));
- var pr=el('div','prog');var bar=el('i');bar.style.width=Math.round(done/total*100)+'%';pr.append(bar);b.append(pr);
- KROWS.forEach(function(g,gi){
-  var rr=g[1].map(function(c){return rom(c)}).join(' ');
-  b.append(el('p','lgh',rr,'margin-top:16px'));var gr=el('div','kg');
-  g[1].forEach(function(c){var ch=isK?kata(c):c,t=sty(el('button','kt'+(kknown[pre+c]?' ok':'')),THC[gi%THC.length]);t.type='button';t.setAttribute('aria-pressed',kknown[pre+c]?'true':'false');
-   var s=el('span',null,ch);s.lang='ja';t.append(s,el('small',null,rom(c)));t.onclick=function(){kknown[pre+c]=!kknown[pre+c];renderCarnet()};gr.append(t)});
-  b.append(gr)});
- b.append(el('p','note',isK?'Les katakana servent surtout pour les mots étrangers et les noms propres. Le trait ー allonge la voyelle (コーヒー kōhī) et le petit ッ double la consonne suivante (ベッド beddo).':'Les hiragana servent pour les mots japonais et les terminaisons. Le petit っ double la consonne suivante (きって kitte). づ et ぢ se prononcent comme ず et じ, et を se prononce « o ».','margin-top:20px'))}
-function showKanji(c){
- var d=$('#dlg');if(d.open)d.close();d.replaceChildren();var gi=GOF[c[0]],col=KGROUPS[gi][2];
- var big=sty(el('div','kbig',c[0]),col);big.lang='ja';d.append(big,el('h2',null,c[1],'text-align:center;font-size:1.25rem'));
- function row(l,t,r){var x=sty(el('div','sr'),SC[l]||col);x.append(el('span','bd',l));var s=el('span',null,t);s.lang='ja';x.append(s);if(r)x.append(el('small','ro',r));d.append(x)}
- if(c[2])row('On’yomi',c[2].replace(/・/g,'・'),romOn(c[2]));if(c[3])row('Kun’yomi',c[3],romKun(c[3]));
- var ex=sty(el('div','cv'),col);ex.style.marginTop='16px';ex.append(el('b',null,'Exemple'));var es=el('span',null,c[4]+'  ('+c[5]+')');es.lang='ja';ex.append(es,el('small','ro',romW(c[5])+' · '+c[6]));d.append(ex);
- d.append(sty(el('span','tag',KGROUPS[gi][0]),col));
- var a=el('div','actions'),cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};
- var kn=el('button','btn ghost',known[c[0]]?'Retirer de « appris »':'Marquer comme appris');kn.type='button';kn.onclick=function(){known[c[0]]=!known[c[0]];d.close();renderCarnet()};
- var av=el('button','btn','Ajouter l’exemple au vocabulaire');av.type='button';av.onclick=function(){var w={k:c[4],h:c[5],ro:romW(c[5]),fr:c[6],th:'Tourisme',rare:'',u:1};if(!words.some(function(x){return key(x)===key(w)}))words.push(w);d.close();renderCarnet()};
- a.append(cl,kn,av);d.append(a);d.showModal()}
-function kanjiView(b){
- var n=KJ.filter(function(c){return known[c[0]]}).length;
- b.append(el('p','note','Appris : '+n+' / '+KJ.length+'. Appuie sur un kanji pour voir ses lectures.','margin-top:16px'));
- var pr=el('div','prog'),bar=el('i');bar.style.width=Math.round(n/KJ.length*100)+'%';pr.append(bar);b.append(pr);
- var ch=el('div','chips');var all=sty(el('button','chip'+(KG<0?' on':''),'Tous'),'#CEC3BB');all.type='button';all.onclick=function(){KG=-1;renderCarnet()};ch.append(all);
- KGROUPS.forEach(function(g,i){var c=sty(el('button','chip'+(KG===i?' on':''),g[0]),g[2]);c.type='button';c.onclick=function(){KG=i;renderCarnet()};ch.append(c)});b.append(ch);
- var gr=el('div','kjg');
- KJ.filter(function(c){return KG<0||GOF[c[0]]===KG}).forEach(function(c){var t=sty(el('button','kj'+(known[c[0]]?' ok':'')),KGROUPS[GOF[c[0]]][2]);t.type='button';t.setAttribute('aria-label',c[0]+' : '+c[1]);var s=el('span',null,c[0]);s.lang='ja';t.append(s,el('small',null,c[1]));t.onclick=function(){showKanji(c)};gr.append(t)});
- b.append(gr);
- b.append(el('p','note','Sélection de 150 kanji très courants : les 80 kanji de 1re année du primaire plus 70 kanji utiles en voyage. Ce n’est pas un classement officiel par fréquence : je ne peux pas t’en garantir un sans source. Lectures écrites de mémoire, à faire vérifier.','margin-top:20px'))}
 function renderStudy(b){
  var sg=el('div','seg');[['hira','Hiragana'],['kata','Katakana'],['kanji','Kanji']].forEach(function(x){var s=el('button',SV===x[0]?'on':'',x[1]);s.type='button';s.onclick=function(){SV=x[0];renderCarnet()};sg.append(s)});b.append(sg);
  if(SV==='kanji')kanjiView(b);else kanaView(b,SV==='kata')}
-var KROWS=[['',['あ','い','う','え','お']],['',['か','き','く','け','こ']],['',['さ','し','す','せ','そ']],['',['た','ち','つ','て','と']],['',['な','に','ぬ','ね','の']],['',['は','ひ','ふ','へ','ほ']],['',['ま','み','む','め','も']],['',['や','ゆ','よ']],['',['ら','り','る','れ','ろ']],['',['わ','を','ん']],['',['が','ぎ','ぐ','げ','ご']],['',['ざ','じ','ず','ぜ','ぞ']],['',['だ','ぢ','づ','で','ど']],['',['ば','び','ぶ','べ','ぼ']],['',['ぱ','ぴ','ぷ','ぺ','ぽ']],['',['きゃ','きゅ','きょ']],['',['しゃ','しゅ','しょ']],['',['ちゃ','ちゅ','ちょ']],['',['にゃ','にゅ','にょ']],['',['ひゃ','ひゅ','ひょ']],['',['みゃ','みゅ','みょ']],['',['りゃ','りゅ','りょ']],['',['ぎゃ','ぎゅ','ぎょ']],['',['じゃ','じゅ','じょ']],['',['びゃ','びゅ','びょ']],['',['ぴゃ','ぴゅ','ぴょ']]];
-function renderCarnet(){
- var b=$('#cview');b.replaceChildren();document.querySelectorAll('#cseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===cv)});
- if(cv==='dico'){
-  var s=el('input');s.type='search';s.placeholder='arigato, merci, bonjour, ありがとう';s.value=q;s.style.marginTop='18px';s.autocomplete='off';s.setAttribute('aria-label','Rechercher un mot');var out=el('div');
-  var run=function(){q=s.value;out.replaceChildren();var n=fold(q);
-   if(!n){out.append(el('p','note','Tape en romaji, kana, kanji ou français. Tes propres mots sont inclus dans la recherche.'));return}
-   var all=allWords().filter(function(w){return[w.k,w.h,w.ro,w.fr,w.rare].some(function(x){return fold(x).indexOf(n)>=0})}).slice(0,12);
-   if(!all.length)out.append(emptyBox('Aucun résultat pour l’instant.\nAppuie sur + pour ajouter ce mot.'));all.forEach(function(w){out.append(card(w))});
-   out.append(el('p','note','Mini-dictionnaire d’aperçu (quelques centaines de formes). Le dictionnaire complet arrive à la phase 7.'))};
-  s.addEventListener('input',run);b.append(s,out);run();
- }else if(cv==='phrases'){
-  b.append(el('p','lead','À qui parles-tu ? Choisis le niveau de langue : les phrases s’adaptent.'));
-  b.append(regPicker());
-  if(!PT){
-   b.append(el('h3',null,'Thèmes','margin-top:26px'));var g=el('div','bubs');
-   THEMES.forEach(function(t){var c=sty(el('button','bub'),thc(t));c.type='button';c.innerHTML='<span class="ic">'+ico(THICON[t],'currentColor',26)+'</span><b>'+t+'</b><small>'+PH[t].length+' phrases</small>';c.onclick=function(){PT=t;renderCarnet();window.scrollTo(0,0)};g.append(c)});b.append(g);
-  }else{
-   b.append(grp(thc(PT),PT,'h2',6));
-   PH[PT].forEach(function(x){b.append(card(ph(PT,x)))});
-  }
- }else if(cv==='vocab'){
-  b.append(el('p','lead','Les mots que tu enregistres, classés par thème et retrouvables dans le dictionnaire.'));
-  if(!words.length)b.append(emptyBox('Ton vocabulaire est vide.\nAppuie sur + pour ajouter un mot, ou sur « Ajouter à mon vocabulaire » depuis une fiche.'));
-  var g2={};words.forEach(function(w){var t=w.th||'Sans thème';(g2[t]=g2[t]||[]).push(w)});
-  Object.keys(g2).forEach(function(t){b.append(grp(thc(t),t,'h3',26));g2[t].forEach(function(w){b.append(card(w))})});
- }else if(cv==='favs'){
-  b.append(el('p','lead','Les mots et phrases marqués d’une étoile, à portée de main.'));
-  var fl=Object.keys(favs).map(function(k){return favs[k]});
-  if(!fl.length)b.append(emptyBox('Aucun favori pour l’instant.\nAppuie sur l’étoile d’une fiche pour la retrouver ici.'));else fl.forEach(function(w){b.append(w.kj?kcard(w.kj):card(w))});
- }else renderStudy(b);
-}
 
 
 /* =====================================================================
@@ -1885,17 +1581,6 @@ function eurS(n){var v=n/RATE;return v.toLocaleString('fr-FR',{minimumFractionDi
 function money(n){return n?Number(n).toLocaleString('fr-FR')+' ¥ · ≈ '+eurS(+n):''}
 
 /* ---------- Légendes (semaine et mois) ---------- */
-function weekLegend(open){var d=el('details','lg');d.open=open!==false;d.append(el('summary',null,'Légende des icônes'));
- function block(t,arr,tr){d.append(el('p','lgh',t));var w=el('div','chips2');arr.forEach(function(x){var c=sty(el('span','chip'+(tr?' tr':'')),x[1]);c.innerHTML=eiH(x[2],16);c.append(document.createTextNode(x[0]));w.append(c)});d.append(w)}
- block('Lieux (formes rondes, tons doux)',TYPES,0);block('Transports (carrés pleins, tons soutenus)',MODES,1);return d}
-function monthLegend(f0){var y=f0.getFullYear(),m=f0.getMonth(),used={},items=[];
- function inM(s){if(!s)return false;var d=PD(s);return d.getFullYear()===y&&d.getMonth()===m}
- places.forEach(function(p){if(!p.cityOnly&&inM(p.date)){var t=typeInfo(p.type);if(!used['p'+t[0]]){used['p'+t[0]]=1;items.push({n:t[0],c:t[1],tr:0})}}});
- trips.forEach(function(t){if(inM(t.date)){var mo=MODES[t.m];if(!used['t'+mo[0]]){used['t'+mo[0]]=1;items.push({n:mo[0],c:mo[1],tr:1})}}});
- var box=el('div','mlgw'),w=el('div','mlg');
- if(!items.length)w.append(el('span',null,'Rond = lieu · carré = transport. Les pastilles du mois apparaîtront ici avec leur légende.'));
- items.forEach(function(x){var s=el('span','lgi'),i=sty(el('i',x.tr?'tr':''),x.c);s.append(i,document.createTextNode(x.n));w.append(s)});
- box.append(w);var all=weekLegend(false);all.classList.add('small');all.querySelector('summary').textContent='Toutes les couleurs';box.append(all);return box}
 
 /* ---------- Référence : Transports → fiche, Destinations → fiche ---------- */
 var HL=null;
@@ -1912,20 +1597,6 @@ function rpath(P,r){var d='',i,Q=[P[0]];for(i=1;i<P.length;i++)if(Math.abs(P[i][
  for(i=1;i<P.length-1;i++){var a=P[i-1],b=P[i],c=P[i+1],v1=[a[0]-b[0],a[1]-b[1]],v2=[c[0]-b[0],c[1]-b[1]],l1=Math.hypot(v1[0],v1[1]),l2=Math.hypot(v2[0],v2[1]),rr=Math.min(r,l1/2,l2/2);
   d+='L'+f(b[0]+v1[0]/l1*rr)+' '+f(b[1]+v1[1]/l1*rr)+'Q'+f(b[0])+' '+f(b[1])+' '+f(b[0]+v2[0]/l2*rr)+' '+f(b[1]+v2[1]/l2*rr)}
  var z=P[P.length-1];return d+'L'+f(z[0])+' '+f(z[1])}
-function metroSVG(sel){
- var s='<svg class="mm" viewBox="0 0 360 412" role="img" aria-label="Schéma simplifié des lignes de métro de Tokyo, positions approximatives">';
- var ycol=METRO[0].c,ring=spline(MP[0].n.map(pj),true);
- s+='<path d="'+ring+'" fill="'+ycol+'" fill-opacity="'+(sel==null||sel===0?.07:.03)+'" stroke="'+ycol+'" stroke-width="15" stroke-opacity="'+(sel==null||sel===0?.16:.05)+'" stroke-linejoin="round"/>';
- var order=MP.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
- order.forEach(function(i){var L=MP[i],c=METRO[i].c,pts=L.n.map(pj),dim=sel!=null&&i!==sel,on=sel===i;
-  var d=L.smooth?spline(pts,!!L.closed):rpath(L.closed?pts.concat([pts[0]]):pts,9);
-  s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+(i===0?(on?3.6:2.4):(on?3.6:1.9))+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+(dim?.13:(on?1:.8))+'"/>'});
- var hubNames={};HUBS.forEach(function(h){hubNames[h[0]]=1});
- if(sel!=null){var lst=METRO[sel].s||METRO[sel].h||[];lst.forEach(function(nm){if(GEO[nm]&&!hubNames[nm]&&MP[sel].n.indexOf(nm)>=0){var p=pj(nm),right=p[0]<240;s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="2.8" fill="#FFFBF5" stroke="'+METRO[sel].c+'" stroke-width="1.8"/><text class="sl" x="'+(p[0]+(right?6:-6)).toFixed(1)+'" y="'+(p[1]+2.6).toFixed(1)+'" text-anchor="'+(right?'start':'end')+'">'+nm+'</text>'}})}
- HUBS.forEach(function(h){var p=pj(h[0]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.4" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.5"/><text class="hl" x="'+(p[0]+h[1]).toFixed(1)+'" y="'+(p[1]+h[2]).toFixed(1)+'" text-anchor="'+h[3]+'">'+h[0]+'</text>'});
- if(sel==null||sel===0)s+='<text class="sl" x="139" y="176" text-anchor="middle" style="fill:#6F8A2E">boucle Yamanote</text>';
- s+='<text class="sl" x="352" y="404" text-anchor="end" style="fill:#5F7FA3">Baie de Tokyo</text></svg>';
- return s}
 
 /* ---------- Données train et bus (listes à vérifier) ---------- */
 var TRAIN=[
@@ -1956,33 +1627,6 @@ var LBL={'Sapporo':'l','Asahikawa':'l','Hakodate':'l','Shin-Hakodate-Hokuto':'l'
 function lineGeo(net,i,l){
  if(net==='shink'){var G=[{f:l.s},{f:l.s},{f:l.s},{f:l.s,dash:['Shin-Hakodate-Hokuto','Sapporo']},{f:['Tokyo','Ueno','Omiya','Takasaki','Echigo-Yuzawa','Nagaoka','Niigata'],from:2},{f:['Tokyo','Ueno','Omiya','Takasaki','Karuizawa','Nagano','Toyama','Kanazawa','Fukui','Tsuruga'],from:3}];return G[i]}
  return{f:l.s}}
-function geoSVG(net,sel){
- var data=NETS[net].d,defs=data.map(function(l,i){return lineGeo(net,i,l)}),xs=[],ys=[],cnt={},ends={};
- data.forEach(function(l,i){var s=l.s;s.forEach(function(n){cnt[n]=(cnt[n]||0)+1});ends[s[0]]=1;ends[s[s.length-1]]=1});
- defs.forEach(function(g){g.f.concat(g.dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})});
- var x0=Math.min.apply(0,xs)-66,x1=Math.max.apply(0,xs)+66,y0=Math.min.apply(0,ys)-22,y1=Math.max.apply(0,ys)+22;
- if(x1-x0<340){var m=(x0+x1)/2;x0=m-170;x1=m+170}
- var W=x1-x0,H=y1-y0,s='<svg class="mm" viewBox="'+x0.toFixed(0)+' '+y0.toFixed(0)+' '+W.toFixed(0)+' '+H.toFixed(0)+'" role="img" aria-label="Schéma simplifié, positions de principe, hors échelle">';
- var order=data.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
- var bus=net==='bus';
- order.forEach(function(i){var g=defs[i],l=data[i],dim=sel!=null&&i!==sel,on=sel===i,names=on?g.f:g.f.slice(g.from||0),pts=names.map(function(n){return SP[n]}).filter(Boolean);if(pts.length<2)return;
-  var op=dim?.14:(on?1:.85);
-  s+='<path d="'+rpath(pts,8)+'" fill="none" stroke="'+l.c+'" stroke-width="'+(on?4:2.6)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"'+(bus?' stroke-dasharray="7 5"':'')+'/>';
-  if(g.dash){var dp=g.dash.map(function(n){return SP[n]});s+='<path d="'+rpath(dp,8)+'" fill="none" stroke="'+l.c+'" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="1 6" opacity="'+op+'"/>'}});
- var boxes=[];function place(n,dir,cls){var p=SP[n];if(!p)return;dir=LBL[n]||'r';var w=n.length*4.7+2,h=10,x=p[0],y=p[1],bx,by,ta;
-  if(dir==='r'){bx=x+7;by=y-5;ta='start'}else if(dir==='l'){bx=x-7-w;by=y-5;ta='end'}else if(dir==='t'){bx=x-w/2;by=y-16;ta='middle'}else{bx=x-w/2;by=y+6;ta='middle'}
-  for(var k=0;k<boxes.length;k++){var q=boxes[k];if(bx<q[0]+q[2]&&bx+w>q[0]&&by<q[1]+q[3]&&by+h>q[1])return}
-  boxes.push([bx,by,w,h]);var tx=dir==='r'?x+7:dir==='l'?x-7:x,ty=dir==='t'?y-8:dir==='b'?y+14:y+3;
-  s+='<text class="gl '+cls+'" x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'" text-anchor="'+ta+'">'+n+'</text>'}
- if(sel!=null){var ln=data[sel],nm=lineGeo(net,sel,ln).f;ln.s.forEach(function(n){var p=SP[n];if(p)s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#FFFBF5" stroke="'+ln.c+'" stroke-width="2"/>'});ln.s.forEach(function(n){place(n,0,'')})}
- var hubs=Object.keys(cnt).filter(function(n){return(cnt[n]>=2||ends[n])&&SP[n]}).sort(function(a,b){return(cnt[b]||0)-(cnt[a]||0)});
- hubs.forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.4" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.5"/>'});
- hubs.forEach(function(n){place(n,0,'b')});
- if(sel==null){var others={};data.forEach(function(l){l.s.forEach(function(n){if(SP[n]&&hubs.indexOf(n)<0)others[n]=1})});Object.keys(others).forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="2.2" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.2"/>'});Object.keys(others).forEach(function(n){place(n,0,'')})}
- if(net==='shink'){var h=SP['Hakata'];s+='<text class="gl m" x="'+(h[0]+7)+'" y="'+(h[1]+12)+'">vers Kagoshima (Kyushu, non détaillé)</text>';var q=SP['Sapporo'];s+='<text class="gl m" x="'+(q[0]-7)+'" y="'+(q[1]-6)+'" text-anchor="end">prolongement prévu</text>'}
- return s+'</svg>'}
-function geoMap(net,sel){var d=el('div','mmap');d.innerHTML=geoSVG(net,sel);
- d.append(el('p','note',net==='bus'?'Schéma de principe, hors échelle : les traits pointillés sont des liaisons en autocar. Plusieurs compagnies, horaires variables : à vérifier.':'Schéma de principe, hors échelle : les positions ne sont pas géographiques. Principales gares seulement, liste écrite à la main : à vérifier.','margin:8px 8px 8px'));return d}
 var NETS={metro:{d:METRO,mi:2,lab:'Métro',low:'métro',map:function(i){return metroMap(i)}},
  shink:{d:SHINK,mi:1,lab:'Shinkansen',low:'Shinkansen',map:function(i){return geoMap('shink',i)}},
  train:{d:TRAIN,mi:0,lab:'Train',low:'train',map:function(i){return geoMap('train',i)}},
@@ -1990,81 +1634,15 @@ var NETS={metro:{d:METRO,mi:2,lab:'Métro',low:'métro',map:function(i){return m
 
 /* ---------- Transports : onglets métro, Shinkansen, train, bus, marche, voiture, avion ---------- */
 var TTABS=[['trajets','Mes trajets'],['metro','Métro'],['shink','Shinkansen'],['train','Train'],['bus','Bus'],['walk','Marche à pied'],['car','Voiture'],['plane','Avion']];
-var TMI={metro:2,shink:1,train:0,bus:3,walk:5,car:4,plane:6},MORDER=[2,1,0,3,5,4,6];
+var TMI={metro:2,shink:1,train:0,bus:3,walk:5,car:4,plane:6};
 (function(){var s=$('#tseg');s.className='seg scroll';s.replaceChildren();TTABS.forEach(function(t,i){var b=el('button',i?'':'on',t[1]);b.type='button';b.dataset.v=t[0];s.append(b)})})();
-var TINFO={
-metro:{lead:'Les lignes du métro de Tokyo et la boucle Yamanote. Appuie sur une ligne pour l’ouvrir sur la carte avec ses principales stations.',notes:['Listes de stations rédigées à la main, non exhaustives : à vérifier avant de s’y fier.','Tokyo Metro et Toei sont deux exploitants différents : un billet unique ou une carte IC évite de se poser la question.']},
-shink:{lead:'Du sud (Hiroshima, Hakata) au nord (Hokkaido). Appuie sur un réseau pour le mettre en évidence et voir ses gares.',notes:['Gares écrites à la main, non exhaustives. Les mini-Shinkansen (Yamagata, Akita) et le Kyushu ne sont pas détaillés.','Sur la plupart des Shinkansen, on choisit entre place réservée et place non réservée. Tarifs et pass : à vérifier avant l’achat, car ils changent.']},
-train:{lead:'Les grands axes ferroviaires hors Shinkansen. Appuie sur un axe pour le voir sur le schéma et ses gares.',notes:['Types de trains JR, du plus lent au plus rapide : local (futsū), rapide (kaisoku), express limité (tokkyū), puis Shinkansen.','Axes écrits de mémoire, non exhaustifs : à vérifier. Certaines lignes (Hakone par exemple) sont privées et ne sont pas couvertes par les pass JR.']},
-bus:{lead:'Les liaisons en autocar entre villes et vers les sites touristiques. Appuie sur une liaison pour la voir sur le schéma.',notes:['Les autocars rapides relient les grandes villes, souvent avec des départs de nuit. Le grand terminal de Tokyo est Busta Shinjuku.','Compagnies, horaires et tarifs varient et changent : réserve en ligne et vérifie avant. En ville, le fonctionnement des bus (montée à l’avant ou à l’arrière, paiement à la montée ou à la descente) varie : suis les indications.']},
-walk:{lead:'Ajoute tes trajets à pied (départ, arrivée, heure) pour les voir dans ton planning.',notes:['Aucune donnée pré-remplie. Distances et durées calculées : phase 6.','Les correspondances dans les très grandes gares (Shinjuku, Tokyo) peuvent être longues : prévois de la marge.']},
-car:{lead:'Ajoute tes trajets en voiture (départ, arrivée, heure) pour les voir dans ton planning.',notes:['La conduite se fait à gauche. Un permis international (convention de Genève de 1949) est demandé : à vérifier auprès des autorités de ton pays avant le départ.','Les péages sont payants. Les voitures de location ont souvent une carte de péage électronique (ETC) : à confirmer auprès du loueur.']},
-plane:{lead:'Ajoute tes vols (aéroports, horaires) pour les voir dans ton planning.',notes:['Tokyo : Haneda (HND) est proche du centre, Narita (NRT) plus éloigné. Osaka : Kansai (KIX) et Itami (ITM).','Règles de bagages et horaires : à vérifier auprès de la compagnie.']}};
-function myTrips(b,mi,low){var mine=sortedTrips().filter(function(t){return t.m===mi});b.append(el('h3',null,'Mes trajets en '+low,'margin-top:26px'));if(!mine.length)b.append(emptyBox('Aucun trajet pour ce moyen.'));else mine.forEach(function(t){b.append(tripCard(t))})}
-function renderTrans(){
- var b=$('#tview');b.replaceChildren();
- document.querySelectorAll('#tseg button').forEach(function(x){var on=x.dataset.v===TV;x.classList.toggle('on',on);if(on)x.parentNode.scrollLeft=Math.max(0,x.offsetLeft-24)});
- if(TV==='trajets'){
-  b.append(el('p','lead','Ajoute un trajet avec ses horaires et son prix : il apparaît ensuite dans ton planning, à la bonne date.'));
-  b.append(el('h3',null,'Mes trajets','margin-top:26px'));
-  if(!trips.length)b.append(emptyBox('Aucun trajet pour l’instant.\nChoisis un moyen ci-dessous ou appuie sur +.'));else sortedTrips().forEach(function(t){b.append(tripCard(t))});
-  b.append(el('h3',null,'Créer un trajet','margin-top:30px'));
-  MORDER.forEach(function(i){var m=MODES[i],c=modeCard(i,m[0],[el('p','meta','Appuie pour créer un trajet en '+m[0].toLowerCase(),'margin-bottom:8px')],'button');c.type='button';c.onclick=function(){addTrip({m:i})};b.append(c)});
-  return}
- var I=TINFO[TV],mi=TMI[TV],low=MODES[mi][0].toLowerCase(),N=NETS[TV];
- b.append(el('p','lead',I.lead));
- if(N){
-  b.append(N.map(null));
-  var lg=null,l=null;
-  N.d.forEach(function(ln,i){var g=TV==='metro'?(i===0?'JR · ligne circulaire':i<10?'Tokyo Metro':'Toei'):TV==='shink'?'Réseaux':TV==='train'?'Axes':'Liaisons';
-   if(g!==lg){lg=g;b.append(grp('#CEC3BB',g,'h3',26));l=el('div','list');b.append(l)}
-   l.append(rowBtn(ln.c,ln.n,ln.e,'',function(){MAPSEL={net:TV,i:i};showTab('carte')},TV==='metro'?'metro':TV==='shink'?'shin':TV==='train'?'train':'bus'))})}
- I.notes.forEach(function(t){b.append(el('p','note',t))});
- var go=el('button','btn','Créer un trajet en '+low);go.type='button';go.style.marginTop='18px';go.onclick=function(){addTrip({m:mi})};b.append(go);
- myTrips(b,mi,low);
-}
 
 /* ---------- Étude : kana compacts ---------- */
 var KB=[['あ','い','う','え','お'],['か','き','く','け','こ'],['さ','し','す','せ','そ'],['た','ち','つ','て','と'],['な','に','ぬ','ね','の'],['は','ひ','ふ','へ','ほ'],['ま','み','む','め','も'],['や','','ゆ','','よ'],['ら','り','る','れ','ろ'],['わ','','を','','ん']];
 var KD=[['が','ぎ','ぐ','げ','ご'],['ざ','じ','ず','ぜ','ぞ'],['だ','ぢ','づ','で','ど'],['ば','び','ぶ','べ','ぼ'],['ぱ','ぴ','ぷ','ぺ','ぽ']];
 var KY=['き','し','ち','に','ひ','み','り','ぎ','じ','び','ぴ'].reduce(function(a,c){return a.concat(['ゃ','ゅ','ょ'].map(function(y){return c+y}))},[]);
-function kanaView(b,isK){
- var pre=isK?'k':'h',all=[].concat.apply([],KB).concat([].concat.apply([],KD)).concat(KY).filter(Boolean),done=all.filter(function(c){return kknown[pre+c]}).length;
- var top=el('div','kprog');top.append(el('span',null,'Appris : '+done+' / '+all.length));var pr=el('div','prog'),bar=el('i');bar.style.width=Math.round(done/all.length*100)+'%';pr.append(bar);top.append(pr);b.append(top);
- function tile(c,gi,g){if(!c){g.append(el('span','kx'));return}var t=sty(el('button','kt'+(kknown[pre+c]?' ok':'')),THC[gi%THC.length]);t.type='button';t.setAttribute('aria-pressed',kknown[pre+c]?'true':'false');
-  var s=el('span',null,isK?kata(c):c);s.lang='ja';t.append(s,el('small',null,rom(c)));t.onclick=function(){kknown[pre+c]=!kknown[pre+c];var y=window.scrollY;renderCarnet();window.scrollTo(0,y)};g.append(t)}
- b.append(el('p','lgh','Sons de base'));var g1=el('div','kg');KB.forEach(function(r,gi){r.forEach(function(c){tile(c,gi,g1)})});b.append(g1);
- b.append(el('p','lgh',isK?'Sons voisés (゛ ゜)':'Sons voisés (゛ ゜)'));var g2=el('div','kg');KD.forEach(function(r,gi){r.forEach(function(c){tile(c,gi+3,g2)})});b.append(g2);
- b.append(el('p','lgh','Sons combinés'));var g3=el('div','kg k6');KY.forEach(function(c,i){tile(c,Math.floor(i/3),g3)});b.append(g3);
- b.append(el('p','note',isK?'Katakana : mots étrangers et noms propres. ー allonge la voyelle (コーヒー kōhī), le petit ッ double la consonne (ベッド beddo).':'Hiragana : mots japonais et terminaisons. Le petit っ double la consonne (きって kitte). づ et ぢ se prononcent comme ず et じ, を se prononce « o ».','margin-top:16px'))}
 
 /* ---------- Étude : kanji compacts + favoris ---------- */
-function kfav(ch){return favs['kj|'+ch]}
-function toggleKfav(ch){var k='kj|'+ch;if(favs[k])delete favs[k];else favs[k]={kj:ch}}
-function showKanji(c){
- var d=$('#dlg');if(d.open)d.close();d.replaceChildren();var gi=GOF[c[0]],col=KGROUPS[gi][2];
- var big=sty(el('div','kbig',c[0]),col);big.lang='ja';d.append(big,el('h2',null,c[1],'text-align:center;font-size:1.25rem'));
- function row(l,t,r){var x=sty(el('div','sr'),SC[l]||col);x.append(el('span','bd',l));var s=el('span',null,t);s.lang='ja';x.append(s);if(r)x.append(el('small','ro',r));d.append(x)}
- if(c[2])row('On’yomi',c[2],romOn(c[2]));if(c[3])row('Kun’yomi',c[3],romKun(c[3]));
- var ex=sty(el('div','cv'),col);ex.style.marginTop='16px';ex.append(el('b',null,'Exemple'));var es=el('span',null,c[4]+'  ('+c[5]+')');es.lang='ja';ex.append(es,el('small','ro',romW(c[5])+' · '+c[6]));d.append(ex);
- d.append(sty(el('span','tag',KGROUPS[gi][0]),col));
- var a=el('div','actions'),cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};
- var fv=el('button','btn ghost',kfav(c[0])?'★ Retirer des favoris':'☆ Ajouter aux favoris');fv.type='button';fv.setAttribute('aria-pressed',kfav(c[0])?'true':'false');fv.onclick=function(){toggleKfav(c[0]);d.close();renderCarnet()};
- var kn=el('button','btn ghost',known[c[0]]?'Retirer de « appris »':'Marquer comme appris');kn.type='button';kn.onclick=function(){known[c[0]]=!known[c[0]];d.close();renderCarnet()};
- var av=el('button','btn','Ajouter l’exemple au vocabulaire');av.type='button';av.onclick=function(){var w={k:c[4],h:c[5],ro:romW(c[5]),fr:c[6],th:'Tourisme',rare:'',u:1};if(!words.some(function(x){return key(x)===key(w)}))words.push(w);d.close();renderCarnet()};
- a.append(cl,fv,kn,av);d.append(a);d.showModal()}
-function kcard(ch){var c=KJ.filter(function(x){return x[0]===ch})[0];if(!c)return el('div');var col=KGROUPS[GOF[ch]][2],e=sty(el('div','entry kfc'),col),f=el('button','fav');f.type='button';f.setAttribute('aria-label','Retirer des favoris');f.innerHTML=ico('star','currentColor',24,null,null,'currentColor');f.onclick=function(ev){ev.stopPropagation();toggleKfav(ch);renderCarnet()};
- var big=el('span','kcb',ch);big.lang='ja';var t=el('div','kct');t.append(el('b',null,c[1]),el('small','ro',(c[2]?romOn(c[2]):'')+(c[2]&&c[3]?'  ·  ':'')+(c[3]?romKun(c[3]):'')));
- var row=el('button','kcr');row.type='button';row.append(big,t);row.onclick=function(){showKanji(c)};e.append(row,f);return e}
-function kanjiView(b){
- var n=KJ.filter(function(c){return known[c[0]]}).length;
- var top=el('div','kprog');top.append(el('span',null,'Appris : '+n+' / '+KJ.length));var pr=el('div','prog'),bar=el('i');bar.style.width=Math.round(n/KJ.length*100)+'%';pr.append(bar);top.append(pr);b.append(top);
- var ch=el('div','chips scroll');var all=sty(el('button','chip'+(KG<0?' on':''),'Tous'),'#CEC3BB');all.type='button';all.onclick=function(){KG=-1;renderCarnet()};ch.append(all);
- KGROUPS.forEach(function(g,i){var c=sty(el('button','chip'+(KG===i?' on':''),g[0]),g[2]);c.type='button';c.onclick=function(){KG=i;renderCarnet()};ch.append(c)});b.append(ch);
- var gr=el('div','kjg');
- KJ.filter(function(c){return KG<0||GOF[c[0]]===KG}).forEach(function(c){var t=sty(el('button','kj'+(known[c[0]]?' ok':'')+(kfav(c[0])?' fv':'')),KGROUPS[GOF[c[0]]][2]);t.type='button';t.setAttribute('aria-label',c[0]+' : '+c[1]+(kfav(c[0])?', favori':''));var s=el('span',null,c[0]);s.lang='ja';t.append(s,el('small',null,c[1]));t.onclick=function(){showKanji(c)};gr.append(t)});
- b.append(gr);
- b.append(el('p','note','Sélection de 150 kanji très courants : les 80 kanji de 1re année du primaire plus 70 kanji utiles en voyage. Ce n’est pas un classement officiel par fréquence. Lectures écrites de mémoire, à faire vérifier.','margin-top:20px'))}
 
 
 /* =====================================================================
@@ -2076,7 +1654,6 @@ function kanjiView(b){
 var MC8=['#A4BED3','#E8A094','#EEB87D','#B4CA9C','#C4A8C9','#EDA5B0','#8EC6BD'];
 MODES.forEach(function(m,i){m[1]=MC8[i]});
 var MACT=[2,1,0,3];
-function mstroke(c){return dk(c,.8)}
 
 /* ---------- Périodes de trajet ---------- */
 function tripSpan(t){if(!t.date)return[];var d2=t.date2&&t.date2>=t.date?t.date2:t.date,dep=t.dep||'',arr=t.arr||'';
@@ -2177,23 +1754,6 @@ function seeTripOnMap(it){showTab('carte');
 function seeOnMap(it){showTab('carte');
  var go=function(n){var m=null;document.querySelectorAll('*').forEach(function(e){if(!m&&e._jm)m=e._jm});var f=typeof pf==='function'?pf(it.pref):null;if(m&&f&&f.b&&document.querySelector('.jm')&&document.querySelector('.jm').getBoundingClientRect().width>0){m.zoomTo(f.b[0],f.b[1],f.b[2],f.b[3])}else if(n<8)setTimeout(function(){go(n+1)},100)};
  setTimeout(function(){go(0)},60)}
-function editPlace(it){
- openForm('Modifier le lieu',[
-  {k:'city',label:'Ville ou zone',val:it.city,sug:citySug},
-  {k:'pref',label:'Préfecture',type:'select',opts:[['','Choisir la préfecture']].concat(PREFS),val:it.pref},
-  {k:'type',label:'Type de lieu',type:'chips',opts:TYPES,val:it.type},
-  {k:'n',label:'Nom du lieu',val:it.n||''},
-  {k:'price',label:'Budget (¥)',type:'number',val:it.price||''},
-  {k:'date',label:'Date',type:'date',val:it.date||''},
-  {k:'time',label:'Heure',type:'time',val:it.time||''},
-  {k:'note',label:'Notes',val:it.note||''}
- ],function(v){
-  if(!v.city)return'Écris la ville ou la zone.';
-  var city=canon(v.city),pf=v.pref||cityPref(city);if(!pf)return'Choisis la préfecture de cette ville.';
-  if(v.time&&!v.date)return'Choisis aussi une date pour ajouter une heure.';
-  it.city=city;it.pref=pf;it.type=v.type;it.n=v.n;it.price=+v.price||0;it.date=v.date;it.time=v.date?v.time:'';it.note=v.note;it.cityOnly=false;
-  if(v.date)S.d=PD(v.date);refresh();return null},'Enregistrer');
-}
 function tripFields(it,pre){var MN=MODES.map(function(m){return m[0]}),MS=MACT.map(function(i){return MODES[i][0]}),mi=MACT.indexOf(it.m!=null?it.m:(pre.m!=null?pre.m:2))>=0?(it.m!=null?it.m:(pre.m!=null?pre.m:2)):2;
  return{MN:MN,fields:[
   {k:'m',label:'Moyen de transport',type:'select',opts:MS,val:MN[mi]},
@@ -2232,43 +1792,10 @@ var FULL8={
 11:['Meguro','Shirokane-dai','Shirokane-takanawa','Mita','Shibakoen','Onarimon','Uchisaiwaicho','Hibiya','Otemachi','Jimbocho','Suidobashi','Kasuga','Hakusan','Sengoku','Sugamo','Nishi-sugamo','Shin-itabashi','Itabashi-kuyakushomae','Itabashi-honcho','Motohasunuma','Shimura-sakaue','Shimura-sanchome','Hasune','Nishidai','Takashimadaira','Shin-takashimadaira','Nishi-takashimadaira'],
 12:['Shinjuku','Shinjuku-sanchome','Akebonobashi','Ichigaya','Kudanshita','Jimbocho','Ogawamachi','Iwamotocho','Bakuro-yokoyama','Hamacho','Morishita','Kikukawa','Sumiyoshi','Nishi-ojima','Ojima','Higashi-ojima','Funabori','Ichinoe','Mizue','Shinozaki','Motoyawata'],
 13:['Hikarigaoka','Nerima-kasugacho','Toshimaen','Nerima','Shin-egota','Ochiai-minami-nagasaki','Nakai','Higashi-nakano','Nakano-sakaue','Nishi-shinjuku-gochome','Tocho-mae','Shinjuku-nishiguchi','Higashi-shinjuku','Wakamatsu-kawada','Ushigome-yanagicho','Ushigome-kagurazaka','Iidabashi','Kasuga','Hongo-sanchome','Ueno-okachimachi','Shin-okachimachi','Kuramae','Ryogoku','Morishita','Kiyosumi-shirakawa','Monzen-nakacho','Tsukishima','Kachidoki','Tsukijishijo','Shiodome','Daimon','Akabanebashi','Azabu-juban','Roppongi','Aoyama-itchome','Kokuritsu-kyogijo','Yoyogi','Shinjuku']};
-var SVC={jr:{f:'Toutes les 2 à 4 min environ en journée, un peu plus espacé tôt le matin et tard le soir',h:'≈ 4 h 30 → ≈ 1 h (varie selon la gare)'},tm:{f:'Heures de pointe ≈ toutes les 2 à 4 min · journée ≈ 3 à 6 min · soir ≈ 5 à 8 min',h:'Premier ≈ 5 h · dernier ≈ minuit à 0 h 30 (varie selon la station)'},toei:{f:'Heures de pointe ≈ 3 à 5 min · journée ≈ 5 à 8 min · soir ≈ 8 à 12 min',h:'Premier ≈ 5 h · dernier ≈ minuit (varie selon la station)'}};
 METRO.forEach(function(l,i){l.full=FULL8[i];l.svc=i===0?'jr':i<10?'tm':'toei';l.ps=i===0?2:(i===1||i===4?1.9:1.8);l.loop=i===0;l.noest=i===13});
 METRO[13].e='Ligne en 6 : Hikarigaoka ↔ Tocho-mae, puis boucle';
 
 /* ---------- Plan du métro : repères, baie, rivière, parcs ---------- */
-function metroBack(){var s='';
- function q(lo,la){return[(lo-139.675)*2323,(35.756-la)*2862]}
- function poly(arr){return arr.map(function(c){var p=q(c[0],c[1]);return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')}
- [139.70,139.75,139.80].forEach(function(lo){var a=q(lo,35.76),b=q(lo,35.60);s+='<path d="M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1)+'" stroke="#4B3D3A" stroke-opacity=".07" stroke-width="1" stroke-dasharray="2 4"/>'});
- [35.65,35.70,35.75].forEach(function(la){var a=q(139.66,la),b=q(139.85,la);s+='<path d="M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1)+'" stroke="#4B3D3A" stroke-opacity=".07" stroke-width="1" stroke-dasharray="2 4"/>'});
- s+='<polygon points="'+poly([[139.752,35.60],[139.752,35.640],[139.762,35.649],[139.774,35.653],[139.789,35.646],[139.818,35.641],[139.832,35.650],[139.86,35.650],[139.86,35.60]])+'" fill="#A4BED3" fill-opacity=".30"/>';
- s+='<polyline points="'+poly([[139.806,35.760],[139.803,35.735],[139.797,35.715],[139.791,35.695],[139.790,35.672],[139.781,35.652]])+'" fill="none" stroke="#A4BED3" stroke-opacity=".6" stroke-width="3.5" stroke-linecap="round"/>';
- function blob(lo,la,w,h,c,op){var p=q(lo,la),W=w*2323,H=h*2862;return'<rect x="'+(p[0]-W/2).toFixed(1)+'" y="'+(p[1]-H/2).toFixed(1)+'" width="'+W.toFixed(1)+'" height="'+H.toFixed(1)+'" rx="'+(Math.min(W,H)*.35).toFixed(1)+'" fill="'+c+'" fill-opacity="'+op+'"/>'}
- s+=blob(139.7528,35.6852,0.018,0.011,'#B4CA9C',.45)+blob(139.7713,35.7148,0.012,0.007,'#B4CA9C',.45)+blob(139.6993,35.6764,0.012,0.012,'#B4CA9C',.45)+blob(139.7100,35.6852,0.010,0.007,'#B4CA9C',.45);
- return s}
-function metroMarks(){var s='';
- function q(lo,la){return[(lo-139.675)*2323,(35.756-la)*2862]}
- [['Palais impérial',139.7528,35.6852,0,-9,'middle'],['Skytree',139.8107,35.7101,5,3,'start'],['Tokyo Tower',139.7454,35.6586,6,3,'start'],['Sensō-ji',139.7967,35.7148,6,-4,'start'],['Parc d’Ueno',139.7690,35.7195,0,-5,'middle'],['Meiji-jingū',139.6993,35.6764,-7,3,'end'],['Shinjuku Gyoen',139.7120,35.6830,7,-3,'start'],['Tokyo Dome',139.7519,35.7056,-6,3,'end'],['Odaiba',139.7745,35.6270,0,4,'middle'],['Tsukiji',139.7704,35.6655,-6,10,'end']].forEach(function(m){var p=q(m[1],m[2]);
-  s+='<rect x="'+(p[0]-2).toFixed(1)+'" y="'+(p[1]-2).toFixed(1)+'" width="4" height="4" transform="rotate(45 '+p[0].toFixed(1)+' '+p[1].toFixed(1)+')" fill="#8A7B74" fill-opacity=".75"/><text class="mk" x="'+(p[0]+m[3]).toFixed(1)+'" y="'+(p[1]+m[4]).toFixed(1)+'" text-anchor="'+m[5]+'">'+m[0]+'</text>'});
- return s}
-function metroSVG(sel){
- var s='<svg class="mm" viewBox="0 6 360 404" role="img" aria-label="Schéma simplifié des lignes de métro de Tokyo, positions approximatives">'+metroBack();
- var ycol=METRO[0].c,ring=spline(MP[0].n.map(pj),true);
- s+='<path d="'+ring+'" fill="none" stroke="'+ycol+'" stroke-width="13" stroke-opacity="'+(sel==null||sel===0?.14:.05)+'" stroke-linejoin="round"/>';
- var order=MP.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
- order.forEach(function(i){var L=MP[i],c=METRO[i].c,pts=L.n.map(pj),dim=sel!=null&&i!==sel,on=sel===i;
-  var d=L.smooth?spline(pts,!!L.closed):rpath(L.closed?pts.concat([pts[0]]):pts,9);
-  s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+(i===0?(on?3.6:2.4):(on?3.6:1.9))+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+(dim?.13:(on?1:.8))+'"/>';
-  (L.stubs||[]).forEach(function(st){var p=st.at==='start'?pts[0]:pts[pts.length-1],n=Math.sqrt(st.d[0]*st.d[0]+st.d[1]*st.d[1]),q2=[p[0]+st.d[0]/n*22,p[1]+st.d[1]/n*22];
-   s+='<path d="M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'L'+q2[0].toFixed(1)+' '+q2[1].toFixed(1)+'" stroke="'+c+'" stroke-width="1.9" stroke-dasharray="1.5 5" stroke-linecap="round" opacity="'+(dim?.13:.8)+'"/>'})});
- var hubNames={};HUBS.forEach(function(h){hubNames[h[0]]=1});
- if(sel!=null){var lst=METRO[sel].full||[];lst.forEach(function(nm){if(GEO[nm]&&!hubNames[nm]&&MP[sel].n.indexOf(nm)>=0){var p=pj(nm),right=p[0]<240;s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="2.8" fill="#FFFBF5" stroke="'+METRO[sel].c+'" stroke-width="1.8"/><text class="sl" x="'+(p[0]+(right?6:-6)).toFixed(1)+'" y="'+(p[1]+2.6).toFixed(1)+'" text-anchor="'+(right?'start':'end')+'">'+nm+'</text>'}})}
- HUBS.forEach(function(h){var p=pj(h[0]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.4" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.5"/><text class="hl" x="'+(p[0]+h[1]).toFixed(1)+'" y="'+(p[1]+h[2]).toFixed(1)+'" text-anchor="'+h[3]+'">'+h[0]+'</text>'});
- s+=metroMarks();
- s+='<text class="mk" x="338" y="396" text-anchor="end" style="fill:#5F7FA3">Baie de Tokyo</text><text class="mk" x="330" y="86" text-anchor="end" style="fill:#5F7FA3">Sumida</text></svg>';
- return s}
-function metroMap(sel){var d=el('div','mmap');d.innerHTML=metroSVG(sel);d.append(el('p','note','Schéma simplifié, hors échelle, à vérifier. Repères en fond, très discrets.','margin:4px 10px 8px;font-size:.74rem'));return d}
 
 /* ---------- Données Shinkansen : durées indicatives ---------- */
 var SHK_D=[
@@ -2332,88 +1859,12 @@ var SPX={'Otaru':[280,12],'New Chitose Airport':[322,40],'Matsushima':[284,206],
 Object.keys(SPX).forEach(function(n){SP[n]=SPX[n]});
 Object.keys(SP).forEach(function(n){if(!SP[n].sq){SP[n]=[SP[n][0],Math.round(SP[n][1]*.8)];SP[n].sq=1}});
 LBL['Kamakura']='r';LBL['Haneda Airport']='r';LBL['Narita']='r';LBL['Arashiyama']='l';LBL['Koyasan']='r';LBL['Miyajima']='r';LBL['Takamatsu']='r';LBL['Matsue']='b';LBL['Izumo-shi']='b';LBL['Otaru']='l';LBL['New Chitose Airport']='b';LBL['Matsushima']='r';
-function geoSVG(net,sel){
- var data=NETS[net].d,defs=data.map(function(l,i){return lineGeo(net,i,l)}),xs=[],ys=[],cnt={},ends={};
- data.forEach(function(l){var s=l.s;s.forEach(function(n){cnt[n]=(cnt[n]||0)+1});ends[s[0]]=1;ends[s[s.length-1]]=1});
- defs.forEach(function(g){g.f.concat(g.dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})});
- if(sel!=null){xs=[];ys=[];defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})}
- var x0=Math.min.apply(0,xs)-64,x1=Math.max.apply(0,xs)+64,y0=Math.min.apply(0,ys)-34,y1=Math.max.apply(0,ys)+36;
- if(x1-x0<300){var m=(x0+x1)/2;x0=m-150;x1=m+150}
- if(y1-y0<150){var m2=(y0+y1)/2;y0=m2-75;y1=m2+75}
- var W=x1-x0,H=y1-y0,s='<svg class="mm" viewBox="'+x0.toFixed(0)+' '+y0.toFixed(0)+' '+W.toFixed(0)+' '+H.toFixed(0)+'" role="img" aria-label="Schéma simplifié, positions de principe, hors échelle">';
- s+='<rect x="'+x0.toFixed(0)+'" y="'+y0.toFixed(0)+'" width="'+W.toFixed(0)+'" height="'+H.toFixed(0)+'" fill="none"/>';
- /* repères de zones */
- var Z=[['HOKKAIDO',318,6],['TOHOKU',286,196],['KANTO',250,320],['CHUBU',70,262],['KANSAI',44,470],['CHUGOKU',20,552]];
- Z.forEach(function(z){var zy=Math.round(z[2]*.8);if(z[1]>x0&&z[1]<x1&&zy>y0&&zy<y1)s+='<text class="zn" x="'+z[1]+'" y="'+zy+'" text-anchor="middle">'+z[0]+'</text>'});
- var order=data.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
- var bus=net==='bus';
- order.forEach(function(i){var g=defs[i],l=data[i],dim=sel!=null&&i!==sel,on=sel===i,names=on?g.f:g.f.slice(g.from||0),pts=names.map(function(n){return SP[n]}).filter(Boolean);if(pts.length<2)return;
-  var op=dim?.14:(on?1:.85),col=mstroke(l.c);
-  s+='<path d="'+rpath(pts,8)+'" fill="none" stroke="'+col+'" stroke-width="'+(on?4:2.6)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"'+(bus?' stroke-dasharray="7 5"':'')+'/>';
-  if(g.dash){var dp=g.dash.map(function(n){return SP[n]});s+='<path d="'+rpath(dp,8)+'" fill="none" stroke="'+col+'" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="1 6" opacity="'+op+'"/>'}});
- var boxes=[];function place(n,cls){var p=SP[n];if(!p)return;var dir=LBL[n]||'r',w=n.length*4.7+2,h=10,x=p[0],y=p[1],bx,by,ta;
-  if(dir==='r'){bx=x+7;by=y-5;ta='start'}else if(dir==='l'){bx=x-7-w;by=y-5;ta='end'}else if(dir==='t'){bx=x-w/2;by=y-16;ta='middle'}else{bx=x-w/2;by=y+6;ta='middle'}
-  for(var k=0;k<boxes.length;k++){var q=boxes[k];if(bx<q[0]+q[2]&&bx+w>q[0]&&by<q[1]+q[3]&&by+h>q[1])return}
-  boxes.push([bx,by,w,h]);var tx=dir==='r'?x+7:dir==='l'?x-7:x,ty=dir==='t'?y-8:dir==='b'?y+14:y+3;
-  s+='<text class="gl '+cls+'" x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'" text-anchor="'+ta+'">'+n+'</text>'}
- if(sel!=null){var ln=data[sel];ln.s.forEach(function(n){var p=SP[n];if(p)s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#FFFBF5" stroke="'+mstroke(ln.c)+'" stroke-width="2"/>'});ln.s.forEach(function(n){place(n,'')})}
- var hubs=Object.keys(cnt).filter(function(n){return(cnt[n]>=2||ends[n])&&SP[n]}).sort(function(a,b){return(cnt[b]||0)-(cnt[a]||0)});
- hubs.forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.4" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.5"/>'});
- hubs.forEach(function(n){place(n,'b')});
- if(sel==null){var others={};data.forEach(function(l){l.s.forEach(function(n){if(SP[n]&&hubs.indexOf(n)<0)others[n]=1})});Object.keys(others).forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="2.2" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="1.2"/>'});Object.keys(others).forEach(function(n){place(n,'')})}
- if(net==='shink'){var h=SP['Hakata'];s+='<text class="gl m" x="'+(h[0]+7)+'" y="'+(h[1]+12)+'">vers Kagoshima (non détaillé)</text>';var q2=SP['Sapporo'];s+='<text class="gl m" x="'+(q2[0]-7)+'" y="'+(q2[1]-6)+'" text-anchor="end">prolongement prévu</text>'}
- return s+'</svg>'}
-function geoMap(net,sel){var d=el('div','mmap');d.innerHTML=geoSVG(net,sel);
- d.append(el('p','note',net==='bus'?'Schéma de principe, hors échelle · pointillés = autocar · à vérifier.':'Schéma de principe, hors échelle, non géographique · à vérifier.','margin:4px 10px 8px;font-size:.74rem'));return d}
 
 /* ---------- Transports : onglets, puces de lignes, carte, détail ---------- */
 var TSEL={metro:null,shink:null,train:null,bus:null};
 var TTABS=[['trajets','Mes trajets'],['metro','Métro'],['shink','Shinkansen'],['train','Train'],['bus','Bus']];
 TMI={metro:2,shink:1,train:0,bus:3};
 (function(){var s=$('#tseg');s.className='seg';s.replaceChildren();TTABS.forEach(function(t,i){var b=el('button',t[0]===TV?'on':'',t[1]);b.type='button';b.dataset.v=t[0];s.append(b)})})();
-function lineChips(net){var w=el('div','chips lc2'),sel=TSEL[net];
- NETS[net].d.forEach(function(l,i){var c=sty(el('button','chip lcp'+(sel===i?' on':''),l.n),l.c);c.type='button';c.insertBefore(el('i'),c.firstChild);c.setAttribute('aria-pressed',sel===i?'true':'false');c.onclick=function(){TSEL[net]=sel===i?null:i;renderTrans()};w.append(c)});return w}
-function estLine(l){var a=l.tm?Object.keys(l.tm):l.full;return(l.tm||(l.full&&!l.noest))?a:null}
-function estimate(l,a,b){if(a===b)return{min:0,k:0};
- if(l.tm){var x=l.tm[a],y=l.tm[b];return x==null||y==null?null:{min:Math.abs(y-x)}}
- var n=l.full,i=n.indexOf(a),j=n.indexOf(b);if(i<0||j<0)return null;var k=Math.abs(i-j);if(l.loop)k=Math.min(k,n.length-k);return{min:Math.round(k*(l.ps||1.8)),k:k}}
-function lineCard(net,i){
- var N=NETS[net],l=N.d[i],c=sty(el('div','leg lcard'),l.c);
- var hd=el('div','lch');hd.append(el('h3',null,l.n),el('small',null,l.e));c.append(hd);
- if(l.svc){var sv=SVC[l.svc];c.append(el('p','lci','Fréquence : '+sv.f),el('p','lci','Service : '+sv.h),el('p','lci mu','Ordre de grandeur, pas un horaire officiel : les métros passent à intervalles réguliers. Horaires précis : site de l’exploitant, Google Maps ou Navitime.'))}
- else if(l.d)c.append(el('p','lci','Durée indicative : '+l.d));
- var names=estLine(l);
- if(names){var box=el('div','est'),s1=el('select'),s2=el('select'),out=el('span','estr');
-  s1.setAttribute('aria-label','Station de départ');s2.setAttribute('aria-label','Station d’arrivée');
-  names.forEach(function(n){[s1,s2].forEach(function(s){var o=el('option',null,n);o.value=n;s.append(o)})});s1.value=names[0];s2.value=names[names.length-1];
-  function up(){var r=estimate(l,s1.value,s2.value);out.textContent=r?(r.min?'≈ '+fmtMin(r.min)+(r.k?' · '+r.k+' station'+(r.k>1?'s':''):''):'même station'):'—'}
-  s1.onchange=s2.onchange=up;up();var sp=el('span',null,'→');box.append(s1,sp,s2,out);c.append(box);
-  if(!l.tm)c.append(el('p','lci mu','Estimation à environ '+(l.ps||1.8).toString().replace('.',',')+' min par station, correspondances non comprises.'))}
- else if(l.noest)c.append(el('p','lci mu','Ligne en 6 : durées non calculées.'));
- var lst=l.full||l.s,sl=el('div','stl');
- lst.forEach(function(s,k){var r=sty(el('button','st'),l.c);r.type='button';r.append(el('i'),el('span',null,s));
-  var tmv=l.tm?l.tm[s]:(l.full&&!l.noest&&!l.loop?Math.round(k*(l.ps||1.8)):null);if(tmv!=null)r.append(el('small','stm','≈ '+fmtMin(tmv)));
-  r.onclick=function(){addTrip({m:N.mi,a:s})};sl.append(r)});
- var det=el('details','stdet'),sm=el('summary',null,'Toutes les stations · '+lst.length);det.append(sm,sl);
- if(l.tm||(l.full&&!l.noest&&!l.loop))det.append(el('p','lci mu','Minutes depuis '+lst[0]+'.'));c.append(det);
- var go=el('button','btn ghost','Voir sur la carte');go.type='button';go.style.marginTop='12px';go.onclick=function(){MAPSEL={net:net,i:i};showTab('carte')};c.append(go);
- return c}
-function renderTrans(){
- var b=$('#tview');b.replaceChildren();
- document.querySelectorAll('#tseg button').forEach(function(x){x.classList.toggle('on',x.dataset.v===TV)});
- if(['trajets','metro','shink','train','bus'].indexOf(TV)<0)TV='trajets';
- if(TV==='trajets'){
-  if(!trips.length)b.append(emptyBox('Aucun trajet pour l’instant.'));else sortedTrips().forEach(function(t){b.append(tripCard(t))});
-  b.append(el('h3',null,'Créer un trajet','margin-top:26px'));
-  MACT.forEach(function(i){var m=MODES[i],c=modeCard(i,m[0],[],'button');c.type='button';c.classList.add('slim');c.onclick=function(){addTrip({m:i})};b.append(c)});
-  return}
- var N=NETS[TV],sel=TSEL[TV],mi=TMI[TV],low=MODES[mi][0].toLowerCase();
- b.append(lineChips(TV),N.map(sel));
- if(sel!=null)b.append(lineCard(TV,sel));
- var go=el('button','btn','Créer un trajet en '+low);go.type='button';go.style.marginTop='18px';go.onclick=function(){addTrip({m:mi})};b.append(go);
- var mine=sortedTrips().filter(function(t){return t.m===mi});
- if(mine.length){b.append(el('h3',null,'Mes trajets en '+low,'margin-top:24px'));mine.forEach(function(t){b.append(tripCard(t))})}
-}
 
 /* ---------- Kanji utiles pour le voyage ---------- */
 var KJ_OUT='貝玉糸王虫草石林耳足力音正早立竹犬目校字学友母父';
@@ -2578,15 +2029,6 @@ function tripCard(t){var meta=[],l1=[];
  if(t.dep||t.arr)l1.push((t.dep||'?')+' → '+(t.arr||'?'));var du=t.date2?'':dur(t);if(du)l1.push(du);
  if(l1.length)meta.push(el('p','meta',l1.join('  ·  ')));if(t.price)meta.push(el('p','meta',money(t.price),'margin-bottom:6px'));
  var c=modeCard(t.m,t.a+' → '+t.b,meta,'button');c.type='button';c.dataset.tid=t.id;c.onclick=function(){showDetail('trip',t.id)};return c}
-function chooser(dk,hr){
- var d=$('#dlg');if(d.open)d.close();d.replaceChildren();
- d.append(el('h2',null,'Ajouter au planning','font-size:1.3rem'),el('p','dsub',F(PD(dk),{weekday:'long',day:'numeric',month:'long'})+(hr?' · '+hr:'')));
- var l=el('div','list');
- function opt(ic,col,t,s,fn){var b=sty(el('button','row'),col);b.type='button';b.append(icoBox(ic,col));var tt=el('span','t');tt.append(el('b',null,t),el('small',null,s));b.append(tt,el('span','go','›'));b.onclick=function(){d.close();fn()};l.append(b)}
- opt('temple','#C4A8C9','Lieu ou activité','Temple, repas, onsen, hébergement…',function(){addPlace({date:dk,time:hr||''})});
- opt('train',MODES[0][1],'Trajet','Métro, Shinkansen, train, bus',function(){addTrip({date:dk,dep:hr||'',m:2})});
- var c=el('button','btn ghost','Annuler');c.type='button';c.style.marginTop='14px';c.onclick=function(){d.close()};d.append(l,c);d.showModal();
-}
 LABELS.transports='Ajouter un trajet';
 
 
@@ -2610,7 +2052,6 @@ var PALS={
 var PALN='b',DIST='b';
 function applyPal(n){PALN=n;var P=PALS[n];MODES.forEach(function(m,i){m[1]=P.modes[i]});METRO.forEach(function(l,i){l.c=P.metro[i]});[SHINK,TRAIN,BUS].forEach(function(D){D.forEach(function(l,i){l.c=P.lines[i%P.lines.length]})});refresh()}
 function applyDist(n){DIST=n;document.documentElement.dataset.dist=n}
-function mstroke(c){return dk(c,.92)}
 applyDist('b');
 (function(){var dl=$('#dlg');dl.addEventListener('close',function(){dl.classList.remove('wide')})})();
 
@@ -2661,8 +2102,6 @@ SHINK.forEach(function(l){if(SPR[l.n])l.pr=SPR[l.n]});
 Object.keys(SP).forEach(function(n){SP[n]=[SP[n][0],Math.round(SP[n][1]/.8)]});
 
 /* ---------- Estimations ---------- */
-function metroFare(i,k){var km=k*(i===0?1.15:1.2),B=i===0?[[3,150],[6,170],[10,200],[15,240],[20,280]]:i<10?[[6,180],[11,210],[19,260],[27,300],[40,330]]:[[4,180],[8,220],[12,270],[16,320],[20,370]];
- for(var j=0;j<B.length;j++)if(km<=B[j][0])return B[j][1];return B[B.length-1][1]}
 function stopsOf(l){return l.full||l.s}
 function calcNames(net,l){if(net==='metro')return(l.noest?null:l.full);return l.tm?stopsOf(l).filter(function(n){return l.tm[n]!=null}):null}
 function calc(net,i,l,a,b){
@@ -2681,71 +2120,12 @@ function metroBox(){if(MBOX)return MBOX;var xs=[],ys=[];MP.forEach(function(L){L
  var x0=Math.min.apply(0,xs)-40,x1=Math.max.apply(0,xs)+40,y0=Math.min.apply(0,ys)-44,y1=Math.max.apply(0,ys)+34;MBOX=[x0,y0,x1-x0,y1-y0];return MBOX}
 function T(x,y,a,t,fs,cls,extra){return'<text class="'+cls+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" text-anchor="'+a+'" style="font-size:'+fs.toFixed(1)+'px'+(extra||'')+'">'+t+'</text>'}
 function boxHit(boxes,bx,by,w,h){for(var i=0;i<boxes.length;i++){var q=boxes[i];if(bx<q[0]+q[2]&&bx+w>q[0]&&by<q[1]+q[3]&&by+h>q[1])return true}return false}
-function metroSVG(sel){
- var B=metroBox(),k=B[2]/358,s='<svg class="mm" viewBox="'+B.map(function(v){return v.toFixed(0)}).join(' ')+'" role="img" aria-label="Schéma simplifié des lignes de métro de Tokyo, positions approximatives">'+metroBack();
- var ycol=METRO[0].c,ring=spline(MP[0].n.map(pj),true);
- s+='<path d="'+ring+'" fill="none" stroke="'+ycol+'" stroke-width="'+(14*k).toFixed(1)+'" stroke-opacity="'+(sel==null||sel===0?.16:.06)+'" stroke-linejoin="round"/>';
- var order=MP.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);
- order.forEach(function(i){var L=MP[i],c=mstroke(METRO[i].c),pts=L.n.map(pj),dim=sel!=null&&i!==sel,on=sel===i,w=(on?5:3)*k,op=dim?.15:(on?1:.72);
-  var d=L.smooth?spline(pts,!!L.closed):rpath(L.closed?pts.concat([pts[0]]):pts,9);
-  s+='<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w.toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"/>';
-  (L.stubs||[]).forEach(function(st){var p=st.at==='start'?pts[0]:pts[pts.length-1],n=Math.sqrt(st.d[0]*st.d[0]+st.d[1]*st.d[1]),q=[p[0]+st.d[0]/n*22,p[1]+st.d[1]/n*22];
-   s+='<path d="M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'L'+q[0].toFixed(1)+' '+q[1].toFixed(1)+'" stroke="'+c+'" stroke-width="'+(2.4*k).toFixed(1)+'" stroke-dasharray="1.5 5" stroke-linecap="round" opacity="'+(dim?.15:.8)+'"/>'})});
- var boxes=[],hubNames={};HUBS.forEach(function(h){hubNames[h[0]]=1});
- var fh=11*k,fs=9.2*k;
- HUBS.forEach(function(h){var p=pj(h[0]),w=h[0].length*fh*.58,bx=h[3]==='end'?p[0]+h[1]-w:h[3]==='middle'?p[0]+h[1]-w/2:p[0]+h[1];boxes.push([bx,p[1]+h[2]-fh,w,fh*1.15])});
- if(sel!=null){var lst=METRO[sel].full||[],cs=mstroke(METRO[sel].c);
-  lst.forEach(function(nm){if(GEO[nm]&&!hubNames[nm]&&MP[sel].n.indexOf(nm)>=0){var p=pj(nm),right=p[0]<B[0]+B[2]*.62,w=nm.length*fs*.56,bx=right?p[0]+6*k:p[0]-6*k-w,by=p[1]-fs*.5;
-   s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(3.2*k).toFixed(1)+'" fill="#FFFBF5" stroke="'+cs+'" stroke-width="'+(2*k).toFixed(1)+'"/>';
-   if(!boxHit(boxes,bx,by,w,fs*1.2)){boxes.push([bx,by,w,fs*1.2]);s+=T(right?p[0]+6*k:p[0]-6*k,p[1]+fs*.34,right?'start':'end',nm,fs,'sl')}}})}
- HUBS.forEach(function(h){var p=pj(h[0]);s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(3.8*k).toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+(1.7*k).toFixed(1)+'"/>'+T(p[0]+h[1]*k,p[1]+h[2]*k,h[3],h[0],fh,'hl')});
- s+=metroMarks9(k);
- s+='</svg>';
- return s}
-function metroMarks9(k){var s='';function q(lo,la){return[(lo-139.675)*2323,(35.756-la)*2862]}
- [['Palais impérial',139.7528,35.6852,0,-9,'middle'],['Skytree',139.8107,35.7101,5,3,'start'],['Tokyo Tower',139.7454,35.6586,6,3,'start'],['Sensō-ji',139.7967,35.7148,6,-4,'start'],['Parc d’Ueno',139.7690,35.7195,0,-5,'middle'],['Meiji-jingū',139.6993,35.6764,-7,3,'end'],['Shinjuku Gyoen',139.7120,35.6830,7,-3,'start'],['Tokyo Dome',139.7519,35.7056,-6,3,'end'],['Odaiba',139.7745,35.6270,0,4,'middle']].forEach(function(m){var p=q(m[1],m[2]);
-  s+='<rect x="'+(p[0]-2.4*k).toFixed(1)+'" y="'+(p[1]-2.4*k).toFixed(1)+'" width="'+(4.8*k).toFixed(1)+'" height="'+(4.8*k).toFixed(1)+'" transform="rotate(45 '+p[0].toFixed(1)+' '+p[1].toFixed(1)+')" fill="#8A7B74" fill-opacity=".7"/>'+T(p[0]+m[3]*k,p[1]+m[4]*k,m[5],m[0],7.6*k,'mk')});
- return s}
 function mapWrap(svg,note){var d=el('div','mmap');var bt=el('button','mexp','Agrandir');bt.type='button';bt.setAttribute('aria-label','Agrandir le plan');bt.innerHTML=ico('expand','currentColor',16)+'<span>Agrandir</span>';bt.onclick=function(){bigMap(svg)};d.append(bt);
  var h=el('div','mmh');h.innerHTML=svg;d.append(h);if(note)d.append(el('p','note',note,'margin:4px 12px 10px;font-size:.74rem'));return d}
 function bigMap(svg){var dl=$('#dlg');if(dl.open)dl.close();dl.replaceChildren();dl.classList.add('wide');var w=el('div','bigmap');w.innerHTML=svg;var c=el('button','btn ghost','Fermer');c.type='button';c.style.marginTop='12px';c.onclick=function(){dl.close()};dl.append(w,c);dl.showModal()}
 ICONS.expand='M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5';
-function metroMap(sel){return mapWrap(metroSVG(sel),'Schéma simplifié, hors échelle. Repères en fond, très discrets.')}
 
 /* ---------- Plans : Shinkansen, train, bus (même schéma, texte à taille lisible) ---------- */
-function geoSVG(net,sel){
- var data=NETS[net].d,defs=data.map(function(l,i){return lineGeo(net,i,l)}),xs=[],ys=[],cnt={},ends={};
- data.forEach(function(l){var s=l.s;s.forEach(function(n){cnt[n]=(cnt[n]||0)+1});ends[s[0]]=1;ends[s[s.length-1]]=1});
- defs.forEach(function(g){g.f.concat(g.dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})});
- if(sel!=null){xs=[];ys=[];defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})}
- var nm=[];if(sel!=null)defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){nm.push(n)});else defs.forEach(function(g){g.f.forEach(function(n){nm.push(n)})});
- var kk=1.1,x0,x1;
- for(var it=0;it<3;it++){x0=1e9;x1=-1e9;nm.forEach(function(n){var p=SP[n];if(!p)return;var w=n.length*10*kk*.56+9*kk,d=LBL[n]||'r';x0=Math.min(x0,p[0]-(d==='l'?w:7*kk));x1=Math.max(x1,p[0]+(d==='r'?w:7*kk))});x0-=10;x1+=10;kk=Math.max(x1-x0,300)/358}
- var y0=Math.min.apply(0,ys)-46,y1=Math.max.apply(0,ys)+40;
- if(x1-x0<300){var m=(x0+x1)/2;x0=m-150;x1=m+150}
- if(y1-y0<170){var m2=(y0+y1)/2;y0=m2-85;y1=m2+85}
- var W=x1-x0,H=y1-y0,k=W/358,fs=10*k,s='<svg class="mm" viewBox="'+x0.toFixed(0)+' '+y0.toFixed(0)+' '+W.toFixed(0)+' '+H.toFixed(0)+'" role="img" aria-label="Schéma simplifié, positions de principe, hors échelle">'+geoBack(x0,y0,W,H,k);
- var Z=[['HOKKAIDO',318,6],['TOHOKU',286,196],['KANTO',250,320],['CHUBU',70,262],['KANSAI',44,470],['CHUGOKU',20,552]];
- var order=data.map(function(_,i){return i}).filter(function(i){return i!==sel});if(sel!=null)order.push(sel);var bus=net==='bus';
- order.forEach(function(i){var g=defs[i],l=data[i],dim=sel!=null&&i!==sel,on=sel===i,names=on?g.f:g.f.slice(g.from||0),pts=names.map(function(n){return SP[n]}).filter(Boolean);if(pts.length<2)return;
-  var op=dim?.15:(on?1:.72),col=mstroke(l.c),w=(on?4.6:3)*k;
-  s+='<path d="'+rpath(pts,8)+'" fill="none" stroke="'+col+'" stroke-width="'+w.toFixed(1)+'" stroke-linecap="round" stroke-linejoin="round" opacity="'+op+'"'+(bus?' stroke-dasharray="'+(8*k).toFixed(1)+' '+(5*k).toFixed(1)+'"':'')+'/>';
-  if(g.dash){var dp=g.dash.map(function(n){return SP[n]});s+='<path d="'+rpath(dp,8)+'" fill="none" stroke="'+col+'" stroke-width="'+(3*k).toFixed(1)+'" stroke-linecap="round" stroke-dasharray="1 '+(6*k).toFixed(1)+'" opacity="'+op+'"/>'}});
- var boxes=[];function place(n,cls){var p=SP[n];if(!p)return;var dir=LBL[n]||'r',w=n.length*fs*.56+2,h=fs*1.25,x=p[0],y=p[1],bx,by,ta,gap=7*k;
-  if(dir==='r'){bx=x+gap;by=y-h/2;ta='start'}else if(dir==='l'){bx=x-gap-w;by=y-h/2;ta='end'}else if(dir==='t'){bx=x-w/2;by=y-gap-h;ta='middle'}else{bx=x-w/2;by=y+gap;ta='middle'}
-  if(boxHit(boxes,bx,by,w,h))return;boxes.push([bx,by,w,h]);var tx=dir==='r'?x+gap:dir==='l'?x-gap:x,ty=dir==='t'?y-gap-h*.2:dir==='b'?y+gap+h*.78:y+fs*.34;
-  s+=T(tx,ty,ta,n,fs,'gl '+cls)}
- var R=3.6*k,sw=1.8*k;
- if(sel!=null){var ln=data[sel];ln.s.forEach(function(n){var p=SP[n];if(p)s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(3.4*k).toFixed(1)+'" fill="#FFFBF5" stroke="'+mstroke(ln.c)+'" stroke-width="'+(2.2*k).toFixed(1)+'"/>'});ln.s.forEach(function(n){place(n,'')})}
- var hubs=Object.keys(cnt).filter(function(n){return(cnt[n]>=2||ends[n])&&SP[n]&&(sel==null||(nm.indexOf(n)>=0&&x0<SP[n][0]&&SP[n][0]<x1&&y0<SP[n][1]&&SP[n][1]<y1))}).sort(function(a,b){return(cnt[b]||0)-(cnt[a]||0)});
- hubs.forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+R.toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+sw.toFixed(1)+'"/>'});
- hubs.forEach(function(n){place(n,'b')});
- if(sel==null){var others={};data.forEach(function(l){l.s.forEach(function(n){if(SP[n]&&hubs.indexOf(n)<0)others[n]=1})});Object.keys(others).forEach(function(n){var p=SP[n];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(2.5*k).toFixed(1)+'" fill="#FFFBF5" stroke="#4B3D3A" stroke-width="'+(1.3*k).toFixed(1)+'"/>'});Object.keys(others).forEach(function(n){place(n,'')})}
- var zbox=[];Z.forEach(function(z){var zy=z[2],zw=z[0].length*7.6*k*.62,zh=7.6*k*1.3,bx=z[1]-zw/2,by=zy-zh;var dot=nm.some(function(n){var p=SP[n];return p&&p[0]>bx-8*k&&p[0]<bx+zw+8*k&&p[1]>by-6*k&&p[1]<by+zh+6*k});if(bx>x0+4&&bx+zw<x1-4&&zy>y0&&zy<y1&&!dot&&!boxHit(boxes,bx-4*k,by-3*k,zw+8*k,zh+6*k)){zbox.push(1);s+=T(z[1],zy,'middle',z[0],7.6*k,'zn')}});
- if(net==='shink'&&sel==null){var h=SP['Hakata'];s+=T(h[0]+8*k,h[1]+20*k,'start','vers Kagoshima (non détaillé)',7.8*k,'gl m')}
- s+=geoParkLabels(boxes,x0,y0,W,H,k);
- return s+'</svg>'}
-function geoMap(net,sel){return mapWrap(geoSVG(net,sel),net==='bus'?'Schéma de principe, hors échelle. Pointillés = autocar.':'Schéma de principe, hors échelle, non géographique.')}
 
 /* ---------- Transports : plan en haut, lignes, puis stations ---------- */
 var NKEY={metro:'metro',shink:'shin',train:'train',bus:'bus'};
@@ -2755,19 +2135,6 @@ function lineRows(b,net){var N=NETS[net],lg=null,l=null;
   if(g!==lg||!l){lg=g;if(g)b.append(grp('#CEC3BB',g,'h3',20));l=el('div','list');if(!g)l.style.marginTop='16px';b.append(l)}
   var sub=ln.e,right=net==='metro'?nStops(ln)+' stations':'';
   l.append(rowBtn(ln.c,ln.n,sub,right,function(){TSEL[net]=i;renderTrans();window.scrollTo(0,0)},NKEY[net]))})}
-function calcCard(net,i,l){
- var names=calcNames(net,l);if(!names)return null;
- var c=sty(el('div','leg lcard'),l.c),box=el('div','est'),s1=el('select'),s2=el('select'),out=el('div','estr');
- s1.setAttribute('aria-label','Départ');s2.setAttribute('aria-label','Arrivée');
- names.forEach(function(n){[s1,s2].forEach(function(s){var o=el('option',null,n);o.value=n;s.append(o)})});s1.value=names[0];s2.value=names[names.length-1];
- function up(){out.replaceChildren();var r=calc(net,i,l,s1.value,s2.value);
-  if(!r){out.append(el('span',null,'—'));return}
-  var parts=[];if(r.k!=null)parts.push(r.k+' station'+(r.k>1?'s':''));parts.push('≈ '+fmtMin(r.min));
-  out.append(el('b',null,parts.join(' · ')));
-  if(r.pr)out.append(el('span',null,'≈ '+money(r.pr).replace(' · ≈ ',' (≈ ')+')'));
-  if(r.dir)out.append(el('small',null,'Direction '+r.dir));if(r.alt)out.append(el('small',null,'Dans l’autre sens : '+r.alt+' stations'))}
- s1.onchange=s2.onchange=up;up();
- var l1=el('label',null,'De'),l2=el('label',null,'À');l1.append(s1);l2.append(s2);box.append(l1,l2);c.append(box,out);return c}
 function stationCard(net,i,l){
  var N=NETS[net],c=sty(el('div','leg lcard'),l.c),lst=stopsOf(l),sl=el('div','stl');
  c.append(el('h3',null,(net==='metro'?'Toutes les stations · ':'Principaux arrêts · ')+lst.length,'font-size:1rem;margin:4px 0 6px'));
@@ -2817,22 +2184,6 @@ var RT={
  Chugoku:{Shimane:[1,0,1,1],Tottori:[2,0,1,1],Yamaguchi:[0,1,1,1],Hiroshima:[1,1,1,1],Okayama:[2,1,1,1]},
  Shikoku:{Ehime:[0,0,1,1],Kagawa:[1,0,1,1],Kochi:[0,1,1,1],Tokushima:[1,1,1,1]},
  Kyushu:{Saga:[0,0,1,1],Fukuoka:[1,0,1,1],Oita:[2,0,1,1],Nagasaki:[0,1,1,1],Kumamoto:[1,1,1,1],Miyazaki:[2,1,1,1],Kagoshima:[1,2,2,1],Okinawa:[0,3,1,1]}};
-var LOC={Hokkaido:[58,2,30,18],Tohoku:[62,24,20,26],Kanto:[56,54,18,12],Chubu:[34,44,20,22],Kansai:[22,62,14,11],Chugoku:[4,58,16,10],Shikoku:[12,74,18,8],Kyushu:[-2,72,12,18]};
-function locator(r){var s='<svg viewBox="-4 0 96 94" class="loc" role="img" aria-label="Position de la région dans le Japon">';
- REG.forEach(function(g){var b=LOC[g.n],on=g===r;s+='<rect x="'+b[0]+'" y="'+b[1]+'" width="'+b[2]+'" height="'+b[3]+'" rx="5" fill="'+(on?g.d:'#E8DDD2')+'" stroke="'+(on?dk(g.d,.6):'none')+'" stroke-width="1.6"/>'});
- return s+'</svg>'}
-function regionMap(r){
- var T2=RT[r.n];if(!T2)return el('div');
- var cw=84,ch=54,gp=6,cols=0,rows=0,gs=cityGroups();
- Object.keys(T2).forEach(function(n){var t=T2[n];cols=Math.max(cols,t[0]+t[2]);rows=Math.max(rows,t[1]+t[3])});
- var W=cols*(cw+gp)-gp,H=rows*(ch+gp)-gp,s='<svg viewBox="0 0 '+W+' '+H+'" class="rmap" role="group" aria-label="Préfectures de la région '+r.n+', schéma">';
- Object.keys(T2).forEach(function(n){var t=T2[n],x=t[0]*(cw+gp),y=t[1]*(ch+gp),w=t[2]*(cw+gp)-gp,h=t[3]*(ch+gp)-gp,has=gs.some(function(g){return g.pref===n&&g.items.length});
-  s+='<g class="rt" data-p="'+n+'" tabindex="0" role="button" aria-label="'+n+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="14" fill="'+r.d+'" fill-opacity="'+(has?.62:.3)+'" stroke="'+dk(r.d,.7)+'" stroke-opacity=".6" stroke-width="1.5"/>'
-   +'<text x="'+(x+w/2)+'" y="'+(y+h/2+4.5)+'" text-anchor="middle" style="font-size:'+(n.length>8?12:13.5)+'px">'+n+'</text></g>'});
- s+='</svg>';
- var c=el('div','regcard');var a=el('div','rmw');a.innerHTML=s;var lc=el('div','locw');lc.innerHTML=locator(r);c.append(a,lc);
- c.querySelectorAll('.rt').forEach(function(g){var p=g.dataset.p;var go=function(){DV={t:'pref',r:r,p:p};renderDest()};g.onclick=go;g.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
- c.append(el('small','rnote','Schéma de principe : positions relatives, pas les vraies frontières.'));return c}
 
 applyPal('b');
 
@@ -2891,46 +2242,8 @@ function verNote(net,i,l){
  return t}
 
 /* ---------- Fond du plan métro : sans palais, parcs ni fleuve ; baie raccourcie ---------- */
-function metroBack(){var s='';
- function q(lo,la){return[(lo-139.675)*2323,(35.756-la)*2862]}
- function poly(arr){return arr.map(function(c){var p=q(c[0],c[1]);return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')}
- [139.70,139.75,139.80].forEach(function(lo){var a=q(lo,35.76),b=q(lo,35.60);s+='<path d="M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1)+'" stroke="#4B3D3A" stroke-opacity=".06" stroke-width="1" stroke-dasharray="2 4"/>'});
- [35.65,35.70,35.75].forEach(function(la){var a=q(139.66,la),b=q(139.85,la);s+='<path d="M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1)+'" stroke="#4B3D3A" stroke-opacity=".06" stroke-width="1" stroke-dasharray="2 4"/>'});
- var g0=q(0,35.652),g1=q(0,35.626);
- s+='<defs><linearGradient id="bayg" gradientUnits="userSpaceOnUse" x1="0" y1="'+g0[1].toFixed(1)+'" x2="0" y2="'+g1[1].toFixed(1)+'"><stop offset="0" stop-color="#A9D4EE" stop-opacity=".42"/><stop offset="1" stop-color="#A9D4EE" stop-opacity="0"/></linearGradient></defs>';
- s+='<polygon points="'+poly([[139.752,35.626],[139.752,35.640],[139.762,35.649],[139.774,35.653],[139.789,35.646],[139.818,35.641],[139.832,35.650],[139.86,35.650],[139.86,35.626]])+'" fill="url(#bayg)"/>';
- return s}
 
 /* ---------- Repères : émoticônes, sans doublon avec les stations déjà nommées ---------- */
-var LMK=[
- ['🗼','Tokyo Tower',139.7454,35.6586,'b'],
- ['SKY','Skytree',139.8107,35.7101,'r'],
- ['⛩️','Sensō-ji',139.7967,35.7148,'r'],
- ['⛩️','Meiji-jingū',139.6993,35.6764,'l'],
- ['🏮','Kabukichō',139.7036,35.6951,'l'],
- ['🍣','Tsukiji',139.7704,35.6655,'r'],
- ['⚾','Tokyo Dome',139.7519,35.7056,'l'],
- ['🎨','teamLab Planets',139.7899,35.6489,'r'],
- ['🎡','Odaiba',139.7745,35.6270,'b']];
-function metroMarks9(k){var s='';function q(lo,la){return[(lo-139.675)*2323,(35.756-la)*2862]}
- var B=metroBox(),fs=8.2*k,ie=15*k,fh=11*k,used=[],pts=[];
- HUBS.forEach(function(h){pts.push(pj(h[0]))});
- pts.forEach(function(a){used.push([a[0]-6*k,a[1]-6*k,12*k,12*k])});
- HUBS.forEach(function(h){var p=pj(h[0]),w=h[0].length*fh*.6,bx=h[3]==='end'?p[0]+h[1]*k-w:h[3]==='middle'?p[0]+h[1]*k-w/2:p[0]+h[1]*k;used.push([bx,p[1]+h[2]*k-fh,w,fh*1.2])});
- function hit(bx,by,w,h){return used.some(function(u){return bx<u[0]+u[2]&&bx+w>u[0]&&by<u[1]+u[3]&&by+h>u[1]})}
- var done=[];
- LMK.forEach(function(m){var p=q(m[2],m[3]);if(p[0]<B[0]+8*k||p[0]>B[0]+B[2]-8*k||p[1]<B[1]+12*k||p[1]>B[1]+B[3]-8*k)return;
-  // l'icône se décale si elle tombe sur une station
-  var iy=p[1],ix=p[0];if(pts.some(function(a){return Math.abs(a[0]-ix)<10*k&&Math.abs(a[1]-iy)<10*k})){iy-=12*k;ix+=5*k}
-  var w=m[1].length*fs*.56,placed=false,order=[m[4],'r','l','t','b'];
-  for(var d=0;d<order.length&&!placed;d++){var dir=order[d],gx=ie*.62+2*k,lx=dir==='r'?ix+gx:dir==='l'?ix-gx:ix,ly=dir==='b'?iy+ie*.62+fs:dir==='t'?iy-ie*.7:iy+fs*.34,ta=dir==='r'?'start':dir==='l'?'end':'middle',bx=dir==='r'?lx:dir==='l'?lx-w:lx-w/2;
-   if(!hit(bx,ly-fs,w,fs*1.25)&&bx>B[0]+2&&bx+w<B[0]+B[2]-2){used.push([bx,ly-fs,w,fs*1.25]);s+=T(lx,ly,ta,m[1],fs,'mk');placed=true}}
-  done.push([m,ix,iy,placed])});
- done.forEach(function(x){var m=x[0],ix=x[1],iy=x[2];
-  if(m[0]==='SKY'){var h=ie*1.15;s+='<g transform="translate('+ix.toFixed(1)+' '+iy.toFixed(1)+')" fill="#8A7B74" fill-opacity=".9"><path d="M'+(-ie*.18).toFixed(1)+' '+(h*.5).toFixed(1)+'L-.6 '+(-h*.3).toFixed(1)+'L.6 '+(-h*.3).toFixed(1)+'L'+(ie*.18).toFixed(1)+' '+(h*.5).toFixed(1)+'Z"/><rect x="'+(-ie*.24).toFixed(1)+'" y="'+(-h*.3).toFixed(1)+'" width="'+(ie*.48).toFixed(1)+'" height="'+(h*.1).toFixed(1)+'" rx="1"/><rect x="'+(-ie*.11).toFixed(1)+'" y="'+(-h*.58).toFixed(1)+'" width="'+(ie*.22).toFixed(1)+'" height="'+(h*.1).toFixed(1)+'" rx="1"/><rect x="-.5" y="'+(-h*.9).toFixed(1)+'" width="1" height="'+(h*.32).toFixed(1)+'"/></g>'}
-  else s+='<text x="'+ix.toFixed(1)+'" y="'+(iy+ie*.36).toFixed(1)+'" text-anchor="middle" style="font-size:'+(ie*(m[1]==='Tokyo Tower'?1.4:1)).toFixed(1)+'px">'+m[0]+'</text>'});
- var bp=q(139.8,35.632);s+=T(bp[0],bp[1],'middle','Baie de Tokyo',8*k,'mk','fill:#5F7FA3');
- return s}
 
 /* ---------- Totaux par destination ---------- */
 function tPlaces(city){var n=norm(city),t=0,miss=0,c=0;places.forEach(function(p){if(norm(p.city)===n&&!p.cityOnly){c++;if(+p.price)t+=+p.price;else miss++}});return{t:t,miss:miss,c:c}}
@@ -3038,19 +2351,6 @@ function geoParkLabels(boxes,x0,y0,W,H,k,net,sel){var s='',fs=6.4*k,used=boxes.s
 /* ---------- Heures : boutons − et + ---------- */
 function hm2min(v){var m=/^(\d{1,2}):(\d{2})$/.exec(v||'');return m?(+m[1])*60+(+m[2]):null}
 function min2hm(n){n=((n%1440)+1440)%1440;return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
-function stepTime(inp,delta){var v=hm2min(inp.value),base=v;
- if(v==null){var other=null;(inp.closest('dialog')||document).querySelectorAll('input[type=time]').forEach(function(o){if(o!==inp&&hm2min(o.value)!=null&&other==null)other=hm2min(o.value)});
-  base=other!=null?other:12*60;if(other!=null&&inp.closest('label')&&/arriv/i.test(inp.closest('label').textContent))base=other+60;
-  inp.value=min2hm(base);inp.dispatchEvent(new Event('input',{bubbles:true}));return}
- inp.value=min2hm(v+delta);inp.dispatchEvent(new Event('input',{bubbles:true}))}
-function decorateTimes(){document.querySelectorAll('#dlg input[type=time]').forEach(function(inp){
- if(inp.parentElement&&inp.parentElement.classList.contains('tstep'))return;
- var w=el('div','tstep'),mk=function(sym,delta,lab){var b=el('button','tbtn',sym);b.type='button';b.setAttribute('aria-label',lab);
-  var tmr=null,rep=null,stop=function(){clearTimeout(tmr);clearInterval(rep)};
-  b.addEventListener('pointerdown',function(e){e.preventDefault();stepTime(inp,delta);tmr=setTimeout(function(){rep=setInterval(function(){stepTime(inp,delta)},110)},450)});
-  ['pointerup','pointerleave','pointercancel'].forEach(function(ev){b.addEventListener(ev,stop)});
-  b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();stepTime(inp,delta)}});return b};
- inp.before(w);w.append(mk('−',-15,'Reculer de 15 minutes'),inp,mk('+',15,'Avancer de 15 minutes'))})}
 var _of11=openForm;
 openForm=function(){_of11.apply(null,arguments);decorateTimes()};
 
@@ -3172,15 +2472,6 @@ function showWish(id){var w=wishes.filter(function(x){return x.id===id})[0];if(!
  del.onclick=function(){if(!armed){armed=true;del.textContent='Confirmer la suppression';del.style.background='var(--accent)';del.style.color='#fff';return}wishes.splice(wishes.indexOf(w),1);d.close();refresh()};
  var cl=el('button','btn ghost','Fermer');cl.type='button';cl.onclick=function(){d.close()};
  a.append(org,ed,del,cl);d.append(a);d.showModal()}
-function wishRow(w){var ti=typeInfo(w.type);return rowBtn(ti[1],w.n,[w.type].concat(w.city?[w.city]:[]).join(' · '),w.price?money(w.price).split(' · ')[0]:'',function(){showWish(w.id)},ti[2])}
-function renderWish(){var box=$('#wish');if(!box)return;box.replaceChildren();
- box.append(el('h2',null,'Envies'));
- if(!wishes.length){box.append(emptyBox('Aucune envie pour l’instant.'));return}
- var tot=0,np=0;wishes.forEach(function(w){if(w.price)tot+=w.price;else np++});
- box.append(el('p','sub',wishes.length+(wishes.length>1?' envies':' envie')+(tot?' · '+money(tot).replace(' · ≈ ',' (≈ ')+')'+(np?' · '+np+' sans prix':''):'')));
- var by={},keys=[];wishes.forEach(function(w){var k=w.city||'';if(!by[k]){by[k]=[];keys.push(k)}by[k].push(w)});
- keys.sort(function(a,b){return a===''?1:b===''?-1:a.localeCompare(b,'fr')});
- keys.forEach(function(k){box.append(grp('#CEC3BB',k||'Ville pas encore choisie','h3',20));var l=el('div','list');by[k].forEach(function(w){l.append(wishRow(w))});box.append(l)})}
 var _rf12=refresh;
 refresh=function(){_rf12();renderWish()};
 LABELS.envies='Ajouter une envie';
@@ -3373,8 +2664,7 @@ function DECO(){
  build();
  var NET=null;function netLines(){if(NET)return NET;NET=MET.map(function(l){var p=[];l.st.forEach(function(n){var g=gxy(n);if(g)p.push(g)});return{c:l.c,p:p}});return NET}
  function vis(x,y,mg){return x>vb.x-mg&&x<vb.x+vb.w+mg&&y>vb.y-mg&&y<vb.y+vb.h+mg}
- function pinPath(k,c,hollow){var u=1/k;return '<path transform="scale('+u+')" d="M0 0C-6 -7.5 -7.2 -10.5 -7.2 -13.6a7.2 7.2 0 1 1 14.4 0C7.2 -10.5 6 -7.5 0 0z" '+(hollow?'fill="#FFFBF5" stroke="'+c+'" stroke-width="1.8" stroke-dasharray="3 2.2"':'fill="'+c+'" stroke="#FFFBF5" stroke-width="1.6"')+'/>'}
-
+ 
  var pfEls=null;
  function roadsOn(z){if(z>=8)return true;if(!pfEls)pfEls=[].slice.call(svg.querySelectorAll('.pf'));
   var A=vb.w/vb.h,pt=new DOMPoint(vb.x+vb.w/2,vb.y+vb.h/2),best=0;
@@ -3385,7 +2675,7 @@ function DECO(){
   var k=SC(),z=Z(),h='',used=[],px=function(n){return n/k};
   function free(bx){return!used.some(function(u){return bx[0]<u[2]&&bx[2]>u[0]&&bx[1]<u[3]&&bx[3]>u[1]})}
   function claim(cx,cy,wpx,hpx,anchor){var w=wpx/k,hh=hpx/k,x0=anchor==='start'?cx:anchor==='end'?cx-w:cx-w/2,bx=[x0,cy-hh*0.75,x0+w,cy+hh*0.35];if(!free(bx))return false;used.push(bx);return true}
-  var lbls='',mg=40/k;
+  var mg=40/k;
 
   /* ----- relief, lacs, parcs, sites : sous les itinéraires ----- */
   var under='';
@@ -3828,7 +3118,6 @@ window.wishTag=function(btn,pref){var c=window.wishCities(pref);if(!c.length)ret
 /* ---------- Itinéraires proposés avant la création d'un trajet ---------- */
 (function(){
 var XFER=[['Shin-Osaka','Osaka',5],['Shin-Yokohama','Yokohama',12]];
-var FARE={'Sanyo|Hiroshima|Okayama':5610};
 var MC={0:'Train',1:'Shinkansen',2:'Métro',3:'Bus'};
 var G=null;
 function lineList(){
