@@ -713,7 +713,7 @@ section{padding-top:0}
 .todayrow{position:absolute;top:0;right:0;margin:0;height:44px;align-items:center}
 .pnav{padding-right:104px}
 .pnav>:not(button){font-size:.86rem;line-height:1.15;text-align:center}
-.wb{min-height:340px}
+.wb{min-height:150px}
 .pnav{padding-right:112px}
 .todayrow button{min-height:38px;padding:0 12px;font-size:.8rem;white-space:nowrap}
 /* v33 */
@@ -733,7 +733,7 @@ section{padding-top:0}
 .wtile .wtp{display:none}
 .todayrow .todaybtn,.todayrow .todaybtn.cur{border:1.5px solid var(--accent);color:var(--accent);background:transparent;opacity:1}
 #destinations .list>.row{max-height:96px}
-#carnet{padding-top:52px}
+#carnet{padding-top:36px}
 #carnet .seg{margin-top:22px}
 #carnet .list{margin-top:8px}#carnet .list>*{margin-top:10px}
 #carnet .row{min-height:66px;padding:12px 16px}
@@ -745,6 +745,11 @@ section{padding-top:0}
 .row:has(.wltag) .t{grid-area:t;align-self:end}
 .row:has(.wltag) .wltag{grid-area:tag;align-self:start;white-space:normal;font-size:.8rem;line-height:1.25}
 .row:has(.wltag) .go{grid-area:go;align-self:center}
+
+/* v35 */
+@media (max-width:899px){nav{padding-bottom:calc(3px + env(safe-area-inset-bottom,0px)*.28)}}
+#dlg:focus,#dlg:focus-visible{outline:none}
+#dlg.dcol{border:3px solid var(--dc)}
 
 </style>
 </head>
@@ -4739,13 +4744,16 @@ function tiles(){
  var nav=document.querySelector('nav'),top=g.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-(nav?nav.offsetHeight:70)-top-76,rows=Math.ceil(empt.length/2);
  g.style.height=Math.max(rows*78+(rows-1)*10,avail)+'px'}
 /* pas de clavier à l'ouverture d'un formulaire : le champ n'est pas pris en focus automatiquement */
-if(window.HTMLDialogElement){var sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){this.setAttribute('autofocus','');this.tabIndex=-1;sm.call(this);var a=document.activeElement;if(a&&this.contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){a.blur();try{this.focus({preventScroll:true})}catch(e){}}}}
+if(window.HTMLDialogElement){var sm=HTMLDialogElement.prototype.showModal;HTMLDialogElement.prototype.showModal=function(){this.setAttribute('autofocus','');this.tabIndex=-1;sm.call(this);setTimeout(dcol,30);setTimeout(dcol,250);var a=document.activeElement;if(a&&this.contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)){a.blur();try{this.focus({preventScroll:true})}catch(e){}}}}
 /* bouton + : posé à égale distance de la dernière ligne et de la barre d'onglets */
 function fab(){var nv=document.querySelector('nav');if(nv&&window.innerWidth<900)document.documentElement.style.setProperty('--fabb',(nv.offsetHeight+10)+'px');else document.documentElement.style.removeProperty('--fabb')}
-/* Carte : « Mes lieux » / « Mes trajets » masqués tant qu'ils sont vides */
-function blocks(){document.querySelectorAll('#carte .blk').forEach(function(b){var e=!!b.querySelector('.empty');if(b.hidden!==e)b.hidden=e})}
+/* Carte : « Mes lieux » / « Mes trajets » toujours présents (sous la carte, en défilant) */
+function blocks(){document.querySelectorAll('#carte .blk').forEach(function(b){if(b.hidden)b.hidden=false})}
 /* Planning, vue Semaine : cadres jusqu'au bas de l'écran */
-function week(){var w=document.querySelector('#planning .wkv');if(!w||!w.offsetParent)return;var nv=document.querySelector('nav'),top=w.getBoundingClientRect().top+window.scrollY,h=window.innerHeight-(nv?nv.offsetHeight:70)-top-10;w.style.minHeight=Math.max(340,h)+'px'}
+function week(){var w=document.querySelector('#planning .wkv');if(!w||!w.offsetParent)return;var nv=document.querySelector('nav'),top=w.getBoundingClientRect().top+window.scrollY,lg=w.nextElementSibling,L=lg&&lg.classList.contains('lg')?lg.offsetHeight:246,h=window.innerHeight-(nv?nv.offsetHeight:70)-top-L-12+64;w.style.minHeight=Math.max(300,h)+'px'}
+/* Envies : le contour du formulaire prend la couleur du type choisi (celle de la pastille) */
+function dcol(){var d=document.getElementById('dlg');if(!d||!d.open)return;var h=d.querySelector('h2'),on=d.querySelector('.ch.on'),c='';if(h&&/envie/i.test(h.textContent)&&on)c=on.style.getPropertyValue('--d');if(c){if(d.style.getPropertyValue('--dc')!==c)d.style.setProperty('--dc',c);d.classList.add('dcol')}else{d.style.removeProperty('--dc');d.classList.remove('dcol')}}
+document.addEventListener('click',function(){setTimeout(dcol,30)},true);
 var raf=0;function sched(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;titles();tiles();fab();blocks();week()})}
 if(window.MutationObserver)new MutationObserver(sched).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
