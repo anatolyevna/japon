@@ -686,6 +686,27 @@ svg path.lb{fill:var(--sea);pointer-events:none}
 .jrsel{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
 .ohsrc{display:block;margin:6px 0 0;color:var(--muted);font-size:.78rem;overflow-wrap:anywhere}
 
+/* v31 : espacements réduits (en-tête, titres, calendrier, listes) + boutons de la carte côte à côte */
+.top{padding:14px 0 4px;gap:6px 12px}
+section{padding-top:0}
+.seg{margin-top:10px}
+.pnav{margin-top:10px}
+.todayrow{margin-top:6px}
+.wkv{margin-top:8px}
+.wb{min-height:230px}
+.mh,.mg{margin-top:6px}
+.mg{gap:4px}
+.mlg2{margin-top:8px}
+.hours{margin-top:8px}
+.hr{min-height:46px;padding:7px 16px}
+.lg{margin-top:12px}
+.wsec{margin-top:14px}
+.list{margin-top:6px}.list>*{margin-top:7px}
+.row{min-height:54px;padding:9px 16px}
+.empty:not(.wc){padding:18px 16px;margin-top:10px}
+.mode{margin-top:8px}
+.zc{display:flex;gap:6px}
+
 </style>
 </head>
 <body>
@@ -4418,7 +4439,6 @@ function jrOpen(){
   pr.oninput=function(){t.price=+pr.value||0;est.style.display=(t.ep&&t.price===t.ep)?'':'none';upd()};
   list.append(r)});
  d.append(list,sum);
- d.append(el('small',null,'Tarifs adulte au '+JR.date+' (sources : pages officielles JR) · supplément Nozomi par trajet','display:block;margin-top:10px;color:var(--muted);font-size:.74rem'));
  function upd(){var c=jrCalc(cfg);sum.replaceChildren();
   function line(a,b,cls){var l=el('div','jl'+(cls?' '+cls:''));l.append(el('span',null,a),el('span','jv',b));sum.append(l)}
   line('Pass '+cfg.d+' jours',money(c.pass));
@@ -4583,17 +4603,18 @@ ROUTE.forEach(function(w,i){var key=w[0];
  if(byN[key]){byN[key].nums.push(i+1);return}
  for(var j=0;j<REFC.length;j++){var r=REFC[j];if(r[0]===w[0]&&r[4]===w[1]&&(r[5]||'')===(w[2]||'')){var s={n:w[0],j:j,lat:r[2],lon:r[3],nums:[i+1]};ST.push(s);byN[key]=s;return}}});
 window.__route={ROUTE:ROUTE,ST:ST};
-var NS='http://www.w3.org/2000/svg',COL='#BC3A5C',HL='#FCEBF1',INK='#5A1A33',ARW='#A39588';
+var NS='http://www.w3.org/2000/svg',COL='#BC3A5C',HL='#FCEBF1',INK='#5A1A33',ARW=(window.__rtArw||'#8A6A57');
 window.__rtOn=true;
 /* Fuji : cône à pentes concaves, face à l'ombre, calotte neigeuse dentelée, base à y=0 (px écran) */
-window.__fujiGlyph=function(){return '<ellipse cx="1" cy="1.6" rx="21" ry="3" fill="#475D80" opacity=".16"/>'+
- '<path d="M-20 .5Q-12 -.5 -8.2 -9Q-6 -15 -4.4 -22L4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q5 2.3 0 1.3Q-5 2.3 -10 1Q-15 2.1 -20 .5Z" fill="#7F97BD" stroke="#475D80" stroke-width=".9" stroke-linejoin="round"/>'+
- '<path d="M4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q6 1.9 3 1.4Q4.4 -8 1.4 -21.4Z" fill="#5F7AA6"/>'+
- '<path d="M-19 .1Q-12 -.9 -9.2 -6.5Q-5 -4 0 -5Q5 -4 9.2 -6.5Q12 -.9 19 .1Q15 2.1 10 1Q5 2.3 0 1.3Q-5 2.3 -10 1Q-15 2.1 -19 .1Z" fill="#6C86B0" opacity=".6"/>'+
- '<path d="M-4.4 -22L4.4 -22L6.7 -14.4L4.2 -16.6L2.3 -11.6L.1 -15.3L-2.2 -11.2L-4.3 -15.6L-6.7 -14.2Z" fill="#FFFFFF" stroke="#B7C4D9" stroke-width=".7" stroke-linejoin="round"/>'+
- '<path d="M4.4 -22L6.7 -14.4L4.2 -16.6L2.3 -11.6L1.2 -13.4L2 -21.6Z" fill="#DCE5F2"/>'+
- '<path d="M-4.4 -22Q0 -23.3 4.4 -22Q0 -20.7 -4.4 -22Z" fill="#475D80"/>'+
- '<path d="M-4.3 -15.6Q-6.3 -10 -8.3 -5.5M-2.2 -11.2Q-3.6 -6 -5.2 -1.5M2.3 -11.6Q3.8 -6 5.4 -1.2" fill="none" stroke="#B7C4D9" stroke-width=".7" stroke-linecap="round" opacity=".55"/>'};
+window.__fujiPal=window.__fujiPal||{a:'#9A8783',b:'#76635F',c:'#4F4147',d:'#85726E'};
+window.__fujiGlyph=function(){var P=window.__fujiPal;return '<ellipse cx="1" cy="1.6" rx="21" ry="3" fill="'+P.c+'" opacity=".16"/>'+
+ '<path d="M-20 .5Q-12 -.5 -8.2 -9Q-6 -15 -4.4 -22L4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q5 2.3 0 1.3Q-5 2.3 -10 1Q-15 2.1 -20 .5Z" fill="'+P.a+'" stroke="'+P.c+'" stroke-width=".9" stroke-linejoin="round"/>'+
+ '<path d="M4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q6 1.9 3 1.4Q4.4 -8 1.4 -21.4Z" fill="'+P.b+'"/>'+
+ '<path d="M-19 .1Q-12 -.9 -9.2 -6.5Q-5 -4 0 -5Q5 -4 9.2 -6.5Q12 -.9 19 .1Q15 2.1 10 1Q5 2.3 0 1.3Q-5 2.3 -10 1Q-15 2.1 -19 .1Z" fill="'+P.d+'" opacity=".6"/>'+
+ '<path d="M-4.4 -22L4.4 -22L6.7 -14.4L4.2 -16.6L2.3 -11.6L.1 -15.3L-2.2 -11.2L-4.3 -15.6L-6.7 -14.2Z" fill="#FFFFFF" stroke="#D8D0CD" stroke-width=".7" stroke-linejoin="round"/>'+
+ '<path d="M4.4 -22L6.7 -14.4L4.2 -16.6L2.3 -11.6L1.2 -13.4L2 -21.6Z" fill="#E6E0DE"/>'+
+ '<path d="M-4.4 -22Q0 -23.3 4.4 -22Q0 -20.7 -4.4 -22Z" fill="'+P.c+'"/>'+
+ '<path d="M-4.3 -15.6Q-6.3 -10 -8.3 -5.5M-2.2 -11.2Q-3.6 -6 -5.2 -1.5M2.3 -11.6Q3.8 -6 5.4 -1.2" fill="none" stroke="'+P.c+'" stroke-width=".7" stroke-linecap="round" opacity=".4"/>'};
 
 function lab(s){return s.nums.join('·')}
 window.__wlMarks=function(k,vis,mg,pm){
@@ -4606,18 +4627,19 @@ window.__wlMarks=function(k,vis,mg,pm){
   P.forEach(function(p){var dx=(p.ax-p.x)*k,dy=(p.ay-p.y)*k;p.x+=dx*.04/k;p.y+=dy*.04/k;
    var fx=p.x*k-FX,fy=p.y*k-FY,fd=Math.hypot(fx,fy),mm=FR+R*.4;if(fd<mm){if(fd<.01){fx=1;fy=0;fd=1}p.x+=fx/fd*(mm-fd)/k;p.y+=fy/fd*(mm-fd)/k}})}
  var byName={};P.forEach(function(p){byName[p.s.n]=p});
- var h='<g class="rt" pointer-events="none">',arr='',bad='',lbl='',boxes=[];
+ var h='<g class="rt" pointer-events="none">',arr='',halo='',bad='',lbl='',boxes=[];
  /* flèches */
  for(var q=0;q<ROUTE.length-1;q++){var A=byName[ROUTE[q][0]],B=byName[ROUTE[q+1][0]];if(!A||!B)continue;
   var ax=A.x*k,ay=A.y*k,bx=B.x*k,by=B.y*k,L=Math.hypot(bx-ax,by-ay);if(L<1)continue;
-  var ux=(bx-ax)/L,uy=(by-ay)/L,nx=-uy,ny=ux,last=q===ROUTE.length-2,bow=last?-.38:.14;
+  var ux=(bx-ax)/L,uy=(by-ay)/L,nx=-uy,ny=ux,last=q===ROUTE.length-2,bow=last?-.38:.14,dsh=last||(ROUTE[q][0]==='Izumo'&&ROUTE[q+1][0]==='Kanazawa');
   var sx=ax+ux*R,sy=ay+uy*R,ex=bx-ux*(R+3.5),ey=by-uy*(R+3.5);
   if(L<2*R+6){continue}
   var cx=(sx+ex)/2+nx*L*bow,cy=(sy+ey)/2+ny*L*bow;
   var tx=ex-cx,ty=ey-cy,tl=Math.hypot(tx,ty)||1;tx/=tl;ty/=tl;
   var hs=4.6,hx1=ex-tx*hs*1.5+(-ty)*hs*.8,hy1=ey-ty*hs*1.5+tx*hs*.8,hx2=ex-tx*hs*1.5-(-ty)*hs*.8,hy2=ey-ty*hs*1.5-tx*hs*.8;
   function W(x,y){return(x/k).toFixed(2)+' '+(y/k).toFixed(2)}
-  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(1.7)+'" stroke-linecap="round"'+(last?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/>'+
+  var dd='M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey);halo+='<path d="'+dd+'" fill="none" stroke="#FFFFFF" stroke-width="'+px(4.2)+'" stroke-linecap="round" opacity=".85"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/><path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="'+px(2.6)+'" stroke-linejoin="round" opacity=".85"/>';
+  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(1.7)+'" stroke-linecap="round"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/>'+
    '<path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="'+ARW+'" stroke="'+ARW+'" stroke-width="'+px(.6)+'" stroke-linejoin="round"/>'}
  /* pastilles numérotées */
  P.forEach(function(p){if(!vis(p.x,p.y,mg))return;var wide=p.s.nums.length>1,hw=px(wide?R+6:R),hh=px(R),ds=Math.hypot((p.x-p.ax)*k,(p.y-p.ay)*k);
@@ -4631,7 +4653,7 @@ window.__wlMarks=function(k,vis,mg,pm){
   for(var c=0;c<C.length;c++){var bx0=p.x*k+C[c][0],by0=p.y*k+C[c][1],bb=[bx0,by0,bx0+tw,by0+th],ok=true;
    for(var o=0;o<boxes.length;o++){var q2=boxes[o];if(bb[0]<q2[2]&&bb[2]>q2[0]&&bb[1]<q2[3]&&bb[3]>q2[1]){ok=false;break}}
    if(ok){boxes.push(bb);lbl+='<rect x="'+(bx0/k)+'" y="'+(by0/k)+'" width="'+(tw/k)+'" height="'+(th/k)+'" rx="'+(th*.3/k)+'" fill="'+HL+'" stroke="'+COL+'" stroke-width="'+px(.8)+'"/><text x="'+((bx0+tw/2)/k)+'" y="'+((by0+th*.76)/k)+'" text-anchor="middle" style="font-size:'+px(10.5)+'px;font-weight:700;fill:'+INK+'">'+p.s.n+'</text>';break}}});
- return h+arr+bad+lbl+'</g>'};
+ return h+halo+arr+bad+lbl+'</g>'};
 /* les libellés et points d'origine de la carte pour ces villes sont remplacés par la pastille et le nom surlignés */
 window.__wlPost=function(svg,dyn,k){if(!window.__rtOn)return;ST.forEach(function(s){var g=dyn.querySelector('.rcity[data-i="'+s.j+'"]');if(g)g.style.display='none'})};
 })();
