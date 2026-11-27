@@ -716,6 +716,18 @@ section{padding-top:0}
 .wb{min-height:340px}
 .pnav{padding-right:112px}
 .todayrow button{min-height:38px;padding:0 12px;font-size:.8rem;white-space:nowrap}
+/* v33 */
+.dupt{display:none!important}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px;margin-top:12px}
+.wtile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:22px;border:1px solid color-mix(in srgb,var(--d) 55%,var(--card));background:color-mix(in srgb,var(--d) 20%,var(--card));color:var(--ink);font:inherit;padding:8px;text-align:center}
+.wtile.wide{grid-column:1/-1}
+.wtile b{font-weight:700;font-size:.95rem}
+.wtile .wti svg{width:30px;height:30px}
+.wtile .wtp{position:absolute;right:12px;top:6px;font-size:1.3rem;color:var(--muted);line-height:1}
+.wtile:active{background:color-mix(in srgb,var(--d) 32%,var(--card))}
+.zc button{width:var(--zs,40px);height:var(--zs,40px)}
+.zc button svg{width:calc(var(--zs,40px)*.46);height:calc(var(--zs,40px)*.46)}
+.zc button:not(:has(svg)){font-size:calc(var(--zs,40px)*.58)}
 
 </style>
 </head>
@@ -3446,7 +3458,7 @@ function DECO(){
  wrap.append(zc);
  /* niveau de zoom */
  var zl=el('div','zlv');wrap.append(zl);
- var oldDraw=draw;draw=function(){oldDraw();var z=Z();zl.textContent=z<1.6?'Japon':z<6?'Régions':z<20?'Villes':'Quartiers'};
+ var oldDraw=draw;draw=function(){oldDraw();var z=Z();zl.textContent=z<1.6?'Japon':z<6?'Régions':z<20?'Villes':'Quartiers';if(!reg)zc.style.setProperty('--zs',(z<=1.1?52:Math.max(38,52-(z-1.1)*10.8))+'px')};
 
  /* ----- fiche d'une destination ----- */
  function closeSheet(){sheet.hidden=true;sheet.replaceChildren()}
@@ -4613,7 +4625,7 @@ ROUTE.forEach(function(w,i){var key=w[0];
  if(byN[key]){byN[key].nums.push(i+1);return}
  for(var j=0;j<REFC.length;j++){var r=REFC[j];if(r[0]===w[0]&&r[4]===w[1]&&(r[5]||'')===(w[2]||'')){var s={n:w[0],j:j,lat:r[2],lon:r[3],nums:[i+1]};ST.push(s);byN[key]=s;return}}});
 window.__route={ROUTE:ROUTE,ST:ST};
-var NS='http://www.w3.org/2000/svg',COL='#BC3A5C',HL='#FCEBF1',INK='#5A1A33',ARW=(window.__rtArw||'#8A6A57');
+var NS='http://www.w3.org/2000/svg',COL='#BC3A5C',HL='#FCEBF1',INK='#5A1A33',ARW=(window.__rtArw||'#4B5F8F');
 window.__rtOn=true;
 /* Fuji : cône à pentes concaves, face à l'ombre, calotte neigeuse dentelée, base à y=0 (px écran) */
 window.__fujiPal=window.__fujiPal||{a:'#AE9E98',b:'#8F7D78',c:'#6B5B5F',d:'#9D8B86'};
@@ -4648,7 +4660,7 @@ window.__wlMarks=function(k,vis,mg,pm){
   var tx=ex-cx,ty=ey-cy,tl=Math.hypot(tx,ty)||1;tx/=tl;ty/=tl;
   var hs=3.7,hx1=ex-tx*hs*1.5+(-ty)*hs*.8,hy1=ey-ty*hs*1.5+tx*hs*.8,hx2=ex-tx*hs*1.5-(-ty)*hs*.8,hy2=ey-ty*hs*1.5-tx*hs*.8;
   function W(x,y){return(x/k).toFixed(2)+' '+(y/k).toFixed(2)}
-  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(window.__rtW||1.1)+'" stroke-linecap="round"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/>'+
+  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(window.__rtW||(dsh?1.6:1.1))+'" stroke-linecap="round"'+(dsh?' stroke-dasharray="0.01 '+px(3.4)+'"':'')+'/>'+
    '<path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="'+ARW+'" stroke="'+ARW+'" stroke-width="'+px(.3)+'" stroke-linejoin="round"/>'}
  /* pastilles numérotées */
  P.forEach(function(p){if(!vis(p.x,p.y,mg))return;var wide=p.s.nums.length>1,hw=px(wide?R+6:R),hh=px(R),ds=Math.hypot((p.x-p.ax)*k,(p.y-p.ay)*k);
@@ -4672,11 +4684,43 @@ window.__wlPost=function(svg,dyn,k){if(!window.__rtOn)return;ST.forEach(function
 var raf=0;
 function fit(){raf=0;var sec=document.getElementById('destinations');if(!sec)return;var list=sec.querySelector('.list');if(!list||!list.offsetParent)return;
  var kids=Array.prototype.slice.call(list.children);if(!kids.length||!kids.every(function(c){return c.classList.contains('row')}))return;
- var nav=document.querySelector('nav'),navH=nav?nav.offsetHeight:70,top=list.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-navH-top-14;
+ var nav=document.querySelector('nav'),navH=nav?nav.offsetHeight:70,top=list.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-navH-top-76;
  list.style.display='flex';list.style.flexDirection='column';list.style.minHeight=Math.max(0,avail)+'px';
  kids.forEach(function(c){c.style.flex='1 1 0'})}
 function sched(){if(!raf)raf=requestAnimationFrame(fit)}
 var sec=document.getElementById('destinations');if(sec&&window.MutationObserver)new MutationObserver(sched).observe(sec,{childList:true,subtree:true});
+window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
+})();
+
+/* v33 : titres de page doublons retirés, libellés raccourcis, grandes pastilles d'Envies, boutons de carte à taille variable */
+(function(){
+function navLabel(id){var b=document.querySelector('nav button[data-t="'+id+'"]');return b?b.textContent.trim():''}
+/* 1. un titre identique au nom de l'onglet est masqué (Carnet de japonais et les titres de région restent) ; 2. libellés raccourcis */
+function titles(){
+ document.querySelectorAll('section').forEach(function(s){var l=navLabel(s.id);if(!l)return;
+  s.querySelectorAll('h2').forEach(function(h){var dup=h.textContent.trim()===l;if(h.classList.contains('dupt')!==dup)h.classList.toggle('dupt',dup)})});
+ document.querySelectorAll('#carte h3').forEach(function(h){var t=h.textContent;if(t==='Mes lieux sur la carte')h.textContent='Mes lieux';else if(t==='Mes trajets sur la carte')h.textContent='Mes trajets'})}
+/* 3. Envies : types sans envie regroupés en grandes pastilles qui remplissent la page */
+var busy=false;
+function tiles(){
+ var sec=document.getElementById('envies');if(!sec||!sec.offsetParent)return;
+ var empt=Array.prototype.slice.call(sec.querySelectorAll('.wsec.empty0'));var old=sec.querySelector('.wgrid');
+ var key=empt.map(function(e){return e.textContent}).join('|');
+ if(!empt.length){if(old)old.remove();return}
+ if(old&&old.dataset.k===key&&empt.every(function(e){return e.style.display==='none'}))return;
+ if(old)old.remove();
+ var g=document.createElement('div');g.className='wgrid';g.dataset.k=key;
+ empt.forEach(function(e,i){var bub=e.querySelector('.wbub'),add=e.querySelector('.wadd');if(!bub||!add)return;
+  var t=document.createElement('button');t.type='button';t.className='wtile';t.style.setProperty('--d',bub.style.getPropertyValue('--d')||'#ccc');
+  var ei=bub.querySelector('.ei');if(ei){var ic=document.createElement('span');ic.className='wti';ic.innerHTML=ei.innerHTML;t.append(ic)}
+  var nm=document.createElement('b');nm.textContent=bub.querySelector('b').textContent;t.append(nm);
+  var pl=document.createElement('span');pl.className='wtp';pl.textContent='+';t.append(pl);t.setAttribute('aria-label',add.getAttribute('aria-label')||nm.textContent);
+  t.onclick=function(){add.click()};if(empt.length%2&&i===empt.length-1)t.classList.add('wide');g.append(t)});
+ empt[0].before(g);empt.forEach(function(e){e.style.display='none'});
+ var nav=document.querySelector('nav'),top=g.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-(nav?nav.offsetHeight:70)-top-76,rows=Math.ceil(empt.length/2);
+ g.style.height=Math.max(rows*78+(rows-1)*10,avail)+'px'}
+var raf=0;function sched(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;titles();tiles()})}
+if(window.MutationObserver)new MutationObserver(sched).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
 })();
 
