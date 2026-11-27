@@ -2595,7 +2595,7 @@ function jgMap(o){
  function fit(b,k){var w=(b[2]-b[0])*k,h=(b[3]-b[1])*k;if(w/h<A)w=h*A;else h=w/A;var cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;return{x:cx-w/2,y:cy-h/2,w:w,h:h}}
  var base;
  if(reg){var u=[1e9,1e9,-1e9,-1e9];reg.l.forEach(function(p){var i=pf(p);if(!i)return;var b=i.b;u=[Math.min(u[0],b[0]),Math.min(u[1],b[1]),Math.max(u[2],b[2]),Math.max(u[3],b[3])]});base=fit(u,1.16)}
- else{var bw0=W+2*PAD,bh0=H+2*PAD,hh0=bw0/A;base=hh0>bh0+.5?{x:-PAD,y:-PAD-(hh0-bh0)*((!o.focus&&!o.mini)?1:.5),w:bw0,h:hh0}:(hh0<bh0-.5?{x:-PAD-(bh0*A-bw0),y:-PAD,w:bh0*A,h:bh0}:{x:-PAD,y:-PAD,w:bw0,h:bh0})}
+ else{var bw0=W+2*PAD,bh0=H+2*PAD,hh0=bw0/A;base=hh0>bh0+.5?{x:-PAD,y:-PAD-(hh0-bh0)*((!o.focus&&!o.mini)?1:.5),w:bw0,h:hh0}:(hh0<bh0-.5?{x:-PAD-(bh0*A-bw0)*((!o.focus&&!o.mini&&window.innerWidth>=900&&window.innerWidth>window.innerHeight)?.5:1),y:-PAD,w:bh0*A,h:bh0}:{x:-PAD,y:-PAD,w:bw0,h:bh0})}
  var NW=Math.max(W+2*PAD,(!reg&&!o.focus&&!o.mini)?base.w:0);                                  /* largeur de référence : z=1 = Japon entier */
  var vb={x:base.x,y:base.y,w:base.w,h:base.h};
  var PERS=!reg&&!o.focus&&!o.mini;if(PERS&&window.__jvb&&window.__jvb.w<=base.w*1.001)vb={x:window.__jvb.x,y:window.__jvb.y,w:window.__jvb.w,h:window.__jvb.h};
@@ -2625,7 +2625,7 @@ function DECO(){
  function SC(){return(svg.clientWidth||358)/vb.w}
  function Z(){return NW/vb.w}
  function clamp(){var bx=-PAD,by=-PAD,bw=W+2*PAD,bh=H+2*PAD;
-  if(vb.w>=bw)vb.x=bx+(bw-vb.w)*(PERS?1:.5);else vb.x=Math.max(bx,Math.min(bx+bw-vb.w,vb.x));
+  if(vb.w>=bw)vb.x=bx+(bw-vb.w)*(PERS&&!(window.innerWidth>=900&&window.innerWidth>window.innerHeight)?1:.5);else vb.x=Math.max(bx,Math.min(bx+bw-vb.w,vb.x));
   if(vb.h>=bh)vb.y=by+(bh-vb.h)*(PERS?1:.5);else vb.y=Math.max(by,Math.min(by+bh-vb.h,vb.y))}
  function setVB(){if(!sheet.hidden)closeSheet();clamp();if(PERS)window.__jvb={x:vb.x,y:vb.y,w:vb.w,h:vb.h};svg.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.w+' '+vb.h);svg.style.touchAction=vb.w<base.w*0.97?'none':'pan-y';draw()}
  var MINW=(W+2*PAD)/110,MAXW=reg?base.w*1.5:Math.max(NW,base.w);
@@ -2985,7 +2985,7 @@ function geoSVG(net,sel){
  if(sel!=null){xs=[];ys=[];defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){var p=SP[n];if(p){xs.push(p[0]);ys.push(p[1])}})}
  var nm=[];if(sel!=null)defs[sel].f.concat(defs[sel].dash||[]).forEach(function(n){nm.push(n)});else defs.forEach(function(g){g.f.forEach(function(n){nm.push(n)})});
  var kk=1.1,x0,x1;
- for(var it=0;it<3;it++){x0=1e9;x1=-1e9;nm.forEach(function(n){var p=SP[n];if(!p)return;var w=n.length*10*kk*.56+9*kk,d=LBL[n]||'r';x0=Math.min(x0,p[0]-(d==='l'?w:7*kk));x1=Math.max(x1,p[0]+(d==='r'?w:7*kk))});x0-=10;x1+=10;kk=Math.max(x1-x0,300)/358}
+ for(var it=0;it<3;it++){x0=1e9;x1=-1e9;nm.forEach(function(n){var p=SP[n];if(!p)return;var w=n.length*10*kk*.56+9*kk,d=LBL[n]||'r';x0=Math.min(x0,p[0]-(d==='l'?w:7*kk));x1=Math.max(x1,p[0]+(d==='r'?w:7*kk))});x0-=10+(net==='bus'?14:0);x1+=10;kk=Math.max(x1-x0,300)/358}
  var y0=Math.min.apply(0,ys)-46,y1=Math.max.apply(0,ys)+40;
  if(x1-x0<300){var m=(x0+x1)/2;x0=m-150;x1=m+150}
  if(y1-y0<170){var m2=(y0+y1)/2;y0=m2-85;y1=m2+85}
@@ -4113,6 +4113,14 @@ document.addEventListener('gesturestart',function(e){var t=e.target;if(!(t&&t.cl
  window.addEventListener('resize',fitT);
  if(window.ResizeObserver){var v0=document.getElementById('tview');if(v0)new ResizeObserver(fitT).observe(v0)}
 })();
+/* Rotation de l'iPad (ou changement de taille de fenêtre) : les cartes sont construites pour une forme d'écran donnée ; quand la forme change (large/étroit, debout/couché, ou fenêtre nettement plus grande/petite : écran partagé), la vue ouverte est reconstruite avec la bonne forme, sinon la carte garde les proportions de l'ancienne position */
+(function(){function cur(){var w=window.innerWidth,h=window.innerHeight;return(w>=900?'W':'N')+(w>h?'L':'P')}
+ var sig=cur(),sw=window.innerWidth,sh=window.innerHeight,t=null;
+ function chk(){var s=cur();if(s===sig&&Math.abs(window.innerWidth-sw)<80&&Math.abs(window.innerHeight-sh)<200)return;sig=s;sw=window.innerWidth;sh=window.innerHeight;window.__jvb=null;
+  if(TAB==='carte')renderMap();else if(TAB==='destinations')renderDest()}
+ function later(d){clearTimeout(t);t=setTimeout(chk,d)}
+ window.addEventListener('resize',function(){later(250)});
+ window.addEventListener('orientationchange',function(){later(450)})})();
 /* ---------- Synchronisation entre appareils (Supabase) ---------- */
 var FUJI='<svg viewBox="0 0 48 40" width="48" height="40" aria-hidden="true"><circle cx="35" cy="11" r="6" fill="#CF6B64"/><path d="M3 37 L19 13 Q24 5 29 13 L45 37 Z" fill="#A4BED3"/><path d="M15.8 18.2 L19 13 Q24 5 29 13 L32.2 18.2 L29.2 16.4 L26.2 19.4 L24 16.6 L21.8 19.4 L18.8 16.4 Z" fill="#FFFBF5"/></svg>';
 (function(){
