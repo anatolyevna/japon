@@ -872,7 +872,7 @@ var THEMES=Object.keys(P),LEX=[];
 THEMES.forEach(function(t){P[t].forEach(function(x){LEX.push({k:x[0],h:x[1],ro:x[2],fr:x[3],th:t,rare:x[4]||''})})});
 W.forEach(function(x){LEX.push({k:x[0],h:x[1],ro:x[2],fr:x[3],th:x[4],rare:''})});
 var THC=['#E8A094','#B4CA9C','#C4A8C9','#A4BED3','#EDA5B0','#EEB87D','#8EC6BD','#D8B59A','#9FB0D6','#D9A08A','#A9B98E','#B9A2B8'];
-function thc(t){var i=THEMES.indexOf(t);return THC[(i<0?0:i)%THC.length]}
+function thc(t){var i=THEMES.indexOf(t);return THCT[(i<0?0:i)%THCT.length]}
 var PREFS=[];REG.forEach(function(r){r.l.forEach(function(p){PREFS.push(p)})});
 var STATIONS=(function(){var s={};METRO.concat(SHINK).forEach(function(l){(l.s||l.h||[]).forEach(function(x){s[x]=1})});return Object.keys(s)})();
 
@@ -1440,7 +1440,7 @@ var THICON={'Salutations':'smile','Politesse et remerciements':'heart','Restaura
 THICON['Voyager seule']='user';THICON['Bars et izakaya']='beer';THICON['Konbini et distributeurs']='cart';THICON['Taxi et bus']='bus';THICON['Aéroport']='plane';THICON['Argent']='yen';THICON['Téléphone et internet']='phone';THICON['Tourisme et temples']='temple';THICON['Tourisme']='camera';
 ICONS.user='M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4.5 20c0-3.8 3.4-6 7.5-6s7.5 2.200 7.500 6';ICONS.beer='M6 4h10v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2zM16 8h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M10 8v8M13 8v8';ICONS.cart='M3 4h2l2.200 11h11l2-8H6.500M9 20h.01M17 20h.01';ICONS.yen='M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9 8l3 4 3-4M12 12v5M9.500 13.500h5M9.500 15.500h5';ICONS.phone='M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2';
 var THCT=THC.concat(['#C9B8E0','#E3C58A','#7FB7B0','#E7A9C3','#B5C98A','#9DB4CF','#D9B0A0']);
-thc=function(t){var i=THEMES.indexOf(t);return THCT[(i<0?0:i)%THCT.length]};
+
 var REGS={c:{n:'Familier',who:'ami(e), famille, enfant',col:'#EDA5B0',ic:'chat',lv:1},p:{n:'Poli',who:'inconnu, vendeur, serveur',col:'#A4BED3',ic:'check',lv:2},f:{n:'Soutenu',who:'personne âgée, supérieur, situation formelle',col:'#C4A8C9',ic:'crown',lv:3}};
 var REGO=['c','p','f'],PREG='p';
 function parseV(s){var a=s.split('|');return{k:a[0],h:a[1],ro:a[2],rare:a[3]||''}}
@@ -2225,21 +2225,7 @@ TRAIN.forEach(function(l){
 BUS.forEach(function(l){if(l.n==='Tokyo–Osaka (nuit)')l.pr=4300});
 
 /* Ce qui a été vérifié, et où */
-var SRC_OK='Vérifié en ligne le 22/11/2026';
-function verNote(net,i,l){
- var t;
- if(net==='metro'){
-  t=i===0?'Tarif JR East en vigueur depuis le 14/03/2026 (billet papier ; la carte IC est un peu moins chère). Nombre de stations exact, durée estimée à ≈ 2 min par station. Prix : tarifs officiels vérifiés pour Tokyo–Ueno, Tokyo–Shinagawa, Tokyo–Shinjuku et Shinjuku–Ueno ; les autres sont estimés (à une tranche près), car le tarif suit le trajet le plus court et non le tour de boucle.'
-   :i<10?'Tarif Tokyo Metro (billet papier ; la carte IC est un peu moins chère), vérifié sur tokyometro.jp. Nombre de stations exact, durée estimée à ≈ 1,8 min par station, prix estimé d’après la longueur officielle de la ligne (à une tranche près).'
-   :'Tarif Toei (billet papier ; la carte IC est un peu moins chère), vérifié sur kotsu.metro.tokyo.jp. Nombre de stations exact, durée estimée à ≈ 1,8 min par station, prix estimé d’après la longueur de la ligne (longueurs Toei non revérifiées, à une tranche près).'}
- else if(net==='shink'){
-  t=SRC_OK+' (ekitan.com, JR East) : prix du trajet complet en place réservée'+(l.n==='Hokuriku'?' (jusqu’à Kanazawa)':'')+' et durée totale. Les temps aux arrêts intermédiaires et les prix partiels sont estimés au prorata. Le Tokaido/Sanyo (Nozome/Mizuho) passera de ≈ 14 720 à ≈ 15 420 ¥ en juillet 2027.'}
- else if(net==='train'&&l.n==='Hakone')t=SRC_OK+' (ekitan.com, horaires du 14/03/2026) : Romancecar 2 470 ¥ jusqu’à Hakone-Yumoto, 75 min (1 910 ¥, 59 min jusqu’à Odawara).';
- else if(net==='train'&&l.n==='Haruka (Kansai)')t=SRC_OK+' (ekitan.com) : place réservée 3 590 ¥ (3 060 ¥ non réservée), ≈ 80 min.';
- else if(net==='train'&&l.n==='Narita')t='Prix du Skyliner vérifié en ligne le 22/11/2026 (2 580 ¥). Durée : les sources donnent entre 41 et 53 min, non tranché.';
- else if(net==='bus'&&l.n==='Tokyo–Osaka (nuit)')t='Prix vérifié en ligne le 22/11/2026 (ekitan.com, fun-japan.jp) : 4 000–4 500 ¥ en saison normale, 9 000–10 000 ¥ en période de pointe. Durée 7 à 10 h. Valeur affichée : milieu de la fourchette normale.';
- else t='Non revérifié : durées et prix estimés (ordre de grandeur), à confirmer avant de s’y fier.';
- return t}
+function verNote(){return ''}
 
 /* ---------- Fond du plan métro : sans palais, parcs ni fleuve ; baie raccourcie ---------- */
 
@@ -2252,12 +2238,7 @@ function cityTotal(city){return tPlaces(city).t+tTrips(city).t}
 function yenS(n){return Number(n).toLocaleString('fr-FR')+' ¥'}
 function cityRow(g){var r=prefRegion(g.pref),n=g.items.length,tt=cityTotal(g.city),sub=g.pref+(n?' · '+n+(n>1?' lieux':' lieu'):'');
  return rowBtn(r.d,g.city,sub,tt?yenS(tt):'',function(){DV={t:'city',city:g.city,pref:g.pref};renderDest()})}
-function totalCard(label,total,lines,foot,col){var c=sty(el('div','leg lcard'),col||'#CEC3BB');c.style.cssText+=';margin-top:12px;padding:14px 16px';
- c.append(el('small',null,label,'display:block;color:var(--muted);font-weight:600'));
- c.append(el('b',null,yenS(total),'display:block;font-size:1.55rem;line-height:1.25;margin-top:2px'));
- c.append(el('span',null,'≈ '+eurS(total),'display:block;color:var(--muted);margin-bottom:6px'));
- (lines||[]).forEach(function(x){c.append(el('div',null,x,'font-size:.9rem;margin-top:2px'))});
- if(foot)c.append(el('small',null,foot,'display:block;color:var(--muted);margin-top:8px'));return c}
+function totalCard(label,total){var c=el('div','tbox');c.append(el('span','tl','Total'),el('b',null,yenS(total)),el('span','te','≈ '+eurS(total)));return c}
 var _rd10=renderDest;
 renderDest=function(){_rd10();var box=$('#dest');
  if(DV.t==='city'){var tp=tPlaces(DV.city),tt=tTrips(DV.city),r=prefRegion(DV.pref),lines=['Lieux : '+yenS(tp.t)+(tp.c?' ('+tp.c+')':'')];
@@ -3049,7 +3030,7 @@ decoratePlan=function(){_dp18();var b=$('#pview'),nav=b&&b.querySelector('.pnav'
 
 /* ---------- v19 : plus aucun texte ajouté de ma part ---------- */
 (function(){
- verNote=function(){return ''};
+ 
  var _mw=mapWrap;mapWrap=function(svg){return _mw(svg,'')};
  try{SHINK.forEach(function(l){if(l.e)l.e=l.e.replace(/\s*\(prolongement[^)]*\)/,'')})}catch(e){}
  ICONS.pin='M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM8 12h.01M12 12h.01M16 12h.01';
@@ -3060,7 +3041,7 @@ decoratePlan=function(){_dp18();var b=$('#pview'),nav=b&&b.querySelector('.pnav'
  var _sc=stationCard;stationCard=function(net,i,l){var c=_sc(net,i,l),mi=NETS[net].mi;
   c.querySelectorAll('button.st').forEach(function(b){var sp=b.querySelector('span');if(!sp)return;var nm=sp.textContent;b.onclick=function(){addTrip({m:mi,b:nm})}});return c};
  /* total : petit encart à part */
- totalCard=function(label,total){var c=el('div','tbox');c.append(el('span','tl','Total'),el('b',null,yenS(total)),el('span','te','≈ '+eurS(total)));return c};
+ 
  var LAB=/\s*\((vide = [^)]*|si connue|seulement si le mot en a|romaji, français ou japonais|hiragana ou katakana)\)/;
  function userNotes(){var s={};[places,trips,wishes,words].forEach(function(a){(a||[]).forEach(function(x){if(x&&x.note)s[String(x.note).trim()]=1})});return s}
  function phOf(i){if(i.closest&&i.closest('.gate'))return;var p=i.placeholder;if(!p)return;var lb=i.closest&&i.closest('label'),n=(/commence|ville ou gare/i.test(p)||(lb&&/^Ville ou/.test(lb.firstChild&&lb.firstChild.nodeValue||'')))?'Commence à écrire…':(i.type==='search'?'Rechercher':'');if(p!==n)i.placeholder=n}
