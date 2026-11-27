@@ -776,8 +776,11 @@ nav{z-index:5}
 .fab::before,.fab::after{content:"";position:absolute;left:50%;top:50%;background:#fff;border-radius:2px;transform:translate(-50%,-50%);box-shadow:0 1px 1px rgba(90,30,25,.25)}
 .fab::before{width:24px;height:3.5px}
 .fab::after{width:3.5px;height:24px}
-.fab{background-color:var(--accent);background-image:radial-gradient(circle at 32% 26%,color-mix(in srgb,var(--accent) 55%,#fff) 0%,var(--accent) 48%,color-mix(in srgb,var(--accent) 82%,#000) 100%);box-shadow:inset 0 2px 3px rgba(255,255,255,.55),inset 0 -5px 8px rgba(90,30,25,.28),0 8px 16px color-mix(in srgb,var(--accent) 45%,transparent),0 2px 3px rgba(60,30,25,.3)}
+.fab{background-color:var(--accent);background-image:none;box-shadow:0 3px 10px rgba(75,50,45,.28)}
 .fab:active{transform:scale(.95)}
+/* v38 légendes Planning : pastilles plus compactes, remplies ligne par ligne (tweaks33 legpack) */
+#pview .lg.flat .chips2{gap:5px}
+#pview .lg.flat .chips2 .chip{padding:0 7px;font-size:.72rem;min-height:28px}
 
 </style>
 </head>
@@ -4796,14 +4799,18 @@ function fab(){var nv=document.querySelector('nav');if(nv&&window.innerWidth<900
 /* Carte : « Mes lieux » / « Mes trajets » toujours présents (sous la carte, en défilant) */
 function blocks(){document.querySelectorAll('#carte .blk').forEach(function(b){if(b.hidden)b.hidden=false})}
 /* Planning, vue Semaine : cadres jusqu'au bas de l'écran */
-function week(){var w=document.querySelector('#planning .wkv');if(!w||!w.offsetParent)return;var nv=document.querySelector('nav'),top=w.getBoundingClientRect().top+window.scrollY,lg=w.nextElementSibling,L=lg&&lg.classList.contains('lg')?lg.offsetHeight:246,h=window.innerHeight-66-top-L-12+64+26;w.style.minHeight=Math.max(300,h)+'px'}
+function week(){var w=document.querySelector('#planning .wkv');if(!w||!w.offsetParent)return;var nv=document.querySelector('nav'),top=w.getBoundingClientRect().top+window.scrollY,lg=w.nextElementSibling,L=246,h=window.innerHeight-66-top-L-12+64+26;w.style.minHeight=Math.max(300,h)+'px'}
 /* Envies : le contour du formulaire prend la couleur du type choisi (celle de la pastille) */
 function dcol(){var d=document.getElementById('dlg');if(!d||!d.open)return;var h=d.querySelector('h2'),on=d.querySelector('.ch.on'),c='';if(h&&/envie/i.test(h.textContent)&&on)c=on.style.getPropertyValue('--d');if(c){if(d.style.getPropertyValue('--dc')!==c)d.style.setProperty('--dc',c);d.classList.add('dcol')}else{d.style.removeProperty('--dc');d.classList.remove('dcol')}}
 document.addEventListener('click',function(){setTimeout(dcol,30)},true);
 /* Mois : cellules un peu plus hautes pour réduire le vide sous la légende */
 function month(){var cs=document.querySelectorAll('#pview .mc');if(!cs.length||!cs[0].offsetParent)return;var r=document.documentElement;r.style.removeProperty('--mh');
  var lg=document.querySelector('#pview .mlg2'),bot=(lg||cs[cs.length-1]).getBoundingClientRect().bottom,fb=parseFloat(getComputedStyle(r).getPropertyValue('--fabb'))||(navReserve()+10),room=window.innerHeight-fb-58-8-bot,add=Math.max(-14,Math.min(28,Math.floor(room/6)));if(add!==0)r.style.setProperty('--mh',(60+add)+'px')}
-var raf=0;function sched(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;titles();tiles();fab();blocks();week();month()})}
+function legpack(){document.querySelectorAll('#pview .lg .chips2').forEach(function(c){var k=Array.prototype.slice.call(c.children);if(!k.length||!c.offsetWidth)return;k.forEach(function(e){e.style.order=''});var W=c.clientWidth,g=parseFloat(getComputedStyle(c).columnGap)||5,w=k.map(function(e){return e.getBoundingClientRect().width});
+ function pack(ix){var L=[],s=[];ix.forEach(function(i){for(var j=0;j<L.length;j++)if(s[j]+g+w[i]<=W+.01){L[j].push(i);s[j]+=g+w[i];return}L.push([i]);s.push(w[i])});return L}
+ var a=pack(k.map(function(_,i){return i})),b=pack(k.map(function(_,i){return i}).sort(function(x,y){return w[y]-w[x]}));var L=b.length<a.length?b:a;
+ L.forEach(function(l,r){l.sort(function(x,y){return x-y}).forEach(function(i,p){k[i].style.order=r*100+p})})})}
+var raf=0;function sched(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;titles();tiles();fab();blocks();legpack();week();month()})}
 if(window.MutationObserver)new MutationObserver(sched).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
 })();
