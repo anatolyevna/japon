@@ -746,7 +746,9 @@ html,body{touch-action:pan-x pan-y}
 #carnet input[type=search],#carnet input[type=text],#carnet input:not([type]){margin-top:26px}
 #destinations .list>.row{max-height:72px}
 .row:has(.wltag) .t{flex:1 1 auto;min-width:0}
-.row:has(.wltag) .wltag{flex:0 1 auto;min-width:0;max-width:62%;text-align:right;white-space:normal;font-size:.82rem;line-height:1.25}
+.row:has(.wltag) .wltag{flex:0 1 auto;min-width:0;max-width:none;text-align:right;white-space:nowrap;font-size:.82rem;line-height:1.25}
+@media (max-width:389px){.row:has(.wltag) .wltag{font-size:.74rem}}
+@media (max-width:369px){.row:has(.wltag) .wltag{font-size:.68rem}}
 
 /* v35 */
 #dlg:focus,#dlg:focus-visible{outline:none}
