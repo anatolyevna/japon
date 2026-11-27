@@ -629,7 +629,7 @@ svg path.lb{fill:var(--sea);pointer-events:none}
 .entry.tap{cursor:pointer;-webkit-tap-highlight-color:transparent}
 
 .wlflw{display:inline-flex;margin-right:-3px}
-.wltag{white-space:nowrap;font-size:.82rem;color:#BC3A5C}
+.wltag{white-space:nowrap;font-size:.82rem;color:#3A3F73}
 
 .rp{margin-top:14px;display:flex;flex-direction:column;gap:10px}
 .rpo{all:unset;text-align:left;box-sizing:border-box;display:block;width:100%;padding:12px 14px;border-radius:16px;background:var(--card);border:1.5px solid var(--line);cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -745,11 +745,8 @@ html,body{touch-action:pan-x pan-y}
 #carnet .empty:not(.wc){padding:28px 20px;margin-top:14px}
 #carnet input[type=search],#carnet input[type=text],#carnet input:not([type]){margin-top:26px}
 #destinations .list>.row{max-height:72px}
-.row:has(.wltag){display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"ic t go" "ic tag go";column-gap:10px;row-gap:1px;align-content:center}
-.row:has(.wltag) .wlflw{grid-area:ic;align-self:center;margin-right:0}
-.row:has(.wltag) .t{grid-area:t;align-self:end}
-.row:has(.wltag) .wltag{grid-area:tag;align-self:start;white-space:normal;font-size:.8rem;line-height:1.25}
-.row:has(.wltag) .go{grid-area:go;align-self:center}
+.row:has(.wltag) .t{flex:1 1 auto;min-width:0}
+.row:has(.wltag) .wltag{flex:0 1 auto;min-width:0;max-width:62%;text-align:right;white-space:normal;font-size:.82rem;line-height:1.25}
 
 /* v35 */
 #dlg:focus,#dlg:focus-visible{outline:none}
@@ -2847,7 +2844,8 @@ function DECO(){
   else closeSheet()}
  svg.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var t=e.target;if(t&&t.closest&&(t.closest('.pin')||t.closest('.pf'))){e.preventDefault();hit(t)}});
  wrap._jm={vb:function(){return vb},base:base,pins:function(){return pins},trips:function(){return tr},draw:setVB,zoomTo:zoomTo,Z:Z,sheet:sheet};
- window.addEventListener('resize',draw);
+ function onResize(){if(svg.isConnected)draw();else window.removeEventListener('resize',onResize)}
+ window.addEventListener('resize',onResize);
  setVB();Promise.resolve().then(draw);
  if(foc){var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm){vb=foc;setVB()}else setTimeout(function(){animTo(foc,900)},350)}
  wrap._jm.home=foc;
