@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<meta name="data-attribution" content="Lieux et horaires : © contributeurs OpenStreetMap (ODbL), via Photon et Nominatim">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Carnet de voyage du Japon d’Alina</title>
@@ -706,6 +707,15 @@ section{padding-top:0}
 .empty:not(.wc){padding:18px 16px;margin-top:10px}
 .mode{margin-top:8px}
 .zc{display:flex;gap:6px}
+/* v32 */
+.top .fuji svg{width:56px;height:47px}
+#pview{position:relative}
+.todayrow{position:absolute;top:0;right:0;margin:0;height:44px;align-items:center}
+.pnav{padding-right:104px}
+.pnav>:not(button){font-size:.86rem;line-height:1.15;text-align:center}
+.wb{min-height:340px}
+.pnav{padding-right:112px}
+.todayrow button{min-height:38px;padding:0 12px;font-size:.8rem;white-space:nowrap}
 
 </style>
 </head>
@@ -4287,7 +4297,7 @@ function hrsAlert(it,dk,tm){
  return null}
 function hrsText(it){var a=[];
  if(it.closed&&it.closed.length)a.push('Fermé : '+DAYS3.filter(function(d){return it.closed.indexOf(d[1])>=0}).map(function(d){return DAYN[d[1]]}).join(', '));
- if(it.ohr)a.push('Horaires OpenStreetMap'+(it.ohchk?' (vérifiés le '+it.ohchk+')':'')+' : '+it.ohr);
+ if(it.ohr)a.push('Horaires : '+it.ohr);
  if(it.oh&&it.ch)a.push('Ouvert de '+it.oh+' à '+it.ch);else if(it.oh)a.push('Ouvre à '+it.oh);else if(it.ch)a.push('Ferme à '+it.ch);
  return a}
 var _eo25=eventsOn;
@@ -4559,7 +4569,7 @@ function osmHours(x){var d=$('#dlg'),prev=d._osm;
   var cur=curHours();var empty=!cur.oh&&!cur.ch&&!cur.closed;
   if(pr&&!pr.complex&&!pr.always&&empty){o.oh=pr.oh;o.ch=pr.ch;o.closed=pr.closed.join(',');setHours(pr.oh,pr.ch,pr.closed)}
   d._osm=o;var det=d.querySelector('details');if(det)det.open=true;
-  var lab=labelInput('Ferme à');if(lab){var src=el('small','ohsrc','Horaires OpenStreetMap : '+info.hours+(info.check?' · vérifié le '+info.check:''));lab.closest('label').after(src)}})}
+  if(!(pr&&!pr.complex&&!pr.always)){var lab=labelInput('Ferme à');if(lab)lab.closest('label').after(el('small','ohsrc','Horaires : '+info.hours))}})}
 function curHours(){var a=labelInput('Ouvre à'),b=labelInput('Ferme à'),c=labelInput('Jours de fermeture');return{oh:a?a.value:'',ch:b?b.value:'',closed:c?c.value:''}}
 function setHours(oh,ch,closed){setField('Ouvre à',oh);setField('Ferme à',ch);
  var want=closed.map(Number);document.querySelectorAll('#dlg .dch').forEach(function(b,i){var d=DAYS3[i][1],on=b.classList.contains('on'),w=want.indexOf(d)>=0;if(on!==w)b.click()})}
@@ -4569,7 +4579,7 @@ function attachPlaceSug(){
  function draw(list,credit){box.replaceChildren();list.slice(0,8).forEach(function(x){
   var lab=x.n+' · '+(x.sub?x.sub+', ':'')+(x.city||'—')+(x.type?' · '+x.type:'');var c=el('button','sug',lab);c.type='button';
   c.onclick=function(){pickPlace(x);box.replaceChildren()};box.append(c)});
-  if(credit&&list.some(function(x){return!x.loc})){box.append(el('small',null,'© contributeurs OpenStreetMap','display:block;color:var(--muted);font-size:.7rem;margin-top:4px'))}}
+  }
  inp.addEventListener('input',function(){var q=inp.value.trim();clearTimeout(tm);var my=++seq;
   if(q.length<2){box.replaceChildren();return}
   var loc=PS.localMatch(q);draw(loc,false);
@@ -4606,7 +4616,7 @@ window.__route={ROUTE:ROUTE,ST:ST};
 var NS='http://www.w3.org/2000/svg',COL='#BC3A5C',HL='#FCEBF1',INK='#5A1A33',ARW=(window.__rtArw||'#8A6A57');
 window.__rtOn=true;
 /* Fuji : cône à pentes concaves, face à l'ombre, calotte neigeuse dentelée, base à y=0 (px écran) */
-window.__fujiPal=window.__fujiPal||{a:'#9A8783',b:'#76635F',c:'#4F4147',d:'#85726E'};
+window.__fujiPal=window.__fujiPal||{a:'#AE9E98',b:'#8F7D78',c:'#6B5B5F',d:'#9D8B86'};
 window.__fujiGlyph=function(){var P=window.__fujiPal;return '<ellipse cx="1" cy="1.6" rx="21" ry="3" fill="'+P.c+'" opacity=".16"/>'+
  '<path d="M-20 .5Q-12 -.5 -8.2 -9Q-6 -15 -4.4 -22L4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q5 2.3 0 1.3Q-5 2.3 -10 1Q-15 2.1 -20 .5Z" fill="'+P.a+'" stroke="'+P.c+'" stroke-width=".9" stroke-linejoin="round"/>'+
  '<path d="M4.4 -22Q6 -15 8.2 -9Q12 -.5 20 .5Q15 2.1 10 1Q6 1.9 3 1.4Q4.4 -8 1.4 -21.4Z" fill="'+P.b+'"/>'+
@@ -4632,15 +4642,14 @@ window.__wlMarks=function(k,vis,mg,pm){
  for(var q=0;q<ROUTE.length-1;q++){var A=byName[ROUTE[q][0]],B=byName[ROUTE[q+1][0]];if(!A||!B)continue;
   var ax=A.x*k,ay=A.y*k,bx=B.x*k,by=B.y*k,L=Math.hypot(bx-ax,by-ay);if(L<1)continue;
   var ux=(bx-ax)/L,uy=(by-ay)/L,nx=-uy,ny=ux,last=q===ROUTE.length-2,bow=last?-.38:.14,dsh=last||(ROUTE[q][0]==='Izumo'&&ROUTE[q+1][0]==='Kanazawa');
-  var sx=ax+ux*R,sy=ay+uy*R,ex=bx-ux*(R+3.5),ey=by-uy*(R+3.5);
+  var sx=ax+ux*R,sy=ay+uy*R,ex=bx-ux*(R+2.8),ey=by-uy*(R+2.8);
   if(L<2*R+6){continue}
   var cx=(sx+ex)/2+nx*L*bow,cy=(sy+ey)/2+ny*L*bow;
   var tx=ex-cx,ty=ey-cy,tl=Math.hypot(tx,ty)||1;tx/=tl;ty/=tl;
-  var hs=4.6,hx1=ex-tx*hs*1.5+(-ty)*hs*.8,hy1=ey-ty*hs*1.5+tx*hs*.8,hx2=ex-tx*hs*1.5-(-ty)*hs*.8,hy2=ey-ty*hs*1.5-tx*hs*.8;
+  var hs=3.7,hx1=ex-tx*hs*1.5+(-ty)*hs*.8,hy1=ey-ty*hs*1.5+tx*hs*.8,hx2=ex-tx*hs*1.5-(-ty)*hs*.8,hy2=ey-ty*hs*1.5-tx*hs*.8;
   function W(x,y){return(x/k).toFixed(2)+' '+(y/k).toFixed(2)}
-  var dd='M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey);halo+='<path d="'+dd+'" fill="none" stroke="#FFFFFF" stroke-width="'+px(4.2)+'" stroke-linecap="round" opacity=".85"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/><path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="'+px(2.6)+'" stroke-linejoin="round" opacity=".85"/>';
-  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(1.7)+'" stroke-linecap="round"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/>'+
-   '<path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="'+ARW+'" stroke="'+ARW+'" stroke-width="'+px(.6)+'" stroke-linejoin="round"/>'}
+  arr+='<path d="M'+W(sx,sy)+'Q'+W(cx,cy)+' '+W(ex,ey)+'" fill="none" stroke="'+ARW+'" stroke-width="'+px(window.__rtW||1.1)+'" stroke-linecap="round"'+(dsh?' stroke-dasharray="'+px(5)+' '+px(3.5)+'"':'')+'/>'+
+   '<path d="M'+W(ex,ey)+'L'+W(hx1,hy1)+'L'+W(hx2,hy2)+'Z" fill="'+ARW+'" stroke="'+ARW+'" stroke-width="'+px(.3)+'" stroke-linejoin="round"/>'}
  /* pastilles numérotées */
  P.forEach(function(p){if(!vis(p.x,p.y,mg))return;var wide=p.s.nums.length>1,hw=px(wide?R+6:R),hh=px(R),ds=Math.hypot((p.x-p.ax)*k,(p.y-p.ay)*k);
   if(ds>3)bad+='<line x1="'+p.ax+'" y1="'+p.ay+'" x2="'+p.x+'" y2="'+p.y+'" stroke="'+COL+'" stroke-width="'+px(1)+'"/><circle cx="'+p.ax+'" cy="'+p.ay+'" r="'+px(1.8)+'" fill="'+COL+'"/>';
@@ -4656,6 +4665,19 @@ window.__wlMarks=function(k,vis,mg,pm){
  return h+halo+arr+bad+lbl+'</g>'};
 /* les libellés et points d'origine de la carte pour ces villes sont remplacés par la pastille et le nom surlignés */
 window.__wlPost=function(svg,dyn,k){if(!window.__rtOn)return;ST.forEach(function(s){var g=dyn.querySelector('.rcity[data-i="'+s.j+'"]');if(g)g.style.display='none'})};
+})();
+
+/* v32 : les listes de régions / préfectures de l'onglet Destinations occupent la hauteur de l'écran */
+(function(){
+var raf=0;
+function fit(){raf=0;var sec=document.getElementById('destinations');if(!sec)return;var list=sec.querySelector('.list');if(!list||!list.offsetParent)return;
+ var kids=Array.prototype.slice.call(list.children);if(!kids.length||!kids.every(function(c){return c.classList.contains('row')}))return;
+ var nav=document.querySelector('nav'),navH=nav?nav.offsetHeight:70,top=list.getBoundingClientRect().top+window.scrollY,avail=window.innerHeight-navH-top-14;
+ list.style.display='flex';list.style.flexDirection='column';list.style.minHeight=Math.max(0,avail)+'px';
+ kids.forEach(function(c){c.style.flex='1 1 0'})}
+function sched(){if(!raf)raf=requestAnimationFrame(fit)}
+var sec=document.getElementById('destinations');if(sec&&window.MutationObserver)new MutationObserver(sched).observe(sec,{childList:true,subtree:true});
+window.addEventListener('resize',sched);document.addEventListener('click',function(){setTimeout(sched,60)},true);sched();
 })();
 
 
